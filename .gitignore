@@ -1,0 +1,21 @@
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+config/*.php
+!config/*.example.php
+opd_dashboard_config.php
+config.php
+
+# Runtime data, caches and database exports
+.usage-data/
+*.sqlite
+*.sqlite3
+*.db
+*.sql
+*.log
+*.bak
+*.zip
+node_modules/
+.DS_Store
+Thumbs.db
