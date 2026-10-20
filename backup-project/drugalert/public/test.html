@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test</title>
+</head>
+<body>
+    <script>
+        try {
+            null.toLowerCase();
+        } catch(e) {
+            console.log("null.toLowerCase(): " + e.message);
+        }
+        try {
+            null.includes("a");
+        } catch(e) {
+            console.log("null.includes(): " + e.message);
+        }
+    </script>
+</body>
+</html>

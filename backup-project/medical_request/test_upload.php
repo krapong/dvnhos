@@ -1,0 +1,1 @@
+<?php file_put_contents('test.log', print_r(, true)); echo json_encode(['success' => false, 'message' => 'Failed']);

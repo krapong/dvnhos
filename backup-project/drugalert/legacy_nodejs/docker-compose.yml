@@ -1,0 +1,27 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: mbm
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./sql/schema.sql:/docker-entrypoint-initdb.d/001-schema.sql:ro
+
+  app:
+    build: .
+    depends_on:
+      - db
+    environment:
+      PORT: 4173
+      NODE_ENV: production
+      MBM_AUTH_SECRET: change-me
+      DATABASE_URL: postgres://postgres:postgres@db:5432/mbm
+    ports:
+      - "4173:4173"
+
+volumes:
+  pgdata:

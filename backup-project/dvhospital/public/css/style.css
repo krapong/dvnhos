@@ -1,0 +1,511 @@
+/* 
+    Elite Hospital Portal Design System
+    Modernized CSS for Hospital Website
+*/
+
+:root {
+    --primary-color: #00897B;
+    /* Ministry Green (Vibrant) */
+    --primary-dark: #00695C;
+    /* Ministry Green (Official Deep) */
+    --primary-light: #E0F2F1;
+    /* Soft Mint */
+    --secondary-color: #10B981;
+    --accent-color: #F59E0B;
+    --emergency-red: #D9383A;
+    /* STRICTLY FOR EMERGENCY ONLY */
+    --text-main: #333333;
+    /* Dark Grey for readability */
+    --text-header: #333333;
+    --text-body: #444444;
+    --text-muted: #666666;
+    --bg-main: #FFFFFF;
+    /* Clean White */
+    --bg-light: #F8F9FA;
+    /* Off-white */
+    --bg-card: #FFFFFF;
+    --glass-bg: rgba(255, 255, 255, 0.95);
+    --glass-border: rgba(255, 255, 255, 0.5);
+    --blur-intensity: 15px;
+    --shadow-premium: 0 15px 35px rgba(0, 121, 107, 0.05);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.05);
+    --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.03);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Sarabun', sans-serif;
+    color: var(--text-main);
+    background-color: var(--bg-light);
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 800;
+    color: var(--text-header);
+    letter-spacing: -0.02em;
+}
+
+/* ====== Glassmorphism Utilities ====== */
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--blur-intensity));
+    -webkit-backdrop-filter: blur(var(--blur-intensity));
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    box-shadow: var(--shadow-premium);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.glass-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.85);
+}
+
+/* ====== Header & Navigation ====== */
+.main-header {
+    background: var(--primary-color);
+    /* Premium Purple */
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.navbar {
+    padding: 0.8rem 0;
+}
+
+.navbar-brand .hospital-name div {
+    color: white !important;
+}
+
+.navbar-brand .hospital-name small {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.navbar-brand .glass-card {
+    background: white !important;
+}
+
+.nav-link {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-weight: 500;
+    padding: 0.5rem 1.2rem !important;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: white !important;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+}
+
+.navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.2);
+    filter: invert(1);
+}
+
+.btn-premium {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: white !important;
+    border: none;
+    border-radius: 12px;
+    padding: 0.6rem 1.8rem;
+    font-weight: 700;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.btn-premium:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* ====== Buttons ====== */
+.btn-emergency {
+    background: var(--emergency-red) !important;
+    color: white !important;
+    border-radius: 50px;
+    padding: 0.6rem 1.5rem;
+    font-weight: 700;
+    box-shadow: 0 4px 15px rgba(217, 56, 58, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.font-ctrl:hover {
+    background: var(--primary-color);
+}
+
+/* Auth Buttons Top Bar */
+.btn-login-top {
+    font-weight: 600;
+    transition: all 0.3s ease;
+    padding: 2px 8px;
+    border-radius: 6px;
+}
+
+.btn-login-top:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: var(--accent-color) !important;
+}
+
+.auth-controls .dropdown-toggle::after {
+    display: none;
+}
+
+.auth-controls .dropdown-item {
+    font-size: 0.9rem;
+    padding: 0.6rem 1.2rem;
+}
+
+/* Global Dropdown Customization */
+.dropdown-item.active,
+.dropdown-item:active {
+    background-color: var(--primary-color) !important;
+    color: white !important;
+}
+
+.hover-primary:hover {
+    color: var(--primary-color) !important;
+}
+
+.btn-primary {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.5rem;
+    border-radius: 12px;
+}
+
+.btn-success,
+.btn-online-service {
+    background: var(--secondary-color);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);
+}
+
+/* ====== Sections ====== */
+.section-title {
+    position: relative;
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 80px;
+    height: 6px;
+    background: var(--primary-color);
+    border-radius: 3px;
+}
+
+/* ====== News & Activities Cards ====== */
+.card-item {
+    background: white;
+    border-radius: 18px;
+    border: none;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.4s ease;
+}
+
+.card-item:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-lg);
+}
+
+.card-item img {
+    transition: transform 0.5s ease;
+}
+
+.card-item:hover img {
+    transform: scale(1.1);
+}
+
+/* ====== Post List Style (No Image) ====== */
+.post-list-item {
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    text-decoration: none !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.post-list-item:hover {
+    transform: translateX(8px);
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-lg);
+}
+
+.post-list-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 5px;
+    background: var(--primary-color);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.post-list-item:hover::before {
+    opacity: 1;
+}
+
+.post-list-date {
+    min-width: 100px;
+    text-align: center;
+    padding-right: 1.5rem;
+    border-right: 2px solid var(--primary-light);
+}
+
+.post-list-date .day {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--primary-color);
+}
+
+.post-list-date .month-year {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.post-list-content {
+    flex-grow: 1;
+}
+
+.post-list-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 0.3rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.post-list-meta {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+@media (max-width: 768px) {
+    .post-list-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.8rem;
+    }
+
+    .post-list-date {
+        border-right: none;
+        border-bottom: 2px solid var(--primary-light);
+        padding-right: 0;
+        padding-bottom: 0.5rem;
+        text-align: left;
+        display: flex;
+        gap: 10px;
+        align-items: baseline;
+    }
+
+    .post-list-date .day {
+        font-size: 1.5rem;
+    }
+}
+
+/* ====== Hero Banner Slider ====== */
+.hero-banner {
+    max-height: 600px;
+    overflow: hidden;
+    position: relative;
+}
+
+.hero-banner .carousel-item {
+    height: 600px;
+}
+
+.hero-banner .carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.hero-banner .carousel-caption {
+    background: rgba(255, 255, 255, 0.75);
+    /* Frosted Glass White Overlay */
+    backdrop-filter: blur(12px);
+    color: #000 !important;
+    padding: 2.5rem;
+    border-radius: 20px;
+    max-width: 80%;
+    width: max-content;
+    right: auto;
+    left: 10%;
+    bottom: 10%;
+    text-align: left;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.hero-banner .carousel-caption h5 {
+    color: #000 !important;
+    font-size: 14pt;
+    font-weight: 900;
+    /* Extra Bold */
+    margin-bottom: 1.2rem;
+    line-height: 1.4;
+    text-shadow: none;
+    white-space: nowrap;
+}
+
+.hero-banner .carousel-caption p {
+    font-size: 12pt;
+    color: #333 !important;
+    margin-bottom: 0;
+    white-space: nowrap;
+}
+
+@media (max-width: 576px) {
+
+    .hero-banner,
+    .hero-banner .carousel-item {
+        height: 300px;
+    }
+
+    .hero-banner .carousel-caption h5 {
+        font-size: 12pt;
+        white-space: normal;
+    }
+
+    .hero-banner .carousel-caption p {
+        white-space: normal;
+    }
+
+    .hero-banner .carousel-caption {
+        max-width: 90%;
+        padding: 1rem;
+        left: 5%;
+    }
+}
+
+/* ====== Footer ====== */
+.main-footer {
+    background: var(--primary-color);
+    /* Premium Purple */
+    color: white;
+    padding: 5rem 0 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.main-footer h5 {
+    color: white;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    opacity: 0.9;
+}
+
+.main-footer a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.main-footer a:hover {
+    color: white;
+    padding-left: 5px;
+}
+
+.main-footer p {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 2rem;
+    margin-top: 3rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* ====== Accessibility Controls ====== */
+.font-ctrl {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.font-ctrl:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Backend Staff Roles Theming */
+.staff-role-pr {
+    --admin-theme: #10B981;
+}
+
+/* Green - Staff 1 */
+.staff-role-procurement {
+    --admin-theme: #0288D1;
+}
+
+/* Blue - Staff 2 */
+.staff-role-hr {
+    --admin-theme: #F59E0B;
+}
+
+/* Orange - Staff 3 */
+.staff-role-admin {
+    --admin-theme: #6366F1;
+}
+
+/* Indigo - Staff 4 */
+
+.admin-layout .sidebar {
+    border-right: 5px solid var(--admin-theme, var(--primary-color)) !important;
+}
+
+.admin-layout .navbar-admin {
+    background: var(--admin-theme, var(--primary-color)) !important;
+}
+
+.admin-layout .card-accent {
+    border-top: 4px solid var(--admin-theme, var(--primary-color)) !important;
+}

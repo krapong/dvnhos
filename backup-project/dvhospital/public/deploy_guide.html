@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>คู่มือการติดตั้งระบบ DVHospital ขึ้นโฮสต์จริง</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #059669;
+            --primary-hover: #047857;
+            --primary-light: #ecfdf5;
+            --secondary: #0f172a;
+            --text-main: #334155;
+            --text-dark: #0f172a;
+            --bg-light: #f8fafc;
+            --bg-card: #ffffff;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+        }
+
+        body {
+            font-family: 'Sarabun', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.7;
+        }
+
+        header {
+            background: linear-gradient(135deg, #065f46 0%, #059669 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .header-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+        header h1 {
+            font-family: 'Outfit', 'Sarabun', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            letter-spacing: -0.5px;
+        }
+
+        header p {
+            font-size: 16px;
+            font-weight: 300;
+            margin: 0;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 940px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background-color: var(--bg-card);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            padding: 40px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border);
+        }
+
+        h2 {
+            font-family: 'Outfit', 'Sarabun', sans-serif;
+            color: var(--text-dark);
+            font-size: 22px;
+            font-weight: 700;
+            border-bottom: 2px solid var(--primary-light);
+            padding-bottom: 12px;
+            margin-top: 0;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2 span {
+            color: var(--primary);
+        }
+
+        p strong {
+            color: var(--text-dark);
+        }
+
+        .alert {
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            font-size: 15px;
+        }
+
+        .alert-important {
+            background-color: #fffbeb;
+            color: #92400e;
+            border-left: 5px solid #d97706;
+        }
+
+        .alert-tip {
+            background-color: #ecfdf5;
+            color: #065f46;
+            border-left: 5px solid #059669;
+        }
+
+        .alert-code {
+            background-color: #f1f5f9;
+            color: #334155;
+            border-left: 5px solid #64748b;
+        }
+
+        ul, ol {
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .package-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .package-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .package-card {
+            background-color: var(--bg-light);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 25px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .package-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+            border-color: var(--primary);
+        }
+
+        .package-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .package-desc {
+            font-size: 14px;
+            color: var(--text-main);
+            margin-bottom: 15px;
+        }
+
+        .badge {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #f1f5f9;
+            color: #0f172a;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        pre {
+            background-color: #0f172a;
+            color: #cbd5e1;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            margin: 15px 0;
+        }
+
+        pre code {
+            background-color: transparent;
+            color: inherit;
+            padding: 0;
+            font-weight: normal;
+        }
+
+        .step-num {
+            background-color: var(--primary);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 60px;
+            margin-bottom: 40px;
+            font-size: 14px;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-content">
+        <div class="logo">🏥</div>
+        <h1>คู่มือการติดตั้งระบบ DVHospital ขึ้นใช้งานจริง</h1>
+        <p>สำหรับเว็บไซต์โรงพยาบาลเทพรัตนเวชชานุกูล เฉลิมพระเกียรติ ๖๐ พรรษา</p>
+    </div>
+</header>
+
+<div class="container">
+
+    <!-- Overview Card -->
+    <div class="card">
+        <h2><span>📦</span> แพ็กเกจที่ระบบจัดระเบียบให้คุณเรียบร้อยแล้ว</h2>
+        <p>เราทำการตรวจสอบระบบฐานข้อมูลความเที่ยงตรงของภาษาไทย และความปลอดภัยในการจัดเก็บคีย์เรียบร้อยแล้ว และได้แปลงไฟล์โครงการออกเป็นแพ็กเกจผลิตเพื่อความพร้อมในการนำไปประยุกต์ใช้งาน 2 รูปแบบ:</p>
+        
+        <div class="package-grid">
+            <div class="package-card">
+                <div class="package-title">
+                    <span>⚡</span> dvhospital_shared_production.zip
+                </div>
+                <div class="package-desc">
+                    <strong>เหมาะสำหรับ:</strong> cPanel / DirectAdmin Shared Hosting (ไม่มีสิทธิ์ SSH terminal)<br>
+                    มีโฟลเดอร์ <code>vendor</code> มาให้ครบถ้วนในตัว อัปโหลดแล้วแตกไฟล์ใช้งานได้เลย
+                </div>
+                <span class="badge">ขนาดประมาณ ~115 MB</span>
+            </div>
+            
+            <div class="package-card">
+                <div class="package-title">
+                    <span>☁️</span> dvhospital_vps_production.zip
+                </div>
+                <div class="package-desc">
+                    <strong>เหมาะสำหรับ:</strong> VPS / Cloud Server (มีสิทธิ์เข้าถึง SSH terminal)<br>
+                    ตัดโฟลเดอร์ vendor และส่วนขยายพัฒนาออก ทำให้มีขนาดเล็กและอัปโหลดได้อย่างรวดเร็ว
+                </div>
+                <span class="badge">ขนาดประมาณ ~88 MB</span>
+            </div>
+        </div>
+
+        <div class="alert alert-tip">
+            💾 <strong>ไฟล์ฐานข้อมูลสำรองจริง:</strong> ไฟล์ <code>database/hospital_db_backup.sql</code> ได้รับการส่งออกแบบ Programmatic ล่าสุด ตรวจทานชุดคำสั่งโครงสร้างและรองรับตัวอักษรภาษาไทยสมบูรณ์แบบ (Charset: UTF-8) พร้อมติดตั้งแล้ว!
+        </div>
+    </div>
+
+    <!-- Step 1: Database -->
+    <div class="card">
+        <h2><span class="step-num">1</span> ขั้นตอนที่ 1: การนำฐานข้อมูลเข้าโฮสต์ (Database Setup)</h2>
+        <ol>
+            <li>เข้าหน้าจัดการโฮสติ้งหลักของคุณ สร้างฐานข้อมูล MySQL และผู้ใช้งานฐานข้อมูลขึ้นมาใหม่</li>
+            <li>มอบสิทธิ์การทำงานทั้งหมดให้กับผู้ใช้รายนั้นกับฐานข้อมูลตัวใหม่ (All Privileges)</li>
+            <li>เปิดโปรแกรม <strong>phpMyAdmin</strong> ของเว็บโฮสต์ขึ้นมา เลือกฐานข้อมูลตัวใหม่ที่สร้างขึ้น</li>
+            <li>ไปที่แท็บ <strong>Import (นำเข้า)</strong> กดเลือกไฟล์ <strong><code>database/hospital_db_backup.sql</code></strong> จากแพ็กเกจของเรา</li>
+            <li>คลิกปุ่ม <strong>Import/Go</strong> ฐานข้อมูลทั้งหมดพร้อมโครงสร้างจะถูกนำเข้าอย่างปลอดภัยสมบูรณ์</li>
+        </ol>
+    </div>
+
+    <!-- Step 2: Upload -->
+    <div class="card">
+        <h2><span class="step-num">2</span> ขั้นตอนที่ 2: อัปโหลดและแตกไฟล์โค้ดของระบบ</h2>
+        
+        <div class="alert alert-important">
+            🚨 <strong>คำแนะนำด้านความปลอดภัย:</strong> ห้ามนำไฟล์หลักของ Laravel แตกไว้ในโฟลเดอร์ <code>public_html</code> โดยตรงทั้งหมด เพื่อป้องกันการดูดไฟล์ <code>.env</code> หรือซอร์สโค้ดควบคุมระบบความปลอดภัย
+        </div>
+
+        <h3>📌 วิธีที่ A: สำหรับ Shared Hosting (cPanel / DirectAdmin)</h3>
+        <ol>
+            <li>นำไฟล์ <code>dvhospital_shared_production.zip</code> อัปโหลดไว้ที่โฟลเดอร์หลักนอก <code>public_html</code> (ตัวอย่างเช่นโฟลเดอร์บ้าน <code>/home/username/</code>)</li>
+            <li>ทำการแตกไฟล์ (Extract) ออกมาที่จุดนั้น</li>
+            <li>ย้ายเฉพาะไฟล์และโฟลเดอร์ที่อยู่ในโฟลเดอร์ <code>public/</code> ของโปรเจกต์ ไปไว้ในโฟลเดอร์ <code>public_html/</code> ของโฮสติ้งจริง</li>
+            <li>เปิดไฟล์ <code>public_html/index.php</code> แก้ไขเส้นทางอ้างอิงให้ถูกต้อง:
+                <pre><code>// บรรทัดที่ 34 (แก้ไขเส้นทางให้ถอยกลับ 1 ระดับไปโฟลเดอร์ที่อยู่นอก public_html)
+require __DIR__.'/../vendor/autoload.php';
+
+// บรรทัดที่ 47
+$app = require_once __DIR__.'/../bootstrap/app.php';</code></pre>
+            </li>
+        </ol>
+
+        <h3>📌 วิธีที่ B: สำหรับ VPS / Dedicated Cloud (Ubuntu/CentOS)</h3>
+        <ol>
+            <li>อัปโหลดไฟล์ <code>dvhospital_vps_production.zip</code> ไปไว้ที่โฟลเดอร์ <code>/var/www/dvhospital</code></li>
+            <li>รันคำสั่ง <code>unzip dvhospital_vps_production.zip</code></li>
+            <li>ดาวน์โหลดแพ็กเกจไลบรารี: <code>composer install --no-dev --optimize-autoloader</code></li>
+            <li>ชี้การทำ Virtual Host ใน Nginx หรือ Apache ให้หันโฟลเดอร์ไปหา <code>/var/www/dvhospital/public</code></li>
+            <li>เซ็ตค่าสิทธิ์การเข้าถึงไฟล์ (File Permissions):
+                <pre><code>chown -R www-data:www-data /var/www/dvhospital
+find /var/www/dvhospital -type f -exec chmod 644 {} \;
+find /var/www/dvhospital -type d -exec chmod 755 {} \;
+chmod -R 775 /var/www/dvhospital/storage
+chmod -R 775 /var/www/dvhospital/bootstrap/cache</code></pre>
+            </li>
+        </ol>
+    </div>
+
+    <!-- Step 3: Env -->
+    <div class="card">
+        <h2><span class="step-num">3</span> ขั้นตอนที่ 3: ตั้งค่าตัวแปรสิ่งแวดล้อมจริง (`.env` Config)</h2>
+        <ol>
+            <li>นำไฟล์ <strong>`.env.production`</strong> มาเปลี่ยนชื่อไฟล์เป็น <strong>`.env`</strong></li>
+            <li>เปิดแก้ไขและอัปเดตข้อมูลเชื่อมฐานข้อมูลและโดเมนจริงของคุณ:
+                <pre><code>APP_NAME="โรงพยาบาลเทพรัตนเวชชานุกูล"
+APP_ENV=production
+APP_DEBUG=false
+APP_URL=https://yourdomain.go.th # โดเมนหลักโรงพยาบาลของคุณ
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=ชื่อฐานข้อมูลบนโฮสต์ของคุณ
+DB_USERNAME=ผู้ใช้งานฐานข้อมูลบนโฮสต์ของคุณ
+DB_PASSWORD=รหัสผ่านเชื่อมฐานข้อมูลของคุณ</code></pre>
+            </li>
+            <li>สร้างความปลอดภัยให้กับการเข้ารหัส (APP_KEY):
+                <ul>
+                    <li><strong> VPS:</strong> รันคำสั่ง <code>php artisan key:generate</code></li>
+                    <li><strong> Shared Hosting:</strong> สามารถสุ่มโค้ดตัวอักษร 32 หลักมาเซ็ตลงในช่อง <code>APP_KEY=</code> หรือใช้เว็บเจนเพื่อสร้างคีย์ได้ เช่น <a href="https://laravelkey.g7.dev/" target="_blank">Laravel Key Generator</a></li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+
+    <!-- Step 4: Storage Link -->
+    <div class="card">
+        <h2><span class="step-num">4</span> ขั้นตอนที่ 4: การเชื่อมโยงโฟลเดอร์ภาพประชาสัมพันธ์ (`storage:link`)</h2>
+        <p>เนื่องจากเว็บแอปพลิเคชัน Laravel บันทึกข้อมูลข่าวประชาสัมพันธ์และแบนเนอร์ไว้ที่ <code>storage/app/public</code> แต่จะเข้าถึงผ่านเว็บบราวเซอร์ทาง <code>public/storage</code> ดังนั้นจำเป็นต้องทำให้โฟลเดอร์ลิงก์หากัน:</p>
+        
+        <h3>📌 สำหรับ VPS</h3>
+        <p>รันคำสั่งเพียงขั้นตอนเดียวผ่านโปรแกรม SSH:</p>
+        <pre><code>php artisan storage:link</code></pre>
+
+        <h3>📌 สำหรับ Shared Hosting (cPanel / DirectAdmin ที่รันคำสั่งไม่ได้)</h3>
+        <p>เราได้พัฒนาตัวช่วยสำหรับเว็บโฮสติ้งจำกัดสิทธิ์มาให้แล้ว:</p>
+        <ol>
+            <li>เข้าสู่เบราว์เซอร์ไปที่โดเมนของคุณและเรียกไฟล์สคริปต์ตัวช่วย: <code>https://yourdomain.go.th/storage_link.php</code></li>
+            <li>กดปุ่มที่หน้าจอ <strong>"คลิกเพื่อเชื่อมต่อโฟลเดอร์ภาพ"</strong> ระบบโปรแกรมมิ่งจะเชื่อมโยงฐานโฟลเดอร์ให้เองอัตโนมัติทันที!</li>
+            <li><strong style="color: #dc2626;">สำคัญมาก:</strong> เมื่อสัญลักษณ์ข้อความสีเขียวแจ้งเตือนว่าทำสำเร็จแล้ว ให้กลับเข้าไปลบไฟล์ <code>public/storage_link.php</code> ออกจากเว็บเซิร์ฟเวอร์ของคุณทันที เพื่อความปลอดภัยของข้อมูลทั้งหมด</li>
+        </ol>
+    </div>
+
+    <!-- Optimization -->
+    <div class="card">
+        <h2><span>⚡</span> ขั้นตอนเสริมพิเศษสำหรับความเร็ว (VPS Only)</h2>
+        <p>หากคุณรันระบบบน VPS แนะนำให้รันคำสั่งเหล่านี้เพื่อคอมไพล์การตั้งค่าและดึงไฟล์ความเร็วสูงสุดของโครงสร้างเว็บมาทำงาน:</p>
+        <pre><code>php artisan config:cache
+php artisan route:cache
+php artisan view:cache</code></pre>
+    </div>
+
+    <div class="footer-note">
+        🏥 ระบบเว็บไซต์โรงพยาบาลเทพรัตนเวชชานุกูล เฉลิมพระเกียรติ ๖๐ พรรษา | จัดการโดยระบบจัดระเบียบโครงสร้างอัตโนมัติ Antigravity
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,10 @@
+Options +FollowSymLinks -Indexes
+DirectoryIndex public/index.php
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Prevent infinite loops in subdirectories
+    RewriteCond %{ENV:REDIRECT_STATUS} ^$
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>

@@ -1,0 +1,26 @@
+<IfModule mod_rewrite.c>
+    <IfModule mod_authz_core.c>
+        Require all granted
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Allow from all
+    </IfModule>
+
+    Options -MultiViews -Indexes
+    DirectoryIndex index.php index.html
+    RewriteEngine On
+
+    # Serve real files from the project root first.
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # Let assets and any other public files resolve from /public.
+    RewriteCond %{DOCUMENT_ROOT}/public/%{REQUEST_URI} -f [OR]
+    RewriteCond %{DOCUMENT_ROOT}/public/%{REQUEST_URI} -d
+    RewriteRule ^(.*)$ public/$1 [L]
+
+    # Fallback all application routes to Laravel's front controller.
+    RewriteRule ^ public/index.php [L]
+</IfModule>

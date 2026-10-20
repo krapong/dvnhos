@@ -1,0 +1,17 @@
+**/.env
+**/.env.*
+**/*config.json
+**/config.php
+**/db_config.php
+**/node_modules/
+**/vendor/
+**/storage/
+**/data/
+**/uploads/
+**/*.sql
+**/*.sqlite*
+**/*.db
+**/*.log
+**/*.csv
+**/*.xlsx
+**/*.zip

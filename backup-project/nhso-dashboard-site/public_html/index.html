@@ -1,0 +1,804 @@
+<!doctype html>
+<html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>แดชบอร์ดการเงินและการเบิกจ่าย สปสช. · รพ.เทพรัตนเวชชานุกูลฯ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&family=Noto+Serif+Thai:wght@400;600&display=swap" rel="stylesheet">
+<style>:root{--c1:#2563eb;--c2:#10b981;--c3:#f59e0b;--c4:#8b5cf6;--c5:#ef4444;--c6:#0ea5e9;--c7:#ec4899;--c8:#14b8a6;
+--color-fg:#1f2430;--color-fg-muted:#5b6475;--color-bg:#f4f6fb;--color-panel:#ffffff;--color-border-line:#e3e7ef;--color-ok:#15803d;--color-bad:#c62828;
+--cds-chart-status-critical:#e53935;--cds-chart-axis:#c3c9d6;--cds-chart-grid:#eceff5;--cds-chart-muted:#c7cfdd;--cds-chart-reference:#9aa3b5;--cds-border:#dfe3eb;
+--cds-surface-popover:#ffffff;--cds-shadow-popover:0 8px 24px rgba(20,30,60,.16);--cds-text-secondary:#5b6475;--cds-dur-slow:.4s;--cds-ease-out:cubic-bezier(.2,.8,.2,1);
+--cds-font-size-caption:12px;--cds-font-size-body:14px;--cds-font-size-heading:16px;--cds-font-size-title:26px;--cds-font-weight-medium:600;
+--cds-gap-xs:4px;--cds-gap-sm:8px;--cds-gap-md:16px;--cds-gap-lg:24px;--cds-pad-xs:4px;--cds-pad-sm:8px;--cds-pad-md:12px;--cds-pad-lg:20px;--cds-pad-xl:28px;--cds-radius:10px;
+--font-anthropic-sans:'Sarabun','Noto Sans Thai',system-ui,sans-serif;--font-anthropic-serif:'Noto Serif Thai','Sarabun',Georgia,serif;}
+@media (prefers-color-scheme: dark){:root{--color-fg:#e7eaf2;--color-fg-muted:#9aa4b8;--color-bg:#0f1420;--color-panel:#171d2b;--color-border-line:#2a3244;--color-ok:#4ade80;--color-bad:#f87171;
+--cds-chart-axis:#3a4357;--cds-chart-grid:#252d3d;--cds-chart-muted:#3b4558;--cds-border:#2a3244;--cds-surface-popover:#1d2435;--cds-text-secondary:#9aa4b8;}}
+*{box-sizing:border-box}html,body{margin:0;background:var(--color-bg);color:var(--color-fg);font-family:var(--font-anthropic-sans);font-size:14px;line-height:1.5}
+#dash-root{padding:16px clamp(12px,2vw,28px)}[data-appifact-content] :is(b,strong){font-weight:700}
+.dash-skeleton{color:transparent!important;background:linear-gradient(90deg,rgba(127,127,127,.12),rgba(127,127,127,.05),rgba(127,127,127,.12));border-radius:6px;min-height:1em}
+.lx-site-foot{margin:24px auto 8px;max-width:1600px;font-size:12px;color:var(--color-fg-muted);text-align:center}</style></head>
+<body><div id="dash-root" data-appifact-content>
+<style>
+.lx-page { font-family: var(--font-anthropic-sans); color: var(--color-fg); max-width: 1400px; margin-inline: auto; }
+.lx-page { --lx-c1: var(--lx-col0); --lx-c2: var(--lx-col1); --lx-c3: var(--lx-col2); --lx-c4: var(--lx-col3); --lx-c5: var(--lx-col7); }
+.lx-top { display: flex; flex-wrap: wrap; gap: var(--cds-gap-md); align-items: flex-end; justify-content: space-between; margin-bottom: var(--cds-gap-md); }
+.lx-title { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: 0; line-height: 1.2; }
+.lx-org { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); margin: var(--cds-gap-xs) 0 0; }
+.lx-fybox { display: flex; align-items: center; gap: var(--cds-gap-sm); font-size: var(--cds-font-size-body); }
+.lx-fybox select { font: inherit; padding: var(--cds-pad-xs) var(--cds-pad-sm); border-radius: var(--cds-radius); border: 1px solid var(--color-border-line); background: var(--color-panel); color: var(--color-fg); }
+.lx-tabs { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr)); gap: var(--cds-gap-sm); margin-bottom: var(--cds-gap-lg); }
+.lx-tabbtn { font: inherit; display: flex; align-items: center; gap: var(--cds-gap-sm); text-align: left; cursor: pointer; padding: var(--cds-pad-sm) var(--cds-pad-md); border-radius: var(--cds-radius); border: 1px solid var(--color-border-line); background: var(--color-panel); color: var(--color-fg); }
+.lx-tabbtn svg { width: 1.6rem; height: 1.6rem; flex: none; fill: none; stroke: var(--lx-accent); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.lx-tabbtn b { display: block; font-weight: 600; }
+.lx-tabbtn small { display: block; color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+.lx-tabbtn[aria-selected="true"] { border-color: var(--lx-accent); box-shadow: inset 0 -3px 0 var(--lx-accent); }
+.lx-hero { display: flex; gap: var(--cds-gap-md); align-items: flex-start; padding: var(--cds-pad-lg); border-radius: var(--cds-radius); background: color-mix(in srgb, var(--lx-accent) 10%, var(--color-panel)); border: 1px solid color-mix(in srgb, var(--lx-accent) 35%, var(--color-border-line)); margin-bottom: var(--cds-gap-md); }
+.lx-hero-ic { flex: none; width: 3.5rem; height: 3.5rem; border-radius: 50%; display: grid; place-items: center; background: var(--lx-accent); }
+.lx-hero-ic svg { width: 2rem; height: 2rem; fill: none; stroke: var(--color-bg); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.lx-h2 { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: 0; }
+.lx-sub { margin: var(--cds-gap-xs) 0 var(--cds-gap-sm); color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+.lx-take { margin: 0; font-size: var(--cds-font-size-heading); line-height: 1.55; }
+.lx-page .lx-em { font-weight: 600; color: var(--lx-accent); font-variant-numeric: tabular-nums; }
+.lx-page .lx-em.lx-bad { color: var(--color-bad); }
+.lx-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); gap: var(--cds-gap-md); margin-bottom: var(--cds-gap-md); }
+.lx-kpi { display: flex; gap: var(--cds-gap-md); padding: var(--cds-pad-lg); background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); border-top: 4px solid var(--lx-accent); }
+.lx-kpi-ic { flex: none; width: 2.75rem; height: 2.75rem; border-radius: 50%; display: grid; place-items: center; background: color-mix(in srgb, var(--lx-accent) 16%, transparent); }
+.lx-kpi-ic svg { width: 1.5rem; height: 1.5rem; fill: none; stroke: var(--lx-accent); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.lx-kpi.lx-warnk { border-top-color: var(--color-bad); }
+.lx-kpi.lx-warnk .lx-kpi-ic { background: color-mix(in srgb, var(--color-bad) 14%, transparent); }
+.lx-kpi.lx-warnk .lx-kpi-ic svg { stroke: var(--color-bad); }
+.lx-kpi-body { min-width: 0; }
+.lx-kpi-lbl { font-size: var(--cds-font-size-body); color: var(--color-fg-muted); }
+.lx-kpi-val { margin: var(--cds-gap-xs) 0; }
+.lx-page .lx-num { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: 2.1rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.lx-unit { color: var(--color-fg-muted); font-size: var(--cds-font-size-body); }
+.lx-kpi-note { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.lx-chg { font-weight: 600; } .lx-chg.up { color: var(--color-ok); } .lx-chg.down { color: var(--color-bad); }
+.lx-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: var(--cds-gap-md); margin-bottom: var(--cds-gap-md); }
+.lx-card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); min-width: 0; }
+.lx-wide { grid-column: 1 / -1; }
+.lx-h3 { font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); margin: 0; }
+.lx-note { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin: var(--cds-gap-xs) 0 var(--cds-gap-md); }
+.lx-chart { position: relative; min-height: 260px; }
+.lx-gauge { position: relative; min-height: 220px; display: grid; place-items: center; }
+.lx-tip { position: absolute; pointer-events: none; background: var(--cds-surface-popover); border: 1px solid var(--cds-border); border-radius: var(--cds-radius); box-shadow: var(--cds-shadow-popover); padding: var(--cds-pad-xs) var(--cds-pad-sm); font-size: var(--cds-font-size-caption); white-space: nowrap; z-index: 5; }
+.lx-tip .h { color: var(--cds-text-secondary); }
+.lx-legend { display: grid; gap: var(--cds-gap-xs); font-size: var(--cds-font-size-caption); }
+.lx-legend div { display: flex; align-items: center; gap: var(--cds-gap-sm); }
+.lx-legend i { width: .7rem; height: .7rem; border-radius: 50%; flex: none; }
+.lx-legend span:last-child { margin-left: auto; font-variant-numeric: tabular-nums; color: var(--color-fg-muted); }
+.lx-donutwrap { display: flex; flex-wrap: wrap; gap: var(--cds-gap-md); align-items: center; }
+.lx-donutwrap svg { flex: none; }
+.lx-donutwrap .lx-legend { flex: 1 1 10rem; }
+.lx-hb { display: grid; gap: var(--cds-gap-sm); }
+.lx-hb-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px var(--cds-gap-sm); font-size: var(--cds-font-size-caption); }
+.lx-hb-row .l { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lx-hb-row .v { font-variant-numeric: tabular-nums; color: var(--color-fg-muted); }
+.lx-hb-bar { grid-column: 1 / -1; height: 10px; border-radius: 5px; background: color-mix(in srgb, var(--color-fg) 7%, transparent); overflow: hidden; }
+.lx-hb-bar i { display: block; height: 100%; border-radius: 5px; background: var(--lx-accent); }
+.lx-hb.err .lx-hb-bar i { background: var(--cds-chart-status-critical); }
+.lx-tablehead { display: flex; flex-wrap: wrap; gap: var(--cds-gap-md); justify-content: space-between; align-items: flex-end; }
+.lx-search { display: flex; align-items: center; gap: var(--cds-gap-sm); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-xs) var(--cds-pad-sm); background: var(--color-bg); flex: 1 1 16rem; max-width: 26rem; }
+.lx-search svg { width: 1.1rem; height: 1.1rem; fill: none; stroke: var(--color-fg-muted); stroke-width: 2; stroke-linecap: round; flex: none; }
+.lx-search input { font: inherit; border: 0; outline: 0; background: transparent; color: var(--color-fg); width: 100%; }
+.lx-count { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin: var(--cds-gap-sm) 0; }
+.lx-tablewrap { max-height: 520px; overflow: auto; border-top: 1px solid var(--color-border-line); }
+.lx-table { width: 100%; border-collapse: collapse; font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; }
+.lx-table th { position: sticky; top: 0; background: var(--color-panel); text-align: left; border-bottom: 1px solid var(--color-border-line); z-index: 1; }
+.lx-table th button { font: inherit; font-weight: 600; background: none; border: 0; color: var(--color-fg); cursor: pointer; padding: var(--cds-pad-sm) var(--cds-pad-xs); width: 100%; text-align: inherit; }
+.lx-table th.lx-n, .lx-table td.lx-n { text-align: right; }
+.lx-table td { padding: var(--cds-pad-xs); border-bottom: 1px solid var(--color-border-line); vertical-align: top; }
+.lx-table td.lx-wrap { max-width: 22rem; overflow-wrap: anywhere; }
+.lx-table th[aria-sort="ascending"] button::after { content: " ▲"; }
+.lx-table th[aria-sort="descending"] button::after { content: " ▼"; }
+.lx-table td.lx-badtxt { color: var(--color-bad); }
+.lx-foot { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin-top: var(--cds-gap-lg); line-height: 1.6; }
+.lx-axis text { fill: var(--color-fg-muted); font-size: 11px; }
+.lx-axis line, .lx-axis path { stroke: var(--cds-chart-axis); }
+.lx-grid-l line { stroke: var(--cds-chart-grid); } .lx-grid-l path { display: none; }
+[data-dash-source-state=refreshing] { opacity: .5; transition: opacity var(--cds-dur-slow); }
+[data-dash-source-state=empty] { color: transparent; }
+.lx-fail { display: flex; align-items: center; justify-content: center; gap: var(--cds-gap-sm); min-height: inherit; color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+.lx-fail::before { content: ""; width: .375rem; height: .375rem; border-radius: 50%; background: var(--color-bad); }
+.lx-empty { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+@media (prefers-reduced-motion: no-preference) { .lx-anim { animation: lxIn var(--cds-dur-slow) var(--cds-ease-out); } @keyframes lxIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } } }
+/* ===== presentation theme ===== */
+.lx-page [hidden] { display: none !important; }
+.lx-stage { position: relative; overflow: hidden; min-height: 520px; border-radius: calc(var(--cds-radius) * 2); color: #fff;
+  background: radial-gradient(1200px 500px at 80% -10%, rgba(255,255,255,.12), transparent 60%), linear-gradient(135deg, #0f1a30 0%, #16305c 55%, #1d4ed8 120%); box-shadow: 0 20px 50px -24px rgba(10,20,45,.8); }
+.lx-scene { position: absolute; inset: 0; padding: clamp(20px, 4vw, 48px); display: flex; flex-direction: column; opacity: 0; transform: translateY(16px); pointer-events: none; transition: opacity .6s ease, transform .6s ease; }
+.lx-scene.on { opacity: 1; transform: none; pointer-events: auto; }
+.lx-kicker { margin: 0; font-size: var(--cds-font-size-body); color: #9fc0ff; letter-spacing: .02em; }
+.lx-st { margin: .3em 0 .6em; font-family: var(--font-anthropic-serif); font-weight: 400; font-size: clamp(1.6rem, 3.2vw, 2.6rem); line-height: 1.2; color: #fff; }
+.lx-bignum { display: flex; align-items: baseline; gap: .4em; margin-top: auto; margin-bottom: auto; }
+.lx-page .lx-bignum b { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: clamp(4rem, 12vw, 9rem); line-height: 1; color: #ffd166; font-variant-numeric: tabular-nums; }
+.lx-bignum span { font-size: clamp(1.2rem, 2.4vw, 2rem); color: #dbe7ff; }
+.lx-cap { margin: 0; font-size: var(--cds-font-size-heading); color: #dbe7ff; }
+.lx-schart { flex: 1; min-height: 340px; position: relative; }
+.lx-schart text { fill: #e6eeff; }
+.lx-sum { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr)); gap: var(--cds-gap-md); margin: auto 0; }
+.lx-sum > div { padding: var(--cds-pad-lg); border-radius: 16px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.18); display: grid; gap: 4px; }
+.lx-sum small { color: #b9cdf5; font-size: var(--cds-font-size-body); }
+.lx-page .lx-sum b { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: clamp(2.2rem, 5vw, 3.6rem); color: #ffd166; font-variant-numeric: tabular-nums; }
+.lx-page .lx-sum .neg b { color: #ff8a80; } .lx-page .lx-sum .pos b { color: #69f0ae; }
+.lx-sum span { color: #dbe7ff; }
+.lx-pctl { display: flex; flex-wrap: wrap; align-items: center; gap: var(--cds-gap-sm); margin-top: var(--cds-gap-md); }
+.lx-pctl .lx-btn.ghost { color: var(--lx-c1); }
+.lx-pctl .lx-playbtn { background: var(--lx-c1); color: #fff; }
+.lx-dots { display: flex; gap: 6px; margin: 0 var(--cds-gap-sm); }
+.lx-dots button { width: 10px; height: 10px; border-radius: 50%; border: 0; padding: 0; cursor: pointer; background: color-mix(in srgb, var(--lx-c1) 30%, transparent); }
+.lx-dots button[aria-current="true"] { background: var(--lx-c1); width: 26px; border-radius: 5px; }
+.lx-pnote { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+@media (prefers-reduced-motion: reduce) { .lx-scene { transition: none; } }
+.lx-ppcard { margin-bottom: var(--cds-gap-md); }
+.lx-pptable td, .lx-pptable th { padding-top: var(--cds-pad-sm); padding-bottom: var(--cds-pad-sm); }
+.lx-pptable th { padding-left: var(--cds-pad-sm); padding-right: var(--cds-pad-sm); font-weight: 600; }
+.lx-pptable td.lx-c, .lx-pptable th.lx-c { text-align: center; }
+.lx-pptable tr.lx-pp-main td:first-child { cursor: pointer; font-weight: 500; }
+.lx-pptable .lx-tog { display: inline-block; width: 1.2em; transition: transform .15s; color: var(--lx-accent); }
+.lx-pptable tr.open .lx-tog { transform: rotate(90deg); }
+.lx-pptable td.lx-code { font-weight: 600; color: color-mix(in srgb, var(--lx-accent) 70%, var(--color-fg)); font-family: ui-monospace, monospace; font-size: 12px; }
+.lx-pptable td.lx-money { color: color-mix(in srgb, var(--lx-accent) 85%, var(--color-fg)); font-weight: 600; }
+.lx-pptable tr.lx-pp-sub td { background: color-mix(in srgb, var(--lx-accent) 6%, transparent) !important; color: var(--color-fg-muted); }
+.lx-pptable tr.lx-pp-sub td:first-child { padding-left: 2.4em; }
+.lx-pptable tfoot td { font-weight: 700; border-top: 2px solid var(--color-border-line); background: color-mix(in srgb, var(--lx-accent) 10%, var(--color-panel)); position: sticky; bottom: 0; }
+.lx-pp-hint { display: inline-block; margin-left: 1.6em; color: var(--color-fg-muted); font-size: 11px; font-weight: 400; }
+.lx-pptable tr.lx-pp-subh td { font-weight: 700; color: var(--color-fg); padding-left: 1.6em !important; }
+.lx-pptable .lx-pp-warn { color: var(--color-bad); }
+.lx-badge { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 11px; font-weight: 700; background: color-mix(in srgb, var(--color-ok) 18%, transparent); color: var(--color-ok); }
+.lx-badge.none { background: transparent; color: var(--color-fg-muted); font-weight: 400; }
+.lx-badge.sum { background: color-mix(in srgb, var(--lx-accent) 20%, transparent); color: var(--lx-ink); }
+.lx-cq { container-type: inline-size; }
+.lx-page.lx-shell { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: var(--cds-gap-lg); align-items: start; max-width: 1600px; }
+.lx-main { min-width: 0; }
+.lx-side { position: sticky; top: var(--cds-gap-sm); max-height: calc(100vh - 2 * var(--cds-gap-sm)); overflow-y: auto; display: flex; flex-direction: column; gap: var(--cds-gap-sm);
+  padding: var(--cds-pad-lg) var(--cds-pad-md); border-radius: calc(var(--cds-radius) * 2); color: #dfe6f2;
+  background: linear-gradient(180deg, #0f1a30 0%, #142443 60%, #172b52 100%); box-shadow: 0 16px 40px -20px rgba(10, 20, 45, .8); }
+.lx-brand { display: flex; gap: var(--cds-gap-sm); align-items: center; padding-bottom: var(--cds-pad-md); border-bottom: 1px solid rgba(255,255,255,.1); }
+.lx-brand-ic, .lx-hosp-ic { flex: none; width: 2.6rem; height: 2.6rem; border-radius: 12px; display: grid; place-items: center; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14); }
+.lx-brand-ic svg, .lx-hosp-ic svg { width: 1.5rem; height: 1.5rem; fill: none; stroke: #fff; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.lx-brand b { display: block; color: #fff; font-size: var(--cds-font-size-heading); }
+.lx-brand small, .lx-hosp small { display: block; color: #93a3bd; font-size: var(--cds-font-size-caption); }
+.lx-hosp { display: flex; gap: var(--cds-gap-sm); align-items: center; padding: var(--cds-pad-sm); border-radius: 12px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); }
+.lx-hosp-ic { background: color-mix(in srgb, var(--lx-c1) 55%, transparent); }
+.lx-hosp b { display: block; color: #fff; font-size: var(--cds-font-size-body); }
+.lx-side-h { margin: var(--cds-gap-sm) 0 0; padding: 0 var(--cds-pad-sm); font-size: var(--cds-font-size-caption); color: #7f8fa9; letter-spacing: .04em; }
+.lx-side .lx-tabs { display: flex; flex-direction: column; gap: 4px; margin: 0; }
+.lx-side .lx-tabbtn { background: transparent; border: 0; box-shadow: none; color: #d3dbea; padding: var(--cds-pad-sm) var(--cds-pad-sm); border-radius: 12px; transform: none; }
+.lx-side .lx-tabbtn:hover { background: rgba(255,255,255,.07); transform: none; box-shadow: none; }
+.lx-side .lx-tabbtn svg { width: 2.1rem; height: 2.1rem; padding: .4rem; border-radius: 10px; background: color-mix(in srgb, var(--lx-accent) 22%, transparent); stroke: color-mix(in srgb, var(--lx-accent) 60%, white); }
+.lx-side .lx-tabbtn b { font-size: var(--cds-font-size-body); color: inherit; }
+.lx-side .lx-tabbtn small { color: #8d9cb5; }
+.lx-side .lx-tabbtn[aria-selected="true"] { color: #fff; background: linear-gradient(135deg, color-mix(in srgb, var(--lx-accent) 85%, black), color-mix(in srgb, var(--lx-accent) 75%, white)); box-shadow: 0 10px 22px -12px var(--lx-accent); }
+.lx-side .lx-tabbtn[aria-selected="true"] svg { stroke: #fff; background: rgba(255,255,255,.2); }
+.lx-side .lx-tabbtn[aria-selected="true"] small { color: rgba(255,255,255,.85); }
+.lx-status { display: grid; gap: 10px; padding: var(--cds-pad-md); border-radius: 14px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.08); font-size: var(--cds-font-size-caption); }
+.lx-st-top { color: #93a3bd; padding-bottom: 6px; border-bottom: 1px solid rgba(255,255,255,.08); }
+.lx-st-top b { color: #e6ecf5; font-weight: 600; }
+.lx-st-row { display: grid; grid-template-columns: auto 1fr; gap: 2px 8px; align-items: start; }
+.lx-st-row > span { display: grid; gap: 1px; min-width: 0; }
+.lx-st-row b { color: #f1f5fb; font-weight: 600; font-size: var(--cds-font-size-caption); }
+.lx-st-msg { font-weight: 600; }
+.lx-st-sub { color: #8d9cb5; }
+.lx-dot { width: .62rem; height: .62rem; border-radius: 50%; margin-top: .3rem; background: #64748b; box-shadow: 0 0 0 3px rgba(100,116,139,.25); }
+.lx-dot.is-ok { background: #22c55e; box-shadow: 0 0 0 3px rgba(34,197,94,.22); }
+.lx-dot.is-warn { background: #f5b301; box-shadow: 0 0 0 3px rgba(245,179,1,.22); }
+.lx-dot.is-bad { background: #ef4444; box-shadow: 0 0 0 3px rgba(239,68,68,.25); animation: lx-pulse 1.6s ease-in-out infinite; }
+.lx-dot.is-wait { background: #94a3b8; animation: lx-pulse 1.2s ease-in-out infinite; }
+@keyframes lx-pulse { 50% { opacity: .45; } }
+.lx-st-row .is-ok-t { color: #4ade80; } .lx-st-row .is-warn-t { color: #fcd34d; } .lx-st-row .is-bad-t { color: #fca5a5; } .lx-st-row .is-none-t { color: #a5b4cb; }
+.lx-st-btn { justify-self: start; margin-top: 3px; font: inherit; font-weight: 600; color: #fcd34d; background: rgba(245,179,1,.12); border: 1px solid rgba(245,179,1,.35); border-radius: 8px; padding: 2px 8px; cursor: pointer; }
+.lx-st-btn:hover { background: rgba(245,179,1,.22); }
+.lx-pend { max-width: min(36rem, calc(100vw - 32px)); border: 1px solid var(--cds-border); border-radius: 14px; padding: var(--cds-pad-lg); background: var(--color-panel); color: var(--color-fg); box-shadow: var(--cds-shadow-popover); }
+.lx-pend::backdrop { background: rgba(10,15,30,.45); }
+.lx-pend h3 { margin: 0 0 4px; font-size: var(--cds-font-size-heading); }
+.lx-pend-note a { color: var(--c1); font-weight: 600; }
+.lx-pend-note { margin: 0 0 10px; color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+.lx-pend ol { margin: 0 0 14px; padding-left: 2rem; max-height: 55vh; overflow: auto; font-size: var(--cds-font-size-caption); }
+.lx-pend li { padding: 4px 0; border-bottom: 1px dashed var(--cds-border); word-break: break-all; }
+.lx-pend li small { display: block; color: var(--color-fg-muted); word-break: normal; }
+.lx-pend-close { font: inherit; font-weight: 600; padding: 6px 16px; border-radius: 10px; border: 1px solid var(--cds-border); background: var(--color-bg); color: var(--color-fg); cursor: pointer; }
+.lx-side-src { display: grid; gap: 2px; padding: var(--cds-pad-sm); border-radius: 12px; background: rgba(255,255,255,.05); font-size: var(--cds-font-size-caption); }
+.lx-side-src span { display: flex; align-items: center; gap: .4rem; color: #e6ecf5; font-weight: 600; margin-top: 4px; }
+.lx-side-src svg { width: 1rem; height: 1rem; fill: none; stroke: #9fb3d6; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.lx-side-src small { color: #8d9cb5; padding-left: 1.4rem; }
+@container (max-width: 860px) {
+  .lx-page.lx-shell { grid-template-columns: minmax(0, 1fr); }
+  .lx-side { position: static; max-height: none; padding: var(--cds-pad-sm); }
+  .lx-side .lx-hosp, .lx-side .lx-side-src { display: none; }
+  .lx-side .lx-tabs { flex-direction: row; overflow-x: auto; }
+  .lx-side .lx-tabbtn { flex: none; }
+  .lx-side .lx-tabbtn small { display: none; }
+}
+.lx-range { display: flex; flex-wrap: wrap; align-items: center; gap: var(--cds-gap-xs) var(--cds-gap-sm); color: #fff; background: rgba(255,255,255,.16); padding: var(--cds-pad-xs) var(--cds-pad-sm); border-radius: 999px; border: 1px solid rgba(255,255,255,.35); }
+.lx-range-lbl { display: inline-flex; align-items: center; gap: .35rem; font-weight: 600; }
+.lx-range-lbl svg { width: 1.1rem; height: 1.1rem; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; }
+.lx-range select, .lx-range input { font: inherit; border: 0; border-radius: 999px; background: #fff; color: #1f1f1f; padding: 2px var(--cds-pad-sm); color-scheme: light; }
+.lx-range .lx-btn.ghost { color: #fff; padding: 2px var(--cds-pad-sm); }
+.lx-ranged .lx-fybox { opacity: .6; }
+.lx-range-note { margin: calc(var(--cds-gap-sm) * -1) 0 var(--cds-gap-md); padding: var(--cds-pad-sm) var(--cds-pad-md); border-radius: var(--cds-radius); font-weight: 600;
+  background: color-mix(in srgb, var(--lx-c1) 12%, var(--color-panel)); border-left: 5px solid var(--lx-c1); }
+.lx-range-note[hidden] { display: none; }
+.lx-sgcard { margin-bottom: var(--cds-gap-md); }
+.lx-sgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 13.5rem), 1fr)); gap: var(--cds-gap-sm); }
+.lx-sg { font: inherit; color: var(--color-fg); text-align: left; cursor: pointer; display: flex; gap: var(--cds-gap-sm); align-items: center; padding: var(--cds-pad-sm); border-radius: calc(var(--cds-radius) * 1.4);
+  border: 1px solid color-mix(in srgb, var(--lx-accent) 28%, var(--color-border-line)); background: linear-gradient(135deg, color-mix(in srgb, var(--lx-accent) 9%, var(--color-panel)), var(--color-panel)); transition: transform .15s, box-shadow .15s; }
+.lx-sg:hover { transform: translateY(-2px); box-shadow: 0 8px 18px -12px var(--lx-accent); }
+.lx-sg-badge { flex: none; width: 2.9rem; height: 2.9rem; border-radius: 50%; display: grid; place-items: center; font-size: 11px; font-weight: 700; letter-spacing: .02em; color: #fff;
+  background: linear-gradient(135deg, var(--lx-ink), color-mix(in srgb, var(--lx-accent) 70%, white)); }
+.lx-sg-txt { min-width: 0; display: grid; }
+.lx-sg-txt b { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lx-sg-txt small { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lx-sg-val { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.lx-sg-val span { font-family: var(--font-anthropic-serif); font-size: 1.15rem; color: var(--lx-ink); font-variant-numeric: tabular-nums; }
+.lx-sg[aria-pressed="true"] { color: #fff; border-color: transparent; background: linear-gradient(135deg, var(--lx-ink), color-mix(in srgb, var(--lx-accent) 75%, white)); box-shadow: 0 10px 22px -12px var(--lx-accent); }
+.lx-sg[aria-pressed="true"] small, .lx-sg[aria-pressed="true"] .lx-sg-val, .lx-sg[aria-pressed="true"] .lx-sg-val span { color: #fff; }
+.lx-sg[aria-pressed="true"] .lx-sg-badge { background: rgba(255,255,255,.22); }
+.lx-sg.zero { opacity: .6; }
+.lx-selhead { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: var(--cds-gap-lg) 0 var(--cds-gap-md); }
+.lx-selhead .lx-sel-name { color: var(--lx-ink); }
+.lx-actions { display: flex; flex-wrap: wrap; gap: var(--cds-gap-sm); align-items: center; }
+.lx-btn { font: inherit; display: inline-flex; align-items: center; gap: .4rem; cursor: pointer; padding: var(--cds-pad-xs) var(--cds-pad-md); border-radius: 999px; border: 0; font-weight: 600;
+  background: #fff; color: #1f3864; box-shadow: 0 4px 12px -6px rgba(0,0,0,.4); }
+.lx-btn svg { width: 1.1rem; height: 1.1rem; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.lx-btn:hover { filter: brightness(.95); } .lx-btn:disabled { opacity: .5; cursor: wait; }
+.lx-btn.ghost { background: transparent; color: var(--lx-accent, var(--color-fg)); box-shadow: inset 0 0 0 1.5px currentColor; }
+.lx-top .lx-btn.ghost { color: #fff; }
+.lx-tools { display: flex; flex-wrap: wrap; gap: var(--cds-gap-sm); align-items: center; flex: 1 1 18rem; justify-content: flex-end; }
+.lx-imp { display: flex; gap: var(--cds-gap-md); padding: var(--cds-pad-lg); margin-bottom: var(--cds-gap-lg); border-radius: calc(var(--cds-radius) * 1.6); background: color-mix(in srgb, var(--lx-c2) 10%, var(--color-panel)); border: 1.5px dashed color-mix(in srgb, var(--lx-c2) 60%, var(--color-border-line)); --lx-accent: var(--lx-c2); }
+.lx-imp[hidden] { display: none; }
+.lx-imp-ic { flex: none; width: 2.75rem; height: 2.75rem; border-radius: 50%; display: grid; place-items: center; background: var(--lx-c2); }
+.lx-imp-ic svg { width: 1.5rem; height: 1.5rem; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.lx-imp-msg { margin: var(--cds-gap-xs) 0 var(--cds-gap-sm); white-space: pre-line; line-height: 1.6; }
+.lx-imp-actions { display: flex; gap: var(--cds-gap-sm); flex-wrap: wrap; }
+.lx-imp .lx-btn:not(.ghost) { background: var(--lx-c2); color: #fff; }
+.lx-cmp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); gap: var(--cds-gap-lg); align-items: start; }
+.lx-lines { min-height: 300px; }
+.lx-short { max-height: none; }
+.lx-yt td:first-child { font-weight: 600; }
+.lx-yt tr.sel td { background: color-mix(in srgb, var(--lx-accent) 20%, transparent) !important; font-weight: 600; }
+.lx-compare { margin-bottom: var(--cds-gap-md); }
+.lx-chg-cell.up { color: var(--color-ok); } .lx-chg-cell.down { color: var(--color-bad); }
+.lx-yearlbl { font-size: 11px; font-weight: 600; }
+.lx-compare .lx-note .lx-yr-range { font-weight: 600; color: var(--color-fg-muted); }
+.lx-gleg { display: flex; flex-wrap: wrap; gap: var(--cds-gap-md); font-size: var(--cds-font-size-caption); margin-bottom: var(--cds-gap-sm); }
+.lx-gleg span { display: inline-flex; align-items: center; gap: .4rem; }
+.lx-gleg i { width: .8rem; height: .8rem; border-radius: 3px; }
+
+.lx-page { --lx-ink: color-mix(in srgb, var(--lx-accent, var(--lx-c1)) 82%, black); }
+.lx-top { position: relative; overflow: hidden; padding: var(--cds-pad-xl) var(--cds-pad-xl); border-radius: calc(var(--cds-radius) * 2); color: #fff;
+  background: linear-gradient(120deg, color-mix(in srgb, var(--lx-c1) 78%, black) 0%, color-mix(in srgb, var(--lx-c2) 78%, black) 45%, color-mix(in srgb, var(--lx-c3) 75%, black) 100%);
+  box-shadow: 0 10px 30px -12px color-mix(in srgb, var(--lx-c1) 60%, transparent); align-items: center; }
+.lx-top::before, .lx-top::after { content: ""; position: absolute; border-radius: 50%; background: rgba(255,255,255,.10); pointer-events: none; }
+.lx-top::before { width: 18rem; height: 18rem; right: -5rem; top: -9rem; }
+.lx-top::after { width: 10rem; height: 10rem; right: 12rem; bottom: -6rem; background: rgba(255,255,255,.07); }
+.lx-top > * { position: relative; }
+.lx-title { color: #fff; font-size: calc(var(--cds-font-size-title) * 1.25); }
+.lx-org { color: rgba(255,255,255,.85); font-size: var(--cds-font-size-body); }
+.lx-fybox { color: #fff; background: rgba(255,255,255,.16); padding: var(--cds-pad-xs) var(--cds-pad-sm); border-radius: 999px; border: 1px solid rgba(255,255,255,.35); }
+.lx-fybox select { border-radius: 999px; border: 0; background: #fff; color: #1f1f1f; font-weight: 600; }
+.lx-tabs { gap: var(--cds-gap-md); }
+.lx-tabbtn { border-radius: calc(var(--cds-radius) * 1.6); padding: var(--cds-pad-md); border: 1px solid color-mix(in srgb, var(--lx-accent) 30%, var(--color-border-line));
+  background: linear-gradient(135deg, color-mix(in srgb, var(--lx-accent) 12%, var(--color-panel)), var(--color-panel)); transition: transform .15s, box-shadow .15s; }
+.lx-tabbtn:hover { transform: translateY(-2px); box-shadow: 0 8px 18px -10px var(--lx-accent); }
+.lx-tabbtn svg { width: 2.6rem; height: 2.6rem; padding: .5rem; border-radius: 50%; background: color-mix(in srgb, var(--lx-accent) 18%, transparent); }
+.lx-tabbtn b { font-size: var(--cds-font-size-heading); }
+.lx-tabbtn[aria-selected="true"] { color: #fff; border-color: transparent; box-shadow: 0 10px 22px -10px var(--lx-accent);
+  background: linear-gradient(135deg, var(--lx-ink), color-mix(in srgb, var(--lx-accent) 70%, white)); }
+.lx-tabbtn[aria-selected="true"] svg { stroke: #fff; background: rgba(255,255,255,.2); }
+.lx-tabbtn[aria-selected="true"] small { color: rgba(255,255,255,.85); }
+.lx-hero { position: relative; overflow: hidden; color: #fff; border: 0; border-radius: calc(var(--cds-radius) * 2); padding: var(--cds-pad-xl);
+  background: linear-gradient(125deg, var(--lx-ink) 0%, color-mix(in srgb, var(--lx-accent) 85%, white) 100%); box-shadow: 0 12px 28px -14px var(--lx-accent); }
+.lx-hero::after { content: ""; position: absolute; width: 16rem; height: 16rem; right: -4rem; bottom: -8rem; border-radius: 50%; background: rgba(255,255,255,.12); }
+.lx-hero > * { position: relative; }
+.lx-hero-ic { width: 4.5rem; height: 4.5rem; background: rgba(255,255,255,.2); box-shadow: inset 0 0 0 2px rgba(255,255,255,.4); }
+.lx-hero-ic svg { width: 2.6rem; height: 2.6rem; stroke: #fff; }
+.lx-h2 { color: #fff; }
+.lx-sub { color: rgba(255,255,255,.85); }
+.lx-take { color: #fff; }
+.lx-page .lx-hero .lx-em { color: #fff; font-size: 1.25em; background: rgba(255,255,255,.18); padding: 0 .35em; border-radius: .4em; }
+.lx-page .lx-hero .lx-em.lx-bad { background: rgba(255,255,255,.28); box-shadow: inset 0 -3px 0 #ffb4a8; }
+.lx-page .lx-hero .lx-chg { color: #fff; }
+.lx-kpi { --k: var(--lx-accent); position: relative; overflow: hidden; border: 0; border-top: 0; border-radius: calc(var(--cds-radius) * 1.6);
+  background: linear-gradient(150deg, color-mix(in srgb, var(--k) 20%, var(--color-panel)) 0%, var(--color-panel) 75%);
+  box-shadow: 0 1px 0 var(--color-border-line), 0 10px 24px -16px var(--k); }
+.lx-kpi::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 6px; background: linear-gradient(var(--k), color-mix(in srgb, var(--k) 40%, white)); }
+.lx-kpis .lx-kpi:nth-child(2) { --k: var(--lx-col4); }
+.lx-kpis .lx-kpi:nth-child(3) { --k: var(--lx-col5); }
+.lx-kpis .lx-kpi:nth-child(4) { --k: var(--lx-col6); }
+.lx-kpis .lx-kpi.lx-warnk { --k: var(--cds-chart-status-critical); }
+.lx-kpi-ic { width: 3.25rem; height: 3.25rem; background: var(--k); box-shadow: 0 6px 14px -6px var(--k); }
+.lx-kpi-ic svg, .lx-kpi.lx-warnk .lx-kpi-ic svg { stroke: #fff; width: 1.7rem; height: 1.7rem; }
+.lx-kpi.lx-warnk .lx-kpi-ic { background: var(--k); }
+.lx-kpi-lbl { font-weight: 600; color: var(--color-fg); }
+.lx-page .lx-kpi .lx-num { font-size: 2.5rem; color: color-mix(in srgb, var(--k) 80%, var(--color-fg)); }
+.lx-card { position: relative; overflow: hidden; border-radius: calc(var(--cds-radius) * 1.6); box-shadow: 0 10px 26px -20px var(--lx-accent); }
+.lx-card::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 4px; background: linear-gradient(90deg, var(--lx-accent), var(--lx-col4), var(--lx-col5)); }
+.lx-h3 { display: flex; align-items: center; gap: var(--cds-gap-sm); }
+.lx-h3::before { content: ""; width: .7rem; height: .7rem; border-radius: 3px; background: var(--lx-accent); flex: none; }
+.lx-hb { gap: var(--cds-gap-md); }
+.lx-hb-row .l { font-weight: 500; color: var(--color-fg); }
+.lx-hb-bar { height: 14px; border-radius: 7px; }
+.lx-hb-bar i { border-radius: 7px; background: linear-gradient(90deg, var(--lx-accent), color-mix(in srgb, var(--lx-col4) 80%, white)); }
+.lx-hb.err .lx-hb-bar i { background: linear-gradient(90deg, var(--cds-chart-status-critical), color-mix(in srgb, var(--cds-chart-status-critical) 45%, white)); }
+.lx-search { border-radius: 999px; border-color: color-mix(in srgb, var(--lx-accent) 45%, var(--color-border-line)); padding: var(--cds-pad-sm) var(--cds-pad-md); }
+.lx-search svg { stroke: var(--lx-accent); }
+.lx-tablewrap { border-top: 0; border-radius: var(--cds-radius); }
+.lx-table th { background: color-mix(in srgb, var(--lx-accent) 16%, var(--color-panel)); }
+.lx-table tbody tr:nth-child(even) td { background: color-mix(in srgb, var(--lx-accent) 5%, transparent); }
+.lx-table tbody tr:hover td { background: color-mix(in srgb, var(--lx-accent) 12%, transparent); }
+.lx-foot { padding: var(--cds-pad-md); border-radius: var(--cds-radius); background: color-mix(in srgb, var(--lx-c1) 6%, var(--color-panel)); border: 1px dashed var(--color-border-line); }
+</style>
+<div class="lx-cq"><div class="lx-page lx-shell">
+ <aside class="lx-side" aria-label="เมนูหลัก">
+  <div class="lx-brand"><div class="lx-brand-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l2.5-6 4 12 2.5-6H21"/></svg></div><div><b>แดชบอร์ดผู้บริหาร</b><small>การเงินและการเบิกจ่าย สปสช.</small></div></div>
+  <div class="lx-hosp"><div class="lx-hosp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V7l8-4 8 4v14H4z"/><path d="M12 8v6M9 11h6M10 21v-4h4v4"/></svg></div><div><b>รพ.เทพรัตนเวชชานุกูลฯ</b><small>รหัสหน่วยบริการ 11120</small></div></div>
+  <p class="lx-side-h">เมนูหลัก</p>
+  <nav class="lx-tabs" role="tablist" aria-orientation="vertical">
+  <button class="lx-tabbtn" role="tab" data-go="smartmoney" style="--lx-accent: var(--lx-c1);"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="6" width="19" height="12" rx="2.5"/><circle cx="12" cy="12" r="3"/><path d="M6 9.5v5M18 9.5v5"/></svg><span><b>Smart Money</b><small>เงินโอนจาก สปสช.</small></span></button>
+  <button class="lx-tabbtn" role="tab" data-go="op" style="--lx-accent: var(--lx-c2);"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3v6a4 4 0 0 0 8 0V3"/><path d="M10 13v2a5 5 0 0 0 10 0v-2"/><circle cx="20" cy="11" r="2"/></svg><span><b>OP</b><small>ผู้ป่วยนอก</small></span></button>
+  <button class="lx-tabbtn" role="tab" data-go="ip" style="--lx-accent: var(--lx-c3);"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6v13M3 14h18v5M21 14v-2a3 3 0 0 0-3-3h-7v5"/><circle cx="7" cy="10.5" r="2"/></svg><span><b>IP</b><small>ผู้ป่วยใน</small></span></button>
+  <button class="lx-tabbtn" role="tab" data-go="ppfs" style="--lx-accent: var(--lx-c4);"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.2-7 10-4-1.8-7-5.5-7-10V6l7-3z"/><path d="M9 12h6M12 9v6"/></svg><span><b>PPFS</b><small>ส่งเสริมสุขภาพฯ</small></span></button>
+  <button class="lx-tabbtn" role="tab" data-go="seamless" style="--lx-accent: var(--lx-c5);"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><path d="M17.25 14v6.5M14 17.25h6.5"/></svg><span><b>Seamless</b><small>บริการเฉพาะ DMIS</small></span></button>
+  <button class="lx-tabbtn" role="tab" data-go="present" style="--lx-accent: var(--lx-c1);"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2.5"/><path d="M10 8.5v6l5-3z"/><path d="M8 21h8"/></svg><span><b>นำเสนอ</b><small>แอนิเมชันยอดจัดสรร</small></span></button>
+  </nav>
+  <p class="lx-side-h">สถานะข้อมูล</p>
+  <div class="lx-status" id="lx-status" aria-live="polite">
+   <div class="lx-st-row"><i class="lx-dot is-wait"></i><span><b>กำลังตรวจสอบ…</b></span></div>
+  </div>
+  <dialog class="lx-pend" id="lx-pend"><form method="dialog"><h3>ไฟล์ที่ยังไม่ได้นำเข้า</h3><p class="lx-pend-note">อัปโหลดไฟล์เหล่านี้ไว้ที่โฟลเดอร์ <a href="https://github.com/Nooknick830/nhso-dashboard-data/upload/main/inbox" target="_blank" rel="noopener">inbox บน GitHub</a> (ไฟล์ละไม่เกิน 25 MB ผ่านหน้าเว็บ) ระบบจะนำเข้าให้ในรอบเช้าถัดไป</p><ol id="lx-pend-list"></ol><button class="lx-pend-close">ปิด</button></form></dialog>
+ </aside>
+ <main class="lx-main">
+ <div class="lx-top">
+  <div><h1 class="lx-title">แดชบอร์ดการเงินและการเบิกจ่าย สปสช.</h1>
+  <p class="lx-org">รพ.เทพรัตนเวชชานุกูล เฉลิมพระเกียรติ ๖๐ พรรษา (11120) · จังหวัดเชียงใหม่</p></div>
+  <div class="lx-actions">
+   <label class="lx-fybox">ปีงบประมาณ <select class="lx-fy" aria-label="ปีงบประมาณ" data-source="sm_by_fy ec_by_fy"></select></label>
+   <div class="lx-range">
+    <span class="lx-range-lbl"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>ช่วงเดือน</span>
+    <select class="lx-mfrom" aria-label="ตั้งแต่เดือน" data-source="smartmoney_transfers ec_by_month"><option value="">ตั้งแต่เดือน…</option></select>
+    <span class="lx-to">ถึง</span>
+    <select class="lx-mto" aria-label="ถึงเดือน" data-source="smartmoney_transfers ec_by_month"><option value="">ถึงเดือน…</option></select>
+    <button class="lx-btn ghost lx-range-clear" hidden>ล้างช่วง ✕</button>
+   </div>
+   <button class="lx-btn lx-export" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg>ส่งออก Excel</button>
+   <button class="lx-btn lx-import" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20V9M7 13.5l5-5 5 5M5 4h14"/></svg>นำเข้า Excel</button>
+   <input type="file" class="lx-file" accept=".xlsx" multiple hidden aria-label="เลือกไฟล์ Excel">
+  </div>
+ </div>
+ <p class="lx-range-note" hidden></p>
+ <div class="lx-imp" hidden role="status"><div class="lx-imp-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20V9M7 13.5l5-5 5 5M5 4h14"/></svg></div><div class="lx-imp-body"><b class="lx-imp-title">นำเข้าไฟล์ Excel</b><p class="lx-imp-msg"></p>
+  <div class="lx-imp-actions"><button class="lx-btn lx-imp-ok" hidden>ยืนยันนำเข้า</button><button class="lx-btn ghost lx-imp-cancel">ปิด</button></div></div></div>
+
+<section class="lx-tab" id="smartmoney" data-tab="smartmoney" style="--lx-accent: var(--lx-c1);">
+ <div class="lx-hero">
+  <div class="lx-hero-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="6" width="19" height="12" rx="2.5"/><circle cx="12" cy="12" r="3"/><path d="M6 9.5v5M18 9.5v5"/></svg></div>
+  <div><h2 class="lx-h2">Smart Money · เงินโอนจาก สปสช.</h2>
+  <p class="lx-sub">รายงานเอกสารการโอนเงินแยกตามหน่วยงาน (Smart Money) · <span class="lx-fy-label">—</span></p>
+  <p class="lx-take" id="sm-take"><span class="lx-fy-label">—</span> โรงพยาบาลได้รับเงินโอนสุทธิ <b class="lx-em" data-source="sm_by_fy" data-field="net_mb" data-where="fy=2569" data-fy-where>—</b> ล้านบาท
+   <span class="lx-chgwrap">(<span class="lx-chg" data-source="sm_by_fy" data-field="chg_pct" data-where="fy=2569" data-fy-where>—</span>% จากปีก่อน)</span>
+   จากยอดจัดสรร <b class="lx-em" data-source="sm_by_fy" data-field="amount_mb" data-where="fy=2569" data-fy-where>—</b> ล้านบาท
+   ถูกหัก/ชะลอโอน <b class="lx-em lx-bad" data-source="sm_by_fy" data-field="deducted_mb" data-where="fy=2569" data-fy-where>—</b> ล้านบาท</p></div>
+ </div>
+ <div class="lx-kpis">
+  <div class="lx-kpi lx-good"><div class="lx-kpi-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16.5 9"/></svg></div><div class="lx-kpi-body">
+<div class="lx-kpi-lbl">เงินโอนสุทธิ (คงเหลือ)</div>
+<div class="lx-kpi-val"><b class="lx-num dash-skeleton" data-source="sm_by_fy" data-field="net_mb" data-where="fy=2569" data-fy-where>—</b> <span class="lx-unit">ล้านบาท</span></div>
+<div class="lx-kpi-note">หลังหักรายการ ชะลอ ภาษี และหลักประกัน</div></div></div>
+  <div class="lx-kpi "><div class="lx-kpi-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M16.5 7.5c0-1.7-2-3-4.5-3s-4.5 1.3-4.5 3 2 2.6 4.5 3 4.5 1.3 4.5 3-2 3-4.5 3-4.5-1.3-4.5-3"/></svg></div><div class="lx-kpi-body">
+<div class="lx-kpi-lbl">ยอดจัดสรร</div>
+<div class="lx-kpi-val"><b class="lx-num dash-skeleton" data-source="sm_by_fy" data-field="amount_mb" data-where="fy=2569" data-fy-where>—</b> <span class="lx-unit">ล้านบาท</span></div>
+<div class="lx-kpi-note">จำนวนเงินก่อนหักรายการ</div></div></div>
+  <div class="lx-kpi lx-warnk"><div class="lx-kpi-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg></div><div class="lx-kpi-body">
+<div class="lx-kpi-lbl">ถูกหัก / ชะลอโอน</div>
+<div class="lx-kpi-val"><b class="lx-num dash-skeleton" data-source="sm_by_fy" data-field="deducted_mb" data-where="fy=2569" data-fy-where>—</b> <span class="lx-unit">ล้านบาท</span></div>
+<div class="lx-kpi-note">ยอดจัดสรร − เงินโอนสุทธิ</div></div></div>
+  <div class="lx-kpi "><div class="lx-kpi-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/></svg></div><div class="lx-kpi-body">
+<div class="lx-kpi-lbl">รายการโอน</div>
+<div class="lx-kpi-val"><b class="lx-num dash-skeleton" data-source="sm_by_fy" data-field="lines" data-where="fy=2569" data-fy-where>—</b> <span class="lx-unit">รายการ</span></div>
+<div class="lx-kpi-note">จำนวนบรรทัดในรายงานโอนเงิน</div></div></div>
+ </div>
+ <div class="lx-grid">
+  <div class="lx-card lx-wide" id="sm-monthly"><h3 class="lx-h3">เงินโอนสุทธิรายเดือน</h3>
+   <p class="lx-note">ตามวันที่โอน · หน่วย: บาท · เลื่อนเมาส์เพื่อดูรายละเอียด</p>
+   <div class="lx-chart" data-chart="sm-monthly" data-source="sm_by_month"></div></div>
+  <div class="lx-card" id="sm-funds"><h3 class="lx-h3">เงินโอนสุทธิแยกตามกองทุน</h3>
+   <p class="lx-note">10 กองทุนที่ได้รับสูงสุดในช่วงที่เลือก · หน่วย: บาท</p>
+   <div class="lx-chart" data-chart="sm-funds" data-source="sm_by_fund"></div></div>
+ </div>
+ <div class="lx-card lx-compare" id="sm-compare"><h3 class="lx-h3">แนวโน้มสถานะทางการเงินชดเชยแยกรายปีงบประมาณ</h3>
+  <p class="lx-note"><span class="lx-yr-range"></span> · เงินโอนสุทธิ (ล้านบาท) · ปี 2570 มีข้อมูลถึง 9 ต.ค. 69</p>
+  <div class="lx-cmp-grid">
+   <div class="lx-chart lx-lines" data-chart="years" data-source="sm_by_fy"></div>
+   <div class="lx-tablewrap lx-short"><table class="lx-table lx-yt" data-source="sm_by_fy" data-row-key="fy"><thead><tr><th data-field="fy" class="">ปีงบ</th><th data-field="amount_mb" class="lx-n">ยอดจัดสรร (ล้านบาท)</th><th data-field="deducted_mb" class="lx-n">หัก/ชะลอ (ล้านบาท)</th><th data-field="net_mb" class="lx-n">โอนสุทธิ (ล้านบาท)</th><th data-field="chg_pct" class="lx-n">เปลี่ยนแปลงจากปีก่อน</th><th data-field="lines" class="lx-n">รายการโอน</th></tr></thead><tbody></tbody></table></div>
+  </div></div>
+
+ <div class="lx-card lx-tablecard" id="sm-table"><div class="lx-tablehead"><div><h3 class="lx-h3">ค้นหารายการโอนเงิน</h3>
+   <p class="lx-note">พิมพ์ชื่อกองทุน งวด/เลขที่เบิกจ่าย หรือวันที่ เช่น “ผู้ป่วยใน”, “OP REFER”, “ก.ย. 69” · กดหัวคอลัมน์เพื่อเรียง</p></div>
+   <div class="lx-tools"><label class="lx-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input type="search" placeholder="ค้นหา…" aria-label="ค้นหารายการโอนเงิน"></label><button class="lx-btn ghost lx-tbl-export" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg>ส่งออกผลค้นหา</button></div></div>
+  <div class="lx-count"></div>
+  <div class="lx-tablewrap"><table class="lx-table" data-source="smartmoney_transfers" data-row-key="id">
+   <thead><tr>
+    <th data-field="date_th"><button data-k="date">วันที่โอน</button></th>
+    <th data-field="period"><button data-k="period">งวด / เลขที่เบิกจ่าย</button></th>
+    <th data-field="fund"><button data-k="fund">กองทุน</button></th>
+    <th data-field="subfund"><button data-k="subfund">กองทุนย่อย</button></th>
+    <th data-field="amount" class="lx-n"><button data-k="amount">จำนวนเงิน</button></th>
+    <th data-field="deducted_total" class="lx-n"><button data-k="deducted_total">หัก/ชะลอ</button></th>
+    <th data-field="net" class="lx-n"><button data-k="net">คงเหลือ (สุทธิ)</button></th>
+   </tr></thead><tbody></tbody></table></div></div>
+</section>
+
+<section class="lx-tab" id="op" data-tab="op" data-cat="OP" style="--lx-accent: var(--lx-c2);" hidden>
+ <div class="lx-hero">
+  <div class="lx-hero-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3v6a4 4 0 0 0 8 0V3"/><path d="M10 13v2a5 5 0 0 0 10 0v-2"/><circle cx="20" cy="11" r="2"/></svg></div>
+  <div><h2 class="lx-h2">OP · ผู้ป่วยนอก</h2>
+  <p class="lx-sub">ผู้ป่วยนอกทุกสิทธิ (ไม่รวมรายการ PP Fee Schedule) · ข้อมูลจากไฟล์ REP ตอบกลับ e-Claim · <span class="lx-fy-label">—</span></p>
+  <p class="lx-take" id="op-take"><span class="lx-fy-label">—</span> ส่งเบิก <b class="lx-em" data-source="ec_by_fy" data-field="claims" data-where="cat=OP&amp;fy=2569" data-fy-where>—</b> รายการ
+   ได้รับชดเชย <b class="lx-em" data-source="ec_by_fy" data-field="paid_mb" data-where="cat=OP&amp;fy=2569" data-fy-where>—</b> ล้านบาท
+   คิดเป็น <b class="lx-em" data-source="ec_by_fy" data-field="pay_pct" data-where="cat=OP&amp;fy=2569" data-fy-where>—</b>% ของยอดเรียกเก็บ
+   และมีรายการติด Error/C <b class="lx-em lx-bad" data-source="ec_by_fy" data-field="err_pct" data-where="cat=OP&amp;fy=2569" data-fy-where>—</b>%</p></div>
+ </div>
+ <div class="lx-kpis">
+  <div class="lx-kpi "><div class="lx-kpi-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg></div><div class="lx-kpi-body">
+<div class="lx-kpi-lbl">รายการส่งเบิก</div>
+<div class="lx-kpi-val"><b class="lx-num dash-skeleton" data-source="ec_by_fy" data-field="claims" data-where="cat=OP&amp;fy=2569" data-fy-where>—</b> <span class="lx-unit">รายการ</span></div>
+<div class="lx-kpi-note">จำนวนรายการ (TRAN_ID) ที่ สปสช. ตอบกลับ</div></div></div>
+  <div class="lx-kpi "><div class="lx-kpi-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M16.5 7.5c0-1.7-2-3-4.5-3s-4.5 1.3-4.5 3 2 2.6 4.5 3 4.5 1.3 4.5 3-2 3-4.5 3-4.5-1.3-4.5-3"/></svg></div><div class="lx-kpi-body">
+<div class="lx-kpi-lbl">ยอดเรียกเก็บ</div>
+<div class="lx-kpi-val"><b class="lx-num dash-skeleton" data-source="ec_by_fy" data-field="billed_mb" data-where="cat=OP&amp;fy=2569" data-fy-where>—</b> <span class="lx-unit">ล้านบาท</span></div>
+<div class="lx-kpi-note">รวมยอดเรียกเก็บ (1.3)</div></div></div>
+  <div class="lx-kpi lx-good"><div class="lx-kpi-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16.5 9"/></svg></div><div class="lx-kpi-body">
+<div class="lx-kpi-lbl">ได้รับชดเชย</div>
+<div class="lx-kpi-val"><b class="lx-num dash-skeleton" data-source="ec_by_fy" data-field="paid_mb" data-where="cat=OP&amp;fy=2569" data-fy-where>—</b> <span class="lx-unit">ล้านบาท</span></div>
+<div class="lx-kpi-note">ชดเชยสุทธิ สปสช. + ต้นสังกัด</div></div></div>
+  <div class="lx-kpi lx-warnk"><div class="lx-kpi-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9.5 17h-19z"/><path d="M12 10v4.5M12 17.5v.01"/></svg></div><div class="lx-kpi-body">
+<div class="lx-kpi-lbl">ติด Error / C</div>
+<div class="lx-kpi-val"><b class="lx-num dash-skeleton" data-source="ec_by_fy" data-field="err_claims" data-where="cat=OP&amp;fy=2569" data-fy-where>—</b> <span class="lx-unit">รายการ</span></div>
+<div class="lx-kpi-note">รายการที่มี Error Code ต้องแก้ไขส่งใหม่</div></div></div>
+ </div>
+ <div class="lx-grid">
+  <div class="lx-card lx-wide" id="op-monthly"><h3 class="lx-h3">ยอดชดเชยรายเดือน (ตามเดือนที่รับบริการ)</h3>
+   <p class="lx-note">แท่ง = ได้รับชดเชย (บาท) · เลื่อนเมาส์เพื่อดูจำนวนรายการและยอดเรียกเก็บ</p>
+   <div class="lx-chart" data-chart="monthly" data-source="ec_by_month"></div></div>
+  <div class="lx-card" id="op-gauge"><h3 class="lx-h3">อัตราได้รับชดเชย</h3>
+   <p class="lx-note">ได้รับชดเชย ÷ ยอดเรียกเก็บ</p>
+   <div class="lx-gauge" data-chart="gauge" data-source="ec_by_fy"></div></div>
+  <div class="lx-card" id="op-rights"><h3 class="lx-h3">สัดส่วนตามสิทธิการรักษา</h3>
+   <p class="lx-note">จำนวนรายการส่งเบิก แยกตามสิทธิหลัก</p>
+   <div class="lx-chart" data-chart="donut" data-source="ec_by_right"></div></div>
+  <div class="lx-card" id="op-items"><h3 class="lx-h3">กองทุน/รายการ ที่ได้รับชดเชยสูงสุด</h3>
+   <p class="lx-note">10 อันดับแรก ตามยอดได้รับชดเชย (บาท)</p>
+   <div class="lx-chart" data-chart="items" data-source="ec_by_item"></div></div>
+  <div class="lx-card" id="op-errors"><h3 class="lx-h3">Error Code ที่พบบ่อย</h3>
+   <p class="lx-note">10 อันดับแรก ตามจำนวนรายการ · ดูความหมายรหัสได้ในคู่มือ e-Claim</p>
+   <div class="lx-chart" data-chart="errors" data-source="eclaim_errors"></div></div>
+ </div>
+ <div class="lx-card lx-compare" id="op-compare"><h3 class="lx-h3">แนวโน้มสถานะทางการเงินชดเชยแยกรายปีงบประมาณ</h3>
+  <p class="lx-note"><span class="lx-yr-range"></span> · ยอดได้รับชดเชย (ล้านบาท) · ปี 2565 มีเฉพาะรายการที่ตอบกลับในระบบใหม่ และปี 2569 ยังทยอยตอบกลับ</p>
+  <div class="lx-cmp-grid">
+   <div class="lx-chart lx-lines" data-chart="years" data-source="ec_by_fy"></div>
+   <div class="lx-tablewrap lx-short"><table class="lx-table lx-yt" data-source="ec_by_fy" data-row-key="cat,fy"><thead><tr><th data-field="fy" class="">ปีงบ</th><th data-field="claims" class="lx-n">รายการส่งเบิก</th><th data-field="err_pct" class="lx-n">% ติด Error</th><th data-field="billed_mb" class="lx-n">เรียกเก็บ (ล้านบาท)</th><th data-field="paid_mb" class="lx-n">ได้รับชดเชย (ล้านบาท)</th><th data-field="pay_pct" class="lx-n">% ได้รับชดเชย</th><th data-field="paid_chg_pct" class="lx-n">เปลี่ยนแปลงจากปีก่อน</th></tr></thead><tbody></tbody></table></div>
+  </div></div>
+
+ <div class="lx-card lx-tablecard" id="op-table"><div class="lx-tablehead"><div><h3 class="lx-h3">ค้นหาข้อมูล OP · ผู้ป่วยนอก</h3>
+   <p class="lx-note">พิมพ์ชื่อเดือน สิทธิ หรือรหัสกองทุน/รายการ เช่น “UCS”, “มี.ค. 69”, “IPINRGR” · กดหัวคอลัมน์เพื่อเรียง</p></div>
+   <div class="lx-tools"><label class="lx-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input type="search" placeholder="ค้นหา…" aria-label="ค้นหาในตาราง OP · ผู้ป่วยนอก"></label><button class="lx-btn ghost lx-tbl-export" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg>ส่งออกผลค้นหา</button></div></div>
+  <div class="lx-count"></div>
+  <div class="lx-tablewrap"><table class="lx-table" data-source="eclaim_summary" data-row-key="id">
+   <thead><tr>
+    <th data-field="month_th"><button data-k="month">เดือนบริการ</button></th>
+    <th data-field="right"><button data-k="right">สิทธิ</button></th>
+    <th data-field="item"><button data-k="item">กองทุน / รายการ</button></th>
+    <th data-field="claims" class="lx-n"><button data-k="claims">รายการ</button></th>
+    <th data-field="err_claims" class="lx-n"><button data-k="err_claims">ติด Error</button></th>
+    <th data-field="billed" class="lx-n"><button data-k="billed">เรียกเก็บ (บาท)</button></th>
+    <th data-field="paid" class="lx-n"><button data-k="paid">ได้รับชดเชย (บาท)</button></th>
+   </tr></thead><tbody></tbody></table></div></div>
+</section>
+
+<section class="lx-tab" id="ip" data-tab="ip" data-cat="IP" style="--lx-accent: var(--lx-c3);" hidden>
+ <div class="lx-hero">
+  <div class="lx-hero-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6v13M3 14h18v5M21 14v-2a3 3 0 0 0-3-3h-7v5"/><circle cx="7" cy="10.5" r="2"/></svg></div>
+  <div><h2 class="lx-h2">IP · ผู้ป่วยใน</h2>
+  <p class="lx-sub">ผู้ป่วยในทุกสิทธิ · ข้อมูลจากไฟล์ REP ตอบกลับ e-Claim · <span class="lx-fy-label">—</span></p>
+  <p class="lx-take" id="ip-take"><span class="lx-fy-label">—</span> ส่งเบิก <b class="lx-em" data-source="ec_by_fy" data-field="claims" data-where="cat=IP&amp;fy=2569" data-fy-where>—</b> รายการ
+   ได้รับชดเชย <b class="lx-em" data-source="ec_by_fy" data-field="paid_mb" data-where="cat=IP&amp;fy=2569" data-fy-where>—</b> ล้านบาท
+   คิดเป็น <b class="lx-em" data-source="ec_by_fy" data-field="pay_pct" data-where="cat=IP&amp;fy=2569" data-fy-where>—</b>% ของยอดเรียกเก็บ
+   และมีรายการติด Error/C <b class="lx-em lx-bad" data-source="ec_by_fy" data-field="err_pct" data-where="cat=IP&amp;fy=2569" data-fy-where>—</b>%</p></div>
+ </div>
+ <div class="lx-kpis">
+  <div class="lx-kpi "><div class="lx-kpi-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg></div><div class="lx-kpi-body">
+<div class="lx-kpi-lbl">รายการส่งเบิก</div>
+<div class="lx-kpi-val"><b class="lx-num dash-skeleton" data-source="ec_by_fy" data-field="claims" data-where="cat=IP&amp;fy=2569" data-fy-where>—</b> <span class="lx-unit">รายการ</span></div>
+<div class="lx-kpi-note">จำนวนรายการ (TRAN_ID) ที่ สปสช. ตอบกลับ</div></div></div>
+  <div class="lx-kpi "><div class="lx-kpi-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M16.5 7.5c0-1.7-2-3-4.5-3s-4.5 1.3-4.5 3 2 2.6 4.5 3 4.5 1.3 4.5 3-2 3-4.5 3-4.5-1.3-4.5-3"/></svg></div><div class="lx-kpi-body">
+<div class="lx-kpi-lbl">ยอดเรียกเก็บ</div>
+<div class="lx-kpi-val"><b class="lx-num dash-skeleton" data-source="ec_by_fy" data-field="billed_mb" data-where="cat=IP&amp;fy=2569" data-fy-where>—</b> <span class="lx-unit">ล้านบาท</span></div>
+<div class="lx-kpi-note">รวมยอดเรียกเก็บ (1.3)</div></div></div>
+  <div class="lx-kpi lx-good"><div class="lx-kpi-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16.5 9"/></svg></div><div class="lx-kpi-body">
+<div class="lx-kpi-lbl">ได้รับชดเชย</div>
+<div class="lx-kpi-val"><b class="lx-num dash-skeleton" data-source="ec_by_fy" data-field="paid_mb" data-where="cat=IP&amp;fy=2569" data-fy-where>—</b> <span class="lx-unit">ล้านบาท</span></div>
+<div class="lx-kpi-note">ชดเชยสุทธิ สปสช. + ต้นสังกัด</div></div></div>
+  <div class="lx-kpi lx-warnk"><div class="lx-kpi-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9.5 17h-19z"/><path d="M12 10v4.5M12 17.5v.01"/></svg></div><div class="lx-kpi-body">
+<div class="lx-kpi-lbl">ติด Error / C</div>
+<div class="lx-kpi-val"><b class="lx-num dash-skeleton" data-source="ec_by_fy" data-field="err_claims" data-where="cat=IP&amp;fy=2569" data-fy-where>—</b> <span class="lx-unit">รายการ</span></div>
+<div class="lx-kpi-note">รายการที่มี Error Code ต้องแก้ไขส่งใหม่</div></div></div>
+ </div>
+ <div class="lx-grid">
+  <div class="lx-card lx-wide" id="ip-monthly"><h3 class="lx-h3">ยอดชดเชยรายเดือน (ตามเดือนที่รับบริการ)</h3>
+   <p class="lx-note">แท่ง = ได้รับชดเชย (บาท) · เลื่อนเมาส์เพื่อดูจำนวนรายการและยอดเรียกเก็บ</p>
+   <div class="lx-chart" data-chart="monthly" data-source="ec_by_month"></div></div>
+  <div class="lx-card" id="ip-gauge"><h3 class="lx-h3">อัตราได้รับชดเชย</h3>
+   <p class="lx-note">ได้รับชดเชย ÷ ยอดเรียกเก็บ</p>
+   <div class="lx-gauge" data-chart="gauge" data-source="ec_by_fy"></div></div>
+  <div class="lx-card" id="ip-rights"><h3 class="lx-h3">สัดส่วนตามสิทธิการรักษา</h3>
+   <p class="lx-note">จำนวนรายการส่งเบิก แยกตามสิทธิหลัก</p>
+   <div class="lx-chart" data-chart="donut" data-source="ec_by_right"></div></div>
+  <div class="lx-card" id="ip-items"><h3 class="lx-h3">กองทุน/รายการ ที่ได้รับชดเชยสูงสุด</h3>
+   <p class="lx-note">10 อันดับแรก ตามยอดได้รับชดเชย (บาท)</p>
+   <div class="lx-chart" data-chart="items" data-source="ec_by_item"></div></div>
+  <div class="lx-card" id="ip-errors"><h3 class="lx-h3">Error Code ที่พบบ่อย</h3>
+   <p class="lx-note">10 อันดับแรก ตามจำนวนรายการ · ดูความหมายรหัสได้ในคู่มือ e-Claim</p>
+   <div class="lx-chart" data-chart="errors" data-source="eclaim_errors"></div></div>
+ </div>
+ <div class="lx-card lx-compare" id="ip-compare"><h3 class="lx-h3">แนวโน้มสถานะทางการเงินชดเชยแยกรายปีงบประมาณ</h3>
+  <p class="lx-note"><span class="lx-yr-range"></span> · ยอดได้รับชดเชย (ล้านบาท) · ปี 2565 มีเฉพาะรายการที่ตอบกลับในระบบใหม่ และปี 2569 ยังทยอยตอบกลับ</p>
+  <div class="lx-cmp-grid">
+   <div class="lx-chart lx-lines" data-chart="years" data-source="ec_by_fy"></div>
+   <div class="lx-tablewrap lx-short"><table class="lx-table lx-yt" data-source="ec_by_fy" data-row-key="cat,fy"><thead><tr><th data-field="fy" class="">ปีงบ</th><th data-field="claims" class="lx-n">รายการส่งเบิก</th><th data-field="err_pct" class="lx-n">% ติด Error</th><th data-field="billed_mb" class="lx-n">เรียกเก็บ (ล้านบาท)</th><th data-field="paid_mb" class="lx-n">ได้รับชดเชย (ล้านบาท)</th><th data-field="pay_pct" class="lx-n">% ได้รับชดเชย</th><th data-field="paid_chg_pct" class="lx-n">เปลี่ยนแปลงจากปีก่อน</th></tr></thead><tbody></tbody></table></div>
+  </div></div>
+
+ <div class="lx-card lx-tablecard" id="ip-table"><div class="lx-tablehead"><div><h3 class="lx-h3">ค้นหาข้อมูล IP · ผู้ป่วยใน</h3>
+   <p class="lx-note">พิมพ์ชื่อเดือน สิทธิ หรือรหัสกองทุน/รายการ เช่น “UCS”, “มี.ค. 69”, “IPINRGR” · กดหัวคอลัมน์เพื่อเรียง</p></div>
+   <div class="lx-tools"><label class="lx-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input type="search" placeholder="ค้นหา…" aria-label="ค้นหาในตาราง IP · ผู้ป่วยใน"></label><button class="lx-btn ghost lx-tbl-export" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg>ส่งออกผลค้นหา</button></div></div>
+  <div class="lx-count"></div>
+  <div class="lx-tablewrap"><table class="lx-table" data-source="eclaim_summary" data-row-key="id">
+   <thead><tr>
+    <th data-field="month_th"><button data-k="month">เดือนบริการ</button></th>
+    <th data-field="right"><button data-k="right">สิทธิ</button></th>
+    <th data-field="item"><button data-k="item">กองทุน / รายการ</button></th>
+    <th data-field="claims" class="lx-n"><button data-k="claims">รายการ</button></th>
+    <th data-field="err_claims" class="lx-n"><button data-k="err_claims">ติด Error</button></th>
+    <th data-field="billed" class="lx-n"><button data-k="billed">เรียกเก็บ (บาท)</button></th>
+    <th data-field="paid" class="lx-n"><button data-k="paid">ได้รับชดเชย (บาท)</button></th>
+   </tr></thead><tbody></tbody></table></div></div>
+</section>
+
+<section class="lx-tab" id="seamless" data-tab="seamless" style="--lx-accent: var(--lx-c5);" hidden>
+ <div class="lx-hero">
+  <div class="lx-hero-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><path d="M17.25 14v6.5M14 17.25h6.5"/></svg></div>
+  <div><h2 class="lx-h2">Seamless · เงินชดเชยบริการเฉพาะ (DMIS)</h2>
+  <p class="lx-sub">เงินโอนจากระบบ Seamless for DMIS (งวดเบิกจ่ายรหัส D…) ในรายงาน Smart Money · <span class="lx-fy-label">—</span></p>
+  <p class="lx-take"><span class="lx-fy-label">—</span> ได้รับเงิน Seamless สุทธิรวม <b class="lx-em" data-source="seamless_by_group" data-field="net_mb" data-where="fy=2569&amp;group=ทั้งหมด" data-fy-where>—</b> ล้านบาท
+   จาก <b class="lx-em" data-source="seamless_by_group" data-field="lines" data-where="fy=2569&amp;group=ทั้งหมด" data-fy-where>—</b> รายการโอน · เลือกกลุ่มด้านล่างเพื่อดูรายละเอียด</p></div>
+ </div>
+ <div class="lx-card lx-sgcard" id="seamless-groups"><h3 class="lx-h3">กลุ่มบริการ Seamless</h3>
+  <p class="lx-note">กดเลือกกลุ่ม · ตัวเลขคือเงินโอนสุทธิของช่วงที่เลือก (บาท) · กลุ่มสีจางคือไม่มีเงินโอนในปีนั้น</p>
+  <div class="lx-sgrid"><button class="lx-sg lx-sg-all" data-group="ทั้งหมด" aria-pressed="true"><span class="lx-sg-badge">ALL</span><span class="lx-sg-txt"><b>ทั้งหมด</b><small>ทุกกลุ่ม Seamless</small>
+<span class="lx-sg-val"><span data-source="seamless_by_group" data-field="net" data-where="fy=2569&amp;group=ทั้งหมด" data-fy-where>—</span> บาท</span></span></button><button class="lx-sg" data-group="CKD" aria-pressed="false"><span class="lx-sg-badge">CKD</span><span class="lx-sg-txt"><b>CKD</b><small>ไตวายเรื้อรัง · DCKD</small>
+<span class="lx-sg-val"><span data-source="seamless_by_group" data-field="net" data-where="fy=2569&amp;group=CKD" data-fy-where>—</span> บาท</span></span></button><button class="lx-sg" data-group="KTP" aria-pressed="false"><span class="lx-sg-badge">KTP</span><span class="lx-sg-txt"><b>KTP</b><small>KTP · DKTP</small>
+<span class="lx-sg-val"><span data-source="seamless_by_group" data-field="net" data-where="fy=2569&amp;group=KTP" data-fy-where>—</span> บาท</span></span></button><button class="lx-sg" data-group="NAPP" aria-pressed="false"><span class="lx-sg-badge">NAP</span><span class="lx-sg-txt"><b>NAPP</b><small>เอชไอวี/เอดส์ · DNAP</small>
+<span class="lx-sg-val"><span data-source="seamless_by_group" data-field="net" data-where="fy=2569&amp;group=NAPP" data-fy-where>—</span> บาท</span></span></button><button class="lx-sg" data-group="TB" aria-pressed="false"><span class="lx-sg-badge">MTB</span><span class="lx-sg-txt"><b>TB</b><small>วัณโรค · DMTB</small>
+<span class="lx-sg-val"><span data-source="seamless_by_group" data-field="net" data-where="fy=2569&amp;group=TB" data-fy-where>—</span> บาท</span></span></button><button class="lx-sg" data-group="ANC" aria-pressed="false"><span class="lx-sg-badge">ANC</span><span class="lx-sg-txt"><b>ANC</b><small>ฝากครรภ์ · DANC</small>
+<span class="lx-sg-val"><span data-source="seamless_by_group" data-field="net" data-where="fy=2569&amp;group=ANC" data-fy-where>—</span> บาท</span></span></button><button class="lx-sg" data-group="MOPH" aria-pressed="false"><span class="lx-sg-badge">MOR</span><span class="lx-sg-txt"><b>MOPH</b><small>MOPH · DMOR</small>
+<span class="lx-sg-val"><span data-source="seamless_by_group" data-field="net" data-where="fy=2569&amp;group=MOPH" data-fy-where>—</span> บาท</span></span></button><button class="lx-sg" data-group="ATK" aria-pressed="false"><span class="lx-sg-badge">ATK</span><span class="lx-sg-txt"><b>ATK</b><small>ตรวจ ATK · DATK</small>
+<span class="lx-sg-val"><span data-source="seamless_by_group" data-field="net" data-where="fy=2569&amp;group=ATK" data-fy-where>—</span> บาท</span></span></button><button class="lx-sg" data-group="น้ำมันกัญชา" aria-pressed="false"><span class="lx-sg-badge">CNB</span><span class="lx-sg-txt"><b>น้ำมันกัญชา</b><small>น้ำมันกัญชา · DCNB</small>
+<span class="lx-sg-val"><span data-source="seamless_by_group" data-field="net" data-where="fy=2569&amp;group=น้ำมันกัญชา" data-fy-where>—</span> บาท</span></span></button><button class="lx-sg" data-group="คัดกรองดาวน์" aria-pressed="false"><span class="lx-sg-badge">DOW</span><span class="lx-sg-txt"><b>คัดกรองดาวน์</b><small>คัดกรองดาวน์ซินโดรม · DDOW</small>
+<span class="lx-sg-val"><span data-source="seamless_by_group" data-field="net" data-where="fy=2569&amp;group=คัดกรองดาวน์" data-fy-where>—</span> บาท</span></span></button><button class="lx-sg" data-group="คัดกรองธาลัสซีเมีย" aria-pressed="false"><span class="lx-sg-badge">TLM</span><span class="lx-sg-txt"><b>คัดกรองธาลัสซีเมีย</b><small>คัดกรองธาลัสซีเมีย · DTLM</small>
+<span class="lx-sg-val"><span data-source="seamless_by_group" data-field="net" data-where="fy=2569&amp;group=คัดกรองธาลัสซีเมีย" data-fy-where>—</span> บาท</span></span></button><button class="lx-sg" data-group="คัดกรองมะเร็งปากมดลูก" aria-pressed="false"><span class="lx-sg-badge">CCS</span><span class="lx-sg-txt"><b>คัดกรองมะเร็งปากมดลูก</b><small>คัดกรองมะเร็งปากมดลูก · DCCS</small>
+<span class="lx-sg-val"><span data-source="seamless_by_group" data-field="net" data-where="fy=2569&amp;group=คัดกรองมะเร็งปากมดลูก" data-fy-where>—</span> บาท</span></span></button><button class="lx-sg" data-group="จิตเวช" aria-pressed="false"><span class="lx-sg-badge">CMH</span><span class="lx-sg-txt"><b>จิตเวช</b><small>จิตเวชเรื้อรังในชุมชน · DCMH</small>
+<span class="lx-sg-val"><span data-source="seamless_by_group" data-field="net" data-where="fy=2569&amp;group=จิตเวช" data-fy-where>—</span> บาท</span></span></button><button class="lx-sg" data-group="ฟื้นฟู" aria-pressed="false"><span class="lx-sg-badge">DSA</span><span class="lx-sg-txt"><b>ฟื้นฟู</b><small>ฟื้นฟูสมรรถภาพ · DDSA</small>
+<span class="lx-sg-val"><span data-source="seamless_by_group" data-field="net" data-where="fy=2569&amp;group=ฟื้นฟู" data-fy-where>—</span> บาท</span></span></button><button class="lx-sg" data-group="แพทย์แผนไทย" aria-pressed="false"><span class="lx-sg-badge">TTM</span><span class="lx-sg-txt"><b>แพทย์แผนไทย</b><small>แพทย์แผนไทย · DTTM</small>
+<span class="lx-sg-val"><span data-source="seamless_by_group" data-field="net" data-where="fy=2569&amp;group=แพทย์แผนไทย" data-fy-where>—</span> บาท</span></span></button><button class="lx-sg" data-group="โรคโลหิตจาง ธาลัสซีเมีย" aria-pressed="false"><span class="lx-sg-badge">TDT</span><span class="lx-sg-txt"><b>โรคโลหิตจาง ธาลัสซีเมีย</b><small>โรคโลหิตจาง ธาลัสซีเมีย · DTDT</small>
+<span class="lx-sg-val"><span data-source="seamless_by_group" data-field="net" data-where="fy=2569&amp;group=โรคโลหิตจาง ธาลัสซีเมีย" data-fy-where>—</span> บาท</span></span></button></div></div>
+ <h3 class="lx-selhead">กลุ่มที่เลือก: <span class="lx-sel-name">ทั้งหมด</span></h3>
+ <div class="lx-kpis">
+  <div class="lx-kpi lx-good"><div class="lx-kpi-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16.5 9"/></svg></div><div class="lx-kpi-body">
+<div class="lx-kpi-lbl">เงินโอนสุทธิ</div>
+<div class="lx-kpi-val"><b class="lx-num dash-skeleton" data-source="seamless_by_group" data-field="net_mb" data-where="fy=2569&amp;group=ทั้งหมด" data-fy-where data-sg-where>—</b> <span class="lx-unit">ล้านบาท</span></div>
+<div class="lx-kpi-note">หลังหักรายการ</div></div></div>
+  <div class="lx-kpi "><div class="lx-kpi-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M16.5 7.5c0-1.7-2-3-4.5-3s-4.5 1.3-4.5 3 2 2.6 4.5 3 4.5 1.3 4.5 3-2 3-4.5 3-4.5-1.3-4.5-3"/></svg></div><div class="lx-kpi-body">
+<div class="lx-kpi-lbl">ยอดจัดสรร</div>
+<div class="lx-kpi-val"><b class="lx-num dash-skeleton" data-source="seamless_by_group" data-field="amount_mb" data-where="fy=2569&amp;group=ทั้งหมด" data-fy-where data-sg-where>—</b> <span class="lx-unit">ล้านบาท</span></div>
+<div class="lx-kpi-note">จำนวนเงินก่อนหักรายการ</div></div></div>
+  <div class="lx-kpi "><div class="lx-kpi-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/></svg></div><div class="lx-kpi-body">
+<div class="lx-kpi-lbl">รายการโอน</div>
+<div class="lx-kpi-val"><b class="lx-num dash-skeleton" data-source="seamless_by_group" data-field="lines" data-where="fy=2569&amp;group=ทั้งหมด" data-fy-where data-sg-where>—</b> <span class="lx-unit">รายการ</span></div>
+<div class="lx-kpi-note">จำนวนบรรทัดในรายงาน</div></div></div>
+  <div class="lx-kpi "><div class="lx-kpi-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V4M4 20h16"/><path d="M7 15l4-4 3 3 5-6"/></svg></div><div class="lx-kpi-body">
+<div class="lx-kpi-lbl">สัดส่วนใน Seamless</div>
+<div class="lx-kpi-val"><b class="lx-num dash-skeleton" data-source="seamless_by_group" data-field="share_pct" data-where="fy=2569&amp;group=ทั้งหมด" data-fy-where data-sg-where>—</b> <span class="lx-unit">%</span></div>
+<div class="lx-kpi-note">ของเงิน Seamless สุทธิทั้งปี</div></div></div>
+ </div>
+ <div class="lx-grid">
+  <div class="lx-card lx-wide" id="seamless-monthly"><h3 class="lx-h3">เงินโอนสุทธิรายเดือน</h3>
+   <p class="lx-note">กลุ่มที่เลือก · ตามวันที่โอน · หน่วย: บาท</p>
+   <div class="lx-chart" data-chart="sg-monthly" data-source="seamless_by_month"></div></div>
+  <div class="lx-card lx-wide" id="seamless-share"><h3 class="lx-h3">เปรียบเทียบทุกกลุ่ม</h3>
+   <p class="lx-note">เงินโอนสุทธิของแต่ละกลุ่มในช่วงที่เลือก · หน่วย: ล้านบาท · % คือสัดส่วนในเงิน Seamless ทั้งหมด</p>
+   <div class="lx-chart" data-chart="sg-groups" data-source="seamless_by_group"></div></div>
+ </div>
+ <div class="lx-card lx-compare" id="seamless-compare"><h3 class="lx-h3">แนวโน้มสถานะทางการเงินชดเชยแยกรายปีงบประมาณ</h3>
+  <p class="lx-note"><span class="lx-yr-range"></span> · เงินโอนสุทธิของกลุ่มที่เลือก (ล้านบาท)</p>
+  <div class="lx-cmp-grid">
+   <div class="lx-chart lx-lines" data-chart="sg-years" data-source="seamless_by_group"></div>
+   <div class="lx-tablewrap lx-short"><table class="lx-table lx-yt lx-sgyt" data-source="seamless_by_group" data-row-key="fy,group"><thead><tr>
+    <th data-field="fy">ปีงบ</th><th data-field="amount_mb" class="lx-n">ยอดจัดสรร (ล้านบาท)</th><th data-field="net_mb" class="lx-n">โอนสุทธิ (ล้านบาท)</th><th data-field="lines" class="lx-n">รายการโอน</th><th data-field="share_pct" class="lx-n">% ของ Seamless</th>
+   </tr></thead><tbody></tbody></table></div>
+  </div></div>
+ <div class="lx-card lx-tablecard" id="seamless-table"><div class="lx-tablehead"><div><h3 class="lx-h3">ค้นหารายการโอน Seamless</h3>
+   <p class="lx-note">แสดงเฉพาะกลุ่มที่เลือก · พิมพ์งวด/เลขที่เบิกจ่าย กองทุน หรือเดือน เช่น “DCKD”, “ก.ย. 69”</p></div>
+   <div class="lx-tools"><label class="lx-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input type="search" placeholder="ค้นหา…" aria-label="ค้นหารายการโอน Seamless"></label><button class="lx-btn ghost lx-tbl-export" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg>ส่งออกผลค้นหา</button></div></div>
+  <div class="lx-count"></div>
+  <div class="lx-tablewrap"><table class="lx-table" data-source="smartmoney_transfers" data-row-key="id">
+   <thead><tr>
+    <th data-field="date_th"><button data-k="date">วันที่โอน</button></th>
+    <th data-field="period"><button data-k="period">งวด / เลขที่เบิกจ่าย</button></th>
+    <th data-field="fund"><button data-k="fund">กองทุน</button></th>
+    <th data-field="subfund"><button data-k="subfund">กองทุนย่อย</button></th>
+    <th data-field="amount" class="lx-n"><button data-k="amount">จำนวนเงิน</button></th>
+    <th data-field="deducted_total" class="lx-n"><button data-k="deducted_total">หัก/ชะลอ</button></th>
+    <th data-field="net" class="lx-n"><button data-k="net">คงเหลือ (สุทธิ)</button></th>
+   </tr></thead><tbody></tbody></table></div></div>
+</section>
+
+<section class="lx-tab" id="ppfs" data-tab="ppfs" data-cat="PPFS" style="--lx-accent: var(--lx-c4);" hidden>
+ <div class="lx-hero">
+  <div class="lx-hero-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.2-7 10-4-1.8-7-5.5-7-10V6l7-3z"/><path d="M9 12h6M12 9v6"/></svg></div>
+  <div><h2 class="lx-h2">PPFS · ส่งเสริมสุขภาพและป้องกันโรค</h2>
+  <p class="lx-sub">บริการ PP Fee Schedule 18 กลุ่ม (ANC, PP_*, HERB, FPNHSO, Walk-in) · ข้อมูลจากไฟล์ REP ตอบกลับ e-Claim · <span class="lx-fy-label">—</span></p>
+  <p class="lx-take" id="ppfs-take"><span class="lx-fy-label">—</span> ส่งเบิก <b class="lx-em" data-source="ec_by_fy" data-field="claims" data-where="cat=PPFS&amp;fy=2569" data-fy-where>—</b> รายการ
+   ได้รับชดเชย <b class="lx-em" data-source="ec_by_fy" data-field="paid_mb" data-where="cat=PPFS&amp;fy=2569" data-fy-where>—</b> ล้านบาท
+   คิดเป็น <b class="lx-em" data-source="ec_by_fy" data-field="pay_pct" data-where="cat=PPFS&amp;fy=2569" data-fy-where>—</b>% ของยอดเรียกเก็บ
+   และมีรายการติด Error/C <b class="lx-em lx-bad" data-source="ec_by_fy" data-field="err_pct" data-where="cat=PPFS&amp;fy=2569" data-fy-where>—</b>%</p></div>
+ </div>
+ <div class="lx-kpis">
+  <div class="lx-kpi "><div class="lx-kpi-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg></div><div class="lx-kpi-body">
+<div class="lx-kpi-lbl">รายการส่งเบิก</div>
+<div class="lx-kpi-val"><b class="lx-num dash-skeleton" data-source="ec_by_fy" data-field="claims" data-where="cat=PPFS&amp;fy=2569" data-fy-where>—</b> <span class="lx-unit">รายการ</span></div>
+<div class="lx-kpi-note">จำนวนรายการ (TRAN_ID) ที่ สปสช. ตอบกลับ</div></div></div>
+  <div class="lx-kpi "><div class="lx-kpi-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M16.5 7.5c0-1.7-2-3-4.5-3s-4.5 1.3-4.5 3 2 2.6 4.5 3 4.5 1.3 4.5 3-2 3-4.5 3-4.5-1.3-4.5-3"/></svg></div><div class="lx-kpi-body">
+<div class="lx-kpi-lbl">ยอดเรียกเก็บ</div>
+<div class="lx-kpi-val"><b class="lx-num dash-skeleton" data-source="ec_by_fy" data-field="billed_mb" data-where="cat=PPFS&amp;fy=2569" data-fy-where>—</b> <span class="lx-unit">ล้านบาท</span></div>
+<div class="lx-kpi-note">รวมยอดเรียกเก็บ (1.3)</div></div></div>
+  <div class="lx-kpi lx-good"><div class="lx-kpi-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16.5 9"/></svg></div><div class="lx-kpi-body">
+<div class="lx-kpi-lbl">ได้รับชดเชย</div>
+<div class="lx-kpi-val"><b class="lx-num dash-skeleton" data-source="ec_by_fy" data-field="paid_mb" data-where="cat=PPFS&amp;fy=2569" data-fy-where>—</b> <span class="lx-unit">ล้านบาท</span></div>
+<div class="lx-kpi-note">ชดเชยสุทธิ สปสช. + ต้นสังกัด</div></div></div>
+  <div class="lx-kpi lx-warnk"><div class="lx-kpi-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9.5 17h-19z"/><path d="M12 10v4.5M12 17.5v.01"/></svg></div><div class="lx-kpi-body">
+<div class="lx-kpi-lbl">ติด Error / C</div>
+<div class="lx-kpi-val"><b class="lx-num dash-skeleton" data-source="ec_by_fy" data-field="err_claims" data-where="cat=PPFS&amp;fy=2569" data-fy-where>—</b> <span class="lx-unit">รายการ</span></div>
+<div class="lx-kpi-note">รายการที่มี Error Code ต้องแก้ไขส่งใหม่</div></div></div>
+ </div>
+ <div class="lx-grid">
+  <div class="lx-card lx-wide" id="ppfs-monthly"><h3 class="lx-h3">ยอดชดเชยรายเดือน (ตามเดือนที่รับบริการ)</h3>
+   <p class="lx-note">แท่ง = ได้รับชดเชย (บาท) · เลื่อนเมาส์เพื่อดูจำนวนรายการและยอดเรียกเก็บ</p>
+   <div class="lx-chart" data-chart="monthly" data-source="ec_by_month"></div></div>
+  <div class="lx-card" id="ppfs-gauge"><h3 class="lx-h3">อัตราได้รับชดเชย</h3>
+   <p class="lx-note">ได้รับชดเชย ÷ ยอดเรียกเก็บ</p>
+   <div class="lx-gauge" data-chart="gauge" data-source="ec_by_fy"></div></div>
+  <div class="lx-card" id="ppfs-rights"><h3 class="lx-h3">สัดส่วนตามสิทธิการรักษา</h3>
+   <p class="lx-note">จำนวนรายการส่งเบิก แยกตามสิทธิหลัก</p>
+   <div class="lx-chart" data-chart="donut" data-source="ec_by_right"></div></div>
+  <div class="lx-card" id="ppfs-items"><h3 class="lx-h3">บริการ PP ที่ได้รับชดเชยสูงสุด</h3>
+   <p class="lx-note">10 อันดับแรก ตามยอดได้รับชดเชย (บาท)</p>
+   <div class="lx-chart" data-chart="items" data-source="ec_by_item"></div></div>
+  <div class="lx-card" id="ppfs-errors"><h3 class="lx-h3">Error Code ที่พบบ่อย</h3>
+   <p class="lx-note">10 อันดับแรก ตามจำนวนรายการ · ดูความหมายรหัสได้ในคู่มือ e-Claim</p>
+   <div class="lx-chart" data-chart="errors" data-source="eclaim_errors"></div></div>
+ </div>
+ <div class="lx-card lx-ppcard" id="ppfs-services"><div class="lx-tablehead"><div><h3 class="lx-h3">รายการบริการ PP Fee Schedule</h3>
+  <p class="lx-note">18 กลุ่มบริการ · จำนวนครั้ง = จำนวนรายการเบิกที่มีบริการนั้น · รายได้รวม = ยอดชดเชยของรายการเบิกเหล่านั้น (รายการที่มีหลายบริการนับในทุกบริการ) · รายการฝากครรภ์แยกค่าชดเชยตามราคา PP Fee ปี 2568: ANC 360 · LAB1 600 · LAB2 190 · อัลตราซาวด์ 400 · ขัดฟัน 500 · PRT 75 · PNC 150/285 · GDM 2,620 (นับเมื่อพบยอด 2,620 ในยอดชดเชยรวม) · ยอด PP ที่ไม่มีรหัสแยกไม่นับรวมในแถวใด (กด ▶ ที่ ANC เพื่อดูองค์ประกอบที่เคลม) · กด ▶ เพื่อดูรายเดือน</p></div></div>
+  <div class="lx-tablewrap lx-short"><table class="lx-table lx-pptable" data-source="ppfs_items anc_patterns"><thead><tr>
+   <th>กลุ่ม/รายการบริการ</th><th>ITEM_NAME</th><th class="lx-n">จำนวน (ครั้ง)</th><th class="lx-n">รายได้รวม (บาท)</th><th class="lx-c">สถานะ</th>
+  </tr></thead><tbody></tbody><tfoot></tfoot></table></div></div>
+ <div class="lx-card lx-compare" id="ppfs-compare"><h3 class="lx-h3">แนวโน้มสถานะทางการเงินชดเชยแยกรายปีงบประมาณ</h3>
+  <p class="lx-note"><span class="lx-yr-range"></span> · ยอดได้รับชดเชย (ล้านบาท) · ปี 2565 มีเฉพาะรายการที่ตอบกลับในระบบใหม่ และปี 2569 ยังทยอยตอบกลับ</p>
+  <div class="lx-cmp-grid">
+   <div class="lx-chart lx-lines" data-chart="years" data-source="ec_by_fy"></div>
+   <div class="lx-tablewrap lx-short"><table class="lx-table lx-yt" data-source="ec_by_fy" data-row-key="cat,fy"><thead><tr><th data-field="fy" class="">ปีงบ</th><th data-field="claims" class="lx-n">รายการส่งเบิก</th><th data-field="err_pct" class="lx-n">% ติด Error</th><th data-field="billed_mb" class="lx-n">เรียกเก็บ (ล้านบาท)</th><th data-field="paid_mb" class="lx-n">ได้รับชดเชย (ล้านบาท)</th><th data-field="pay_pct" class="lx-n">% ได้รับชดเชย</th><th data-field="paid_chg_pct" class="lx-n">เปลี่ยนแปลงจากปีก่อน</th></tr></thead><tbody></tbody></table></div>
+  </div></div>
+
+ <div class="lx-card lx-tablecard" id="ppfs-table"><div class="lx-tablehead"><div><h3 class="lx-h3">ค้นหาข้อมูล PPFS · ส่งเสริมสุขภาพและป้องกันโรค</h3>
+   <p class="lx-note">พิมพ์ชื่อเดือน สิทธิ หรือรหัสกองทุน/รายการ เช่น “UCS”, “มี.ค. 69”, “IPINRGR” · กดหัวคอลัมน์เพื่อเรียง</p></div>
+   <div class="lx-tools"><label class="lx-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input type="search" placeholder="ค้นหา…" aria-label="ค้นหาในตาราง PPFS · ส่งเสริมสุขภาพและป้องกันโรค"></label><button class="lx-btn ghost lx-tbl-export" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg>ส่งออกผลค้นหา</button></div></div>
+  <div class="lx-count"></div>
+  <div class="lx-tablewrap"><table class="lx-table" data-source="eclaim_summary" data-row-key="id">
+   <thead><tr>
+    <th data-field="month_th"><button data-k="month">เดือนบริการ</button></th>
+    <th data-field="right"><button data-k="right">สิทธิ</button></th>
+    <th data-field="item"><button data-k="item">กองทุน / รายการ</button></th>
+    <th data-field="claims" class="lx-n"><button data-k="claims">รายการ</button></th>
+    <th data-field="err_claims" class="lx-n"><button data-k="err_claims">ติด Error</button></th>
+    <th data-field="billed" class="lx-n"><button data-k="billed">เรียกเก็บ (บาท)</button></th>
+    <th data-field="paid" class="lx-n"><button data-k="paid">ได้รับชดเชย (บาท)</button></th>
+   </tr></thead><tbody></tbody></table></div></div>
+</section>
+<section class="lx-tab lx-present" id="present" data-tab="present" style="--lx-accent: var(--lx-c1);" hidden>
+ <div class="lx-stage" id="present-stage">
+  <div class="lx-scene" data-scene="0">
+   <p class="lx-kicker">Smart Money · <span class="lx-fy-label">—</span></p>
+   <h2 class="lx-st">สปสช. จัดสรรเงินให้โรงพยาบาล</h2>
+   <div class="lx-bignum"><b class="lx-count" data-source="sm_by_fy" data-field="amount_mb" data-where="fy=2569" data-fy-where>—</b><span>ล้านบาท</span></div>
+   <p class="lx-cap">ยอดจัดสรรทั้งปีงบประมาณ ตามรายงานโอนเงิน Smart Money</p>
+  </div>
+  <div class="lx-scene" data-scene="1">
+   <p class="lx-kicker">จากยอดจัดสรร… เหลือเข้าบัญชีจริงเท่าไร</p>
+   <h2 class="lx-st">ยอดจัดสรร → ถูกหัก/ชะลอ → โอนสุทธิ</h2>
+   <div class="lx-schart" data-chart="waterfall" data-source="sm_by_fy"></div>
+  </div>
+  <div class="lx-scene" data-scene="2">
+   <p class="lx-kicker">แนวโน้ม 5 ปีงบประมาณ</p>
+   <h2 class="lx-st lx-trend-title">ยอดจัดสรรรายปี</h2>
+   <div class="lx-schart" data-chart="alloc-years" data-source="sm_by_fy"></div>
+  </div>
+  <div class="lx-scene" data-scene="3">
+   <p class="lx-kicker">ยอดจัดสรรมาจากกองทุนไหน</p>
+   <h2 class="lx-st">5 กองทุนหลักของยอดจัดสรร</h2>
+   <div class="lx-schart" data-chart="alloc-funds" data-source="sm_by_fund"></div>
+  </div>
+  <div class="lx-scene" data-scene="4">
+   <p class="lx-kicker">สรุป · <span class="lx-fy-label">—</span></p>
+   <h2 class="lx-st">ภาพรวมเงินจัดสรรในปีนี้</h2>
+   <div class="lx-sum">
+    <div><small>ได้รับจัดสรร</small><b class="lx-count" data-source="sm_by_fy" data-field="amount_mb" data-where="fy=2569" data-fy-where>—</b><span>ล้านบาท</span></div>
+    <div class="neg"><small>ถูกหัก / ชะลอโอน</small><b class="lx-count" data-source="sm_by_fy" data-field="deducted_mb" data-where="fy=2569" data-fy-where>—</b><span>ล้านบาท</span></div>
+    <div class="pos"><small>เข้าบัญชีจริง</small><b class="lx-count" data-source="sm_by_fy" data-field="net_mb" data-where="fy=2569" data-fy-where>—</b><span>ล้านบาท</span></div>
+   </div>
+   <p class="lx-cap lx-sum-cap"></p>
+  </div>
+ </div>
+ <div class="lx-pctl">
+  <button class="lx-btn ghost lx-prev" aria-label="ฉากก่อนหน้า">◀</button>
+  <button class="lx-btn lx-playbtn" aria-label="เล่น/หยุด">⏸ หยุด</button>
+  <button class="lx-btn ghost lx-next" aria-label="ฉากถัดไป">▶</button>
+  <div class="lx-dots"></div>
+  <span class="lx-pnote">เปลี่ยนฉากอัตโนมัติทุก 7 วินาที · เลือกปีงบได้ที่ด้านบน · กดปุ่ม F11 เพื่อเต็มจอ</span>
+ </div>
+</section>
+ <p class="lx-foot">ที่มา: โฟลเดอร์ dashboard — <b>samart monney</b> (nhso_2566–2570.xlsx, รายงานโอนเงิน Smart Money) และ <b>REP-E-claim</b> (ไฟล์ REP ตอบกลับ e-Claim 5,537 ไฟล์)
+ · รายการเบิกนับตาม TRAN_ID หากมีการอุทธรณ์/ส่งซ้ำ ใช้ผลตอบกลับล่าสุด · เดือนและปีงบของ OP/IP/PPFS นับตามวันที่รับบริการ ข้อมูลช่วงท้ายปีงบ 2569 ยังทยอยตอบกลับ
+ · PPFS = รายการเบิกที่มีรหัสบริการ PP Fee Schedule 18 กลุ่ม (ANC, PP_*, HERB, FPNHSO, Walk-in ฯลฯ) ถ้ารายการเดียวกันมีทั้งค่ารักษาและบริการเหล่านี้จะนับเป็น PPFS · ไม่แสดงชื่อ เลขบัตรประชาชน หรือ HN ของผู้ป่วย</p>
+ </main>
+</div></div>
+
+<p class="lx-site-foot">ข้อมูลปรับปรุงล่าสุด: <span id="lx-updated">15/10/2569 13:34 น.</span></p>
+</div>
+<script>window.DASH_SOURCES={"smartmoney_transfers": "data/smartmoney_transfers.json", "eclaim_summary": "data/eclaim_summary.json", "eclaim_errors": "data/eclaim_errors.json", "ppfs_items": "data/ppfs_items.json", "anc_patterns": "data/anc_patterns.json"};window.DASH_DEFAULT_PARAMS={"fy":2569};</script>
+<script>
+window.lxRenderStatus=function(m){
+  var box=document.getElementById('lx-status'); if(!box) return;
+  if(!m||!m.sources){ box.innerHTML='<div class="lx-st-row"><i class="lx-dot"></i><span><b>ไม่พบไฟล์สถานะ</b><small class="lx-st-sub">data/meta.json</small></span></div>'; return; }
+  var esc=function(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});};
+  var chk=Date.parse(m.checked||m.updated), stale=!isFinite(chk)||(Date.now()-chk)>48*3600e3;
+  var h='<div class="lx-st-top">ตรวจล่าสุด <b>'+esc(m.checked_th||m.updated_th)+'</b></div>';
+  [['rep','REP e-Claim'],['smartmoney','Smart Money'],['seamless','Seamless DMIS']].forEach(function(k){
+    var s=m.sources[k[0]]||{}, n=(s.pending||[]).length, cls, msg, extra='';
+    if(s.state==='none'){ cls='none'; msg='ยังไม่เชื่อมข้อมูล'; }
+    else if(stale){ cls='bad'; msg='ไม่ได้อัปเดตเกิน 2 วัน'; }
+    else if(n){ cls='warn'; msg='มีไฟล์ค้าง '+n+' ไฟล์'; extra='<button type="button" class="lx-st-btn" data-src="'+k[0]+'">ดูรายชื่อไฟล์</button>'; }
+    else { cls='ok'; msg='อัปเดตล่าสุด '+esc(m.checked_th||m.updated_th); }
+    var sub=esc(s.detail||'')+(s.last_new_th&&s.last_new_th!=='-'?'<br>ข้อมูลใหม่เข้าล่าสุด '+esc(s.last_new_th):'');
+    if(cls==='bad') sub='งานอัปเดตอัตโนมัติไม่ได้ทำงาน อาจเพราะการเชื่อม Google Drive หลุด<br>'+sub;
+    h+='<div class="lx-st-row"><i class="lx-dot is-'+(cls==='none'?'none':cls)+'"></i><span><b>'+k[1]+'</b><span class="lx-st-msg is-'+cls+'-t">'+msg+'</span><small class="lx-st-sub">'+sub+'</small>'+extra+'</span></div>';
+  });
+  box.innerHTML=h;
+  box.querySelectorAll('.lx-st-btn').forEach(function(b){ b.onclick=function(){
+    var list=(m.sources[b.dataset.src]||{}).pending||[], ol=document.getElementById('lx-pend-list');
+    ol.innerHTML=list.map(function(f){return '<li>'+esc(f.title)+'<small>'+esc(f.reason)+' · '+(f.bytes/1048576).toFixed(2)+' MB</small></li>';}).join('');
+    var d=document.getElementById('lx-pend'); if(d.showModal) d.showModal(); else d.setAttribute('open','');
+  };});
+};
+</script>
+<script>
+(function(){
+  var S=['assets/d3.min.js','assets/runtime.js','assets/xlsx.js','assets/app.js'];
+  function next(){ if(!S.length) return; var s=document.createElement('script'); s.src=S.shift(); s.onload=next; document.body.appendChild(s); }
+  function stamp(m){ if(m&&m.updated_th){ var e=document.getElementById('lx-updated'); if(e) e.textContent=m.updated_th; } if(window.lxRenderStatus) window.lxRenderStatus(m); }
+  var done=false; function go(){ if(!done){ done=true; next(); } }
+  setTimeout(go,30000);
+  fetch('sync.php',{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){ stamp(j.meta); go(); })
+    .catch(function(){ fetch('data/meta.json',{cache:'no-store'}).then(function(r){return r.json();}).then(stamp).catch(function(){}).then(go); });
+})();
+</script>
+</body></html>
