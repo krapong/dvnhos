@@ -12,7 +12,7 @@
 
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <!-- FontAwesome 6 (สำหรับไอคอน) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -234,7 +234,49 @@
         .kpi-tone-doc-time { --kpi-color: #ea580c; }
         .kpi-tone-dispensed { --kpi-color: #7c3aed; }
         .kpi-box .kpi-heading, .kpi-box .kpi-value { color:var(--kpi-color); }
-    </style>
+
+/* Compact SLA card, matching the supplied reference. */
+#cc-section-waiting .section-card{border-radius:14px;overflow:hidden}
+#cc-section-waiting .section-header{background:linear-gradient(100deg,#1056dc,#2076ec);padding:12px 15px;color:#fff;font-size:15px}
+#cc-section-waiting .badge-step{background:#fff;color:#1765e5;width:28px;height:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center}
+#cc-section-waiting .card-body{padding:12px 14px 0}
+#cc-section-waiting .table-responsive{padding:0}
+#cc-section-waiting table{width:100%;min-width:0!important;table-layout:fixed;font-size:13px}
+#cc-section-waiting td,#cc-section-waiting th{min-width:0!important;overflow-wrap:anywhere}
+#cc-section-waiting th,#cc-section-waiting td{padding:10px 9px;vertical-align:middle;border:0;line-height:1.5}
+#cc-section-waiting th{background:#f0f5fc;color:#15283f;border-bottom:1px solid #d8e2f0;font-weight:700}
+#cc-section-waiting th:first-child{width:43%}
+#cc-section-waiting th:nth-child(2){width:21%}
+#cc-section-waiting th:nth-child(3){width:22%}
+#cc-section-waiting th:last-child{width:14%}
+#cc-section-waiting .num-col{text-align:right;white-space:normal;font-variant-numeric:tabular-nums}
+#cc-section-waiting td:first-child{font-weight:400}
+#cc-section-waiting tr.table-danger td{background:#fbe1e7!important;color:#a71930!important;box-shadow:none}
+#cc-section-waiting td:last-child{font-size:11px;color:#718096}
+#cc-section-waiting td:last-child i{font-size:20px!important}
+#cc-section-waiting .sla-caption{padding:10px 17px 12px;color:#7c899a;font-size:11px;line-height:1.6;text-align:center}
+#cc-section-waiting details{border-top:1px solid #edf1f6;text-align:left;margin-top:6px;padding-top:6px}
+#cc-section-waiting summary{cursor:pointer;color:#64748b}
+#cc-section-waiting #time-data-note{font-size:11px;margin-top:7px;line-height:1.7}
+[data-bs-theme=dark] #cc-section-waiting th{background:#24364e;color:#e2e8f0;border-color:#40516b}
+[data-bs-theme=dark] #cc-section-waiting tr.table-danger td{background:#552c3a!important;color:#ffbac7!important}
+@media(max-width:480px){#cc-section-waiting th,#cc-section-waiting td{padding:9px 5px;font-size:12px}#cc-section-waiting .section-header{font-size:14px}}
+
+/* Fiscal report: match table columns to chart stage colors. */
+#cc-section-fiscal-wait table th:first-child,#cc-section-fiscal-wait table td:first-child{background:#f1f5f9;color:#334155}
+#cc-section-fiscal-wait table tr>:nth-child(2){--fiscal-color:#2563eb;--fiscal-bg:#eff6ff}
+#cc-section-fiscal-wait table tr>:nth-child(3){--fiscal-color:#168577;--fiscal-bg:#ecfdf5}
+#cc-section-fiscal-wait table tr>:nth-child(4){--fiscal-color:#a65b00;--fiscal-bg:#fffbeb}
+#cc-section-fiscal-wait table tr>:nth-child(5){--fiscal-color:#9333ce;--fiscal-bg:#faf5ff}
+#cc-section-fiscal-wait table tr>:nth-child(6){--fiscal-color:#c52d58;--fiscal-bg:#fff1f5}
+#cc-section-fiscal-wait table tr>:nth-child(7){--fiscal-color:#475569;--fiscal-bg:#f1f5f9}
+#cc-section-fiscal-wait table tr>:nth-child(n+2){background:var(--fiscal-bg);color:var(--fiscal-color);box-shadow:none;border-left:1px solid var(--bs-border-color,#dee2e6)}
+#cc-section-fiscal-wait table thead th{border-top:4px solid var(--fiscal-color,#94a3b8);font-weight:700}
+#cc-section-fiscal-wait table tbody tr:hover>*{filter:brightness(.97)}
+[data-bs-theme=dark] #cc-section-fiscal-wait table tr>:nth-child(n+2){background:color-mix(in srgb,var(--fiscal-color) 18%,#172333);color:color-mix(in srgb,var(--fiscal-color) 48%,white)}
+[data-bs-theme=dark] #cc-section-fiscal-wait table th:first-child,[data-bs-theme=dark] #cc-section-fiscal-wait table td:first-child{background:#243247;color:#e2e8f0}
+
+</style>
     <style>
 :root{--cc-sidebar:244px;--cc-bg:#eef3f8;--cc-surface:#fff;--cc-text:#21344c;--cc-muted:#62758d;--cc-border:#dce5ef}
 body{background:var(--cc-bg);color:var(--cc-text)}
@@ -326,8 +368,8 @@ body{background:var(--cc-bg);color:var(--cc-text)}
     <div id="cc-ui-message" class="cc-section-note" role="status" hidden></div>
     <div id="cc-existing-note" class="cc-section-note" hidden>ข้อมูลในหน้านี้มาจากรายงานเดิมตามช่วงวันที่ ไม่ใช้ยืนยันจำนวนผู้ป่วยที่กำลังรอหรืออยู่ระหว่างบริการ ณ ขณะนี้</div>
     <div class="process-flow-container mb-3" data-cc-section data-cc-modules="overview">
-        <div class="process-step"><i class="fa-solid fa-clipboard-list icon-stage-registration"></i><div class="fw-bold small">1. ลงทะเบียน</div><div class="text-muted" style="font-size:0.75rem;">Registration</div></div>
-        <div class="process-step"><i class="fa-solid fa-user-nurse icon-stage-triage"></i><div class="fw-bold small">2. คัดกรอง</div><div class="text-muted" style="font-size:0.75rem;">Triage</div></div>
+        <div class="process-step"><i class="fa-solid fa-clipboard-list icon-stage-registration"></i><div class="fw-bold small">1. เปิด Visit</div><div class="text-muted" style="font-size:0.75rem;">Registration</div></div>
+        <div class="process-step"><i class="fa-solid fa-user-nurse icon-stage-triage"></i><div class="fw-bold small">2. ซักประวัติ</div><div class="text-muted" style="font-size:0.75rem;">Triage</div></div>
         <div class="process-step"><i class="fa-solid fa-chair icon-stage-waiting"></i><div class="fw-bold small">3. รอพบแพทย์</div><div class="text-muted" style="font-size:0.75rem;">Waiting</div></div>
         <div class="process-step"><i class="fa-solid fa-user-doctor icon-stage-doctor"></i><div class="fw-bold small">4. พบแพทย์</div><div class="text-muted" style="font-size:0.75rem;">Consultation</div></div>
         <div class="process-step"><i class="fa-solid fa-stethoscope icon-stage-treatment"></i><div class="fw-bold small">5. ตรวจ/หัตถการ</div><div class="text-muted" style="font-size:0.75rem;">Treatment</div></div>
@@ -339,6 +381,24 @@ body{background:var(--cc-bg);color:var(--cc-text)}
     <!-- ==========================================
          ส่วนที่ 1: OPD KPI SUMMARY
     =========================================== -->
+    <section class="section-card mb-3" id="cc-section-fiscal-wait" data-cc-section data-cc-modules="overview" aria-labelledby="fiscal-wait-heading">
+        <div class="section-header"><h2 id="fiscal-wait-heading" class="h6 mb-0"><i class="fa-solid fa-clock me-2" aria-hidden="true"></i>ระยะเวลารอคอยแยกปีงบประมาณ</h2><button id="fiscal-wait-refresh" type="button" class="btn btn-light btn-sm">แสดงปีที่เลือก</button></div>
+        <div class="p-3">
+            <div class="d-flex flex-wrap gap-2 align-items-center mb-2"><fieldset id="fiscal-wait-years" class="border rounded p-2"><legend class="small fw-bold float-none w-auto px-1 mb-1">เลือกปีงบประมาณที่ต้องการเปรียบเทียบ (เลือกได้หลายปี)</legend><div id="fiscal-wait-year-options" class="d-flex flex-wrap gap-3"></div></fieldset><span id="fiscal-wait-range" class="small text-muted"></span></div><p class="small text-muted mb-2">ติ๊กปีที่ต้องการ แล้วกด “แสดงปีที่เลือก” • ปีงบประมาณเริ่ม 1 ตุลาคม ถึง 30 กันยายน • แยกจากตัวกรองวันที่ด้านบน</p>
+            <p id="fiscal-wait-status" role="status" class="small">กำลังโหลดรายงานปีงบประมาณ…</p>
+            <div class="table-responsive"><table class="table table-hover table-custom mb-2" aria-describedby="fiscal-wait-note">
+                <thead><tr><th scope="col">ปีงบประมาณ</th><th scope="col" class="num-col">คัดกรอง/ซักประวัติ</th><th scope="col" class="num-col">รอพบแพทย์</th><th scope="col" class="num-col">Lab</th><th scope="col" class="num-col">X-ray</th><th scope="col" class="num-col">รอรับยา</th><th scope="col" class="num-col">รวมทุกจุด</th></tr></thead>
+                <tbody id="fiscal-wait-body"><tr><td colspan="7" class="text-center text-muted">กำลังโหลดข้อมูล…</td></tr></tbody>
+            </table></div>
+            <div id="fiscal-wait-charts" class="row g-3 my-2" hidden>
+                <div class="col-12 col-xl-6"><h3 class="h6">กราฟแท่ง · เวลาเฉลี่ยแต่ละจุด (นาที)</h3><p class="small text-muted">สีแยกตามปีงบประมาณ • ปีเดียวกันใช้สีเดียวกันทุกกราฟ</p><div style="height:300px;position:relative"><canvas id="fiscal-wait-bar" role="img" aria-label="กราฟแท่งเวลาเฉลี่ยแต่ละจุดตามปีงบประมาณ"></canvas></div></div>
+                <div class="col-12 col-xl-6"><h3 class="h6">กราฟเส้น · เปรียบเทียบเวลาเฉลี่ยระหว่างจุด (นาที)</h3><div style="height:300px;position:relative"><canvas id="fiscal-wait-line" role="img" aria-label="กราฟเส้นเปรียบเทียบเวลาเฉลี่ยระหว่างจุดบริการ"></canvas></div><p class="small text-muted">เส้นเชื่อมค่าเฉลี่ยของแต่ละจุด ไม่ใช่แนวโน้มตามวันหรือเวลาสะสม</p></div>
+                <div class="col-12 col-xl-6"><h3 class="h6">กราฟโดนัท · จำนวนตัวอย่างที่ใช้คำนวณแต่ละจุด</h3><div style="height:320px;position:relative"><canvas id="fiscal-wait-donut" role="img" aria-label="กราฟโดนัทจำนวนตัวอย่างแต่ละจุดบริการ แยกวงตามปีงบประมาณ"></canvas></div><p id="fiscal-wait-donut-note" class="small text-muted"></p><p class="small text-muted">ไม่รวมช่องเวลารวม • VN เดียวอาจนับหลายจุด สัดส่วนนี้ไม่ใช่สัดส่วนผู้ป่วยไม่ซ้ำ</p></div>
+            </div>
+            <p id="fiscal-wait-note" class="small text-muted mb-0">แต่ละช่องแสดงเวลาเฉลี่ย ชั่วโมง:นาที:วินาที และจำนวน VN ที่ใช้คำนวณ • คัดกรอง: ลงทะเบียน → สิ้นสุดคัดกรองล่าสุด • รอแพทย์: เข้าคิวแผนกตรวจครั้งแรก → เริ่มพบแพทย์ครั้งแรก • Lab/X-ray: เริ่มครั้งแรก → สิ้นสุดครั้งสุดท้าย เฉพาะรายการเริ่มและจบวันเดียวกัน • รอรับยา: เข้าคิว 006 ครั้งแรก → จ่ายยาครั้งสุดท้าย • รวมทุกจุด: ลงทะเบียน → จ่ายยาครั้งสุดท้าย (เฉพาะ VN ที่มีคู่เวลา) ไม่ใช่ผลบวกค่าเฉลี่ย • รับเวลา 0–8 ชั่วโมง ยกเว้นรอรับยา 0–4 ชั่วโมง • ไม่มีคู่เวลาจะแสดง —</p>
+        </div>
+    </section>
+
     <div class="section-card mb-3" id="cc-section-kpi" data-cc-section data-cc-modules="overview">
         <div class="section-header flex-wrap gap-2">
             <div><span class="badge-step">1</span> OPD KPI SUMMARY ภาพรวมตัวชี้วัดผู้ป่วยนอก</div>
@@ -396,7 +456,7 @@ body{background:var(--cc-bg);color:var(--cc-text)}
                 <!-- กล่อง 1.5 -->
                 <div class="col-6 col-md-4 col-xl-2">
                     <div class="kpi-box kpi-tone-doc-time">
-                        <div class="kpi-heading small fw-bold"><i class="fa-solid fa-stethoscope icon-stage-doctor me-1"></i> ซักประวัติ → เริ่มบันทึกรายการยา (เฉลี่ย)</div>
+                        <div class="kpi-heading small fw-bold"><i class="fa-solid fa-stethoscope icon-stage-doctor me-1"></i> ส่งเข้าห้อง → บันทึกยาครั้งแรก (เฉลี่ย)</div>
                         <div class="kpi-value" id="kpi-doc-time">—</div>
                         <div class="small text-muted" title="service4 = เรียกผู้ป่วยไปซักประวัติ • service6 = เริ่มบันทึกรายการยาที่ห้องจ่ายยา • เฉลี่ยเฉพาะคู่เวลาที่อยู่ระหว่าง 1–120 นาที">เรียกซักประวัติ (service4) → เริ่มบันทึกรายการยา (service6)</div>
                         <div id="kpi-trend-4" class="kpi-trend text-muted">ยังไม่มีข้อมูลเปรียบเทียบ</div>
@@ -456,9 +516,9 @@ body{background:var(--cc-bg);color:var(--cc-text)}
                 </div>
                 <div class="card-body">
                     <p class="small text-muted mb-2">นับ VN ที่มีหลักฐานแต่ละขั้นตอน • กลับบ้านอิงแผนกปัจจุบัน `cur_dep` รหัส 017 “กลับบ้าน”</p>
-                    <div class="flow-row"><div class="flow-label"><i class="fa-solid fa-clipboard-check me-1 icon-stage-registration"></i> ลงทะเบียน</div><div class="flow-bar-wrap"><div class="flow-bar" style="width:0%;background:#0d6efd">—</div></div><div class="flow-pct">—</div></div>
-                    <div class="flow-row"><div class="flow-label"><i class="fa-solid fa-user-nurse me-1 icon-stage-triage"></i> คัดกรอง</div><div class="flow-bar-wrap"><div class="flow-bar" style="width:0%;background:#198754">—</div></div><div class="flow-pct">—</div></div>
-                    <div class="flow-row"><div class="flow-label"><i class="fa-solid fa-clock me-1 icon-stage-waiting"></i> เข้าจุดตรวจ</div><div class="flow-bar-wrap"><div class="flow-bar" style="width:0%;background:#ffc107">—</div></div><div class="flow-pct">—</div></div>
+                    <div class="flow-row"><div class="flow-label"><i class="fa-solid fa-clipboard-check me-1 icon-stage-registration"></i> เปิด Visit</div><div class="flow-bar-wrap"><div class="flow-bar" style="width:0%;background:#0d6efd">—</div></div><div class="flow-pct">—</div></div>
+                    <div class="flow-row"><div class="flow-label"><i class="fa-solid fa-user-nurse me-1 icon-stage-triage"></i> ซักประวัติ</div><div class="flow-bar-wrap"><div class="flow-bar" style="width:0%;background:#198754">—</div></div><div class="flow-pct">—</div></div>
+                    <div class="flow-row"><div class="flow-label"><i class="fa-solid fa-clock me-1 icon-stage-waiting"></i> เข้าห้องตรวจ</div><div class="flow-bar-wrap"><div class="flow-bar" style="width:0%;background:#ffc107">—</div></div><div class="flow-pct">—</div></div>
                     <div class="flow-row"><div class="flow-label"><i class="fa-solid fa-user-doctor me-1 icon-stage-doctor"></i> มีการวินิจฉัย</div><div class="flow-bar-wrap"><div class="flow-bar" style="width:0%;background:#fd7e14">—</div></div><div class="flow-pct">—</div></div>
                     <div class="flow-row"><div class="flow-label"><i class="fa-solid fa-pills me-1 icon-stage-pharmacy"></i> จ่ายยาแล้ว</div><div class="flow-bar-wrap"><div class="flow-bar" style="width:0%;background:#6f42c1">—</div></div><div class="flow-pct">—</div></div>
                     <div class="flow-row"><div class="flow-label"><i class="fa-solid fa-wallet me-1 icon-stage-payment"></i> มีใบเสร็จสถานะ OK</div><div class="flow-bar-wrap"><div class="flow-bar" style="width:0%;background:#0dcaf0">—</div></div><div class="flow-pct">—</div></div>
@@ -486,7 +546,7 @@ body{background:var(--cc-bg);color:var(--cc-text)}
         <div class="col-lg-6 col-md-12" id="cc-section-waiting" data-cc-section data-cc-modules="waiting">
             <div class="section-card">
                 <div class="section-header">
-                    <div><span class="badge-step">6</span> การวิเคราะห์เวลารอในแต่ละขั้นตอน</div>
+                    <div><span class="badge-step">6</span> การวิเคราะห์เวลารอในแต่ละขั้นตอน (SLA)</div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -494,47 +554,24 @@ body{background:var(--cc-bg);color:var(--cc-text)}
                             <thead>
                                 <tr>
                                     <th>ขั้นตอน</th>
-                                    <th class="num-col">ช่วงเวลาเฉลี่ย</th>
+                                    <th class="num-col">เวลาเฉลี่ย</th>
                                     <th class="num-col">Target (SLA)</th>
                                     <th class="text-center">สถานะ</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr id="row-sla-registration">
-                                    <td>ลงทะเบียน → คัดกรอง</td>
-                                    <td class="num-col" id="sla-registration-val">—</td>
-                                    <td class="num-col text-muted">&le; 10 นาที</td>
-                                    <td class="text-center" id="sla-registration-icon">—</td>
-                                </tr>
-                                <tr id="row-sla-triage">
-                                    <td>คัดกรอง → จุดตรวจ</td>
-                                    <td class="num-col" id="sla-triage-val">—</td>
-                                    <td class="num-col text-muted">&le; 15 นาที</td>
-                                    <td class="text-center" id="sla-triage-icon">—</td>
-                                </tr>
-                                <tr id="row-sla-doc" hidden>
-                                    <td class="fw-bold">รอรับคิวแพทย์</td>
-                                    <td class="num-col" id="sla-doc-val">—</td>
-                                    <td class="num-col text-muted">&le; 20 นาที</td>
-                                    <td class="text-center" id="sla-doc-icon">—</td>
-                                </tr>
-                                <tr id="row-sla-pharm">
-                                    <td class="fw-bold">เข้าห้องยา → จ่ายยา</td>
-                                    <td class="num-col" id="sla-pharm-val">—</td>
-                                    <td class="num-col text-muted">&le; 20 นาที</td>
-                                    <td class="text-center" id="sla-pharm-icon">—</td>
-                                </tr>
-                                <tr id="row-sla-payment">
-                                    <td>เข้าห้องจ่ายยา → ใบเสร็จ</td>
-                                    <td class="num-col" id="sla-payment-val">—</td>
-                                    <td class="num-col text-muted">&le; 10 นาที</td>
-                                    <td class="text-center" id="sla-payment-icon">—</td>
-                                </tr>
-                            </tbody>
+                                <tr id="row-sla-registration"><td title="เริ่ม → สิ้นสุดบันทึก OPD-NEW-VISIT ครั้งแรกต่อ Visit">ลงทะเบียน</td><td class="num-col" id="sla-registration-val">—</td><td class="num-col text-muted">&le; 10 นาที</td><td class="text-center" id="sla-registration-icon">—</td></tr>
+<tr id="row-sla-wait-triage"><td title="สิ้นสุดเปิด Visit → เริ่มซักประวัติ ครั้งแรกต่อ Visit">รอคัดกรอง</td><td class="num-col" id="sla-wait-triage-val">—</td><td class="num-col text-muted">&le; 15 นาที</td><td class="text-center" id="sla-wait-triage-icon">—</td></tr>
+<tr id="row-sla-triage"><td title="เริ่ม → สิ้นสุดบันทึก OPD-SCREEN ครั้งแรกต่อ Visit">คัดกรอง / ซักประวัติ</td><td class="num-col" id="sla-triage-val">—</td><td class="num-col text-muted">&le; 15 นาที</td><td class="text-center" id="sla-triage-icon">—</td></tr>
+<tr id="row-sla-doc"><td title="สิ้นสุดซักประวัติ → เริ่มบันทึกตรวจแพทย์ ครั้งแรกต่อ Visit">รอพบแพทย์</td><td class="num-col" id="sla-doc-val">—</td><td class="num-col text-muted">&le; 20 นาที</td><td class="text-center" id="sla-doc-icon">—</td></tr>
+<tr id="row-sla-consult"><td title="เริ่ม → สิ้นสุดบันทึก OPD-DOCTOR ครั้งแรกต่อ Visit; ยังไม่รวมเวลาหัตถการแยก">ตรวจ / หัตถการ</td><td class="num-col" id="sla-consult-val">—</td><td class="num-col text-muted">&le; 15 นาที</td><td class="text-center" id="sla-consult-icon">—</td></tr>
+<tr id="row-sla-payment"><td title="เข้าห้องเก็บเงิน → ออกใบเสร็จสถานะ OK">ชำระเงิน</td><td class="num-col" id="sla-payment-val">—</td><td class="num-col text-muted">&le; 10 นาที</td><td class="text-center" id="sla-payment-icon">—</td></tr>
+<tr id="row-sla-pharm"><td title="เข้าคิวห้องยา → จ่ายยา แผนกเดียวกัน">รอรับยา</td><td class="num-col" id="sla-pharm-val">—</td><td class="num-col text-muted">&le; 20 นาที</td><td class="text-center" id="sla-pharm-icon">—</td></tr>
+</tbody>
                         </table>
                     </div>
                 </div>
-                <div id="time-data-note" class="small text-muted px-3 pb-3">ยังไม่มีข้อมูลเวลา</div>
+                <div class="sla-caption">เกณฑ์ SLA ตามภาพ • รายการที่ยังไม่มีคู่เวลาตรงขั้นตอนแสดง N/A<details><summary>รายละเอียดสูตรและจำนวนคู่เวลา</summary><div id="time-data-note">ยังไม่มีข้อมูลเวลา</div></details></div>
             </div>
         </div>
 
@@ -543,13 +580,13 @@ body{background:var(--cc-bg);color:var(--cc-text)}
             <div class="section-card d-flex flex-column justify-content-between">
                 <div>
                     <div class="section-header">
-                        <div><span class="badge-step">7</span> ประสิทธิภาพคลินิก Top 5</div>
+                        <div><span class="badge-step">7</span> ประสิทธิภาพห้อง Top 5 · ส่งเข้าห้อง → บันทึกสั่งยา</div>
                     </div>
                     <div class="table-responsive" style="max-height:360px;overflow:auto">
                         <table class="table table-hover table-custom mb-0">
                             <thead>
                                 <tr>
-                                    <th>คลินิก / แผนก</th>
+                                    <th>ห้องตรวจที่ส่งเข้า</th>
                                     <th class="num-col">ครั้งรับบริการ</th>
                                     <th class="num-col">ซักประวัติ → เริ่มบันทึกรายการยา (เฉลี่ย)</th>
                                     <th class="num-col">ครั้งที่มีข้อมูลเวลา</th>
@@ -561,7 +598,7 @@ body{background:var(--cc-bg);color:var(--cc-text)}
                 </div>
                 <div class="bg-light p-2 border-top text-center small">
                     <i class="fa-solid fa-user-doctor icon-stage-doctor me-1"></i>
-                    <strong title="service4 = เรียกผู้ป่วยไปซักประวัติ • service6 = เริ่มบันทึกรายการยาที่ห้องจ่ายยา • เฉลี่ยเฉพาะคู่เวลาที่อยู่ระหว่าง 1–120 นาที">เวลาเฉลี่ย เรียกซักประวัติ → เริ่มบันทึกรายการยา:</strong> <strong id="eff-footer-avg">—</strong>
+                    <strong>ส่งเข้าห้อง → บันทึกยา เฉลี่ยเฉพาะ Top 5:</strong> <strong id="eff-footer-avg">—</strong>
                 </div>
             </div>
         </div>
@@ -668,6 +705,7 @@ body{background:var(--cc-bg);color:var(--cc-text)}
 
     <section id="cc-phase3" data-cc-section data-cc-modules="analytics waiting" class="cc-module-panel" hidden aria-labelledby="analytics-heading">
         <div class="cc-analytics-heading"><span class="badge-step">11</span><div><h2 id="analytics-heading">วิเคราะห์เวลาบริการและคุณภาพข้อมูล</h2><span class="cc-analytics-subtitle">OPD Analytics · ภาพรวมประสิทธิภาพบริการ</span></div><i class="fa-solid fa-chart-line" aria-hidden="true"></i></div>
+        <p><a href="fiscal-service-times.html" class="btn btn-outline-primary btn-sm">รายงานเวลาบริการ ปีงบประมาณ 2568–2569</a> <small>ช่วงวันที่คงที่ตามคำสั่ง SQL</small></p>
         <p>ใช้ช่วงวันที่ด้านบน • Median คือค่ากลาง และ P90 คือเปอร์เซ็นไทล์ที่ 90 (ประมาณค่าระหว่างจุด) • นับเฉพาะคู่เวลาที่ใช้คำนวณได้</p>
         <button id="analytics-refresh" class="btn btn-primary btn-sm">อัปเดต Analytics</button> <button class="btn btn-outline-primary btn-sm" data-report-export="analytics" data-export-format="csv">CSV</button> <button class="btn btn-outline-primary btn-sm" data-report-export="analytics" data-export-format="excel">Excel (.xml)</button>
         <p id="analytics-status" role="status" class="mt-3">ยังไม่มีข้อมูล</p><p id="analytics-updated"></p>
@@ -684,7 +722,7 @@ body{background:var(--cc-bg);color:var(--cc-text)}
         <div class="table-responsive"><table class="table table-striped"><caption>กดช่วงเวลาเพื่อใช้ช่วงนั้นเป็นตัวกรองรายงานส่วนกลาง (จำกัดการเจาะช่วงไม่เกิน 366 วัน) • สัปดาห์เริ่มวันจันทร์</caption><thead><tr><th>ช่วงวันที่</th><th>Visit</th><th>ใหม่</th><th>เก่า</th><th>ไม่ทราบกลุ่ม</th></tr></thead><tbody id="long-body"></tbody></table></div>
         <h3 class="h5 mt-4">Data Quality · ความพร้อมของข้อมูล</h3><p id="analytics-quality"></p>
         <div class="table-responsive"><table class="table table-striped"><thead><tr><th>ช่วงบริการ</th><th>ตัวอย่างใช้ได้</th><th>ไม่มีคู่เวลาที่ใช้ได้</th><th>ความครอบคลุม</th></tr></thead><tbody id="analytics-quality-body"></tbody></table></div>
-        <p>เวลาอยู่จุดตรวจไม่ใช่เวลาตรวจแพทย์ล้วน ระยะเวลารวมสิ้นสุดที่การเข้าจุดกลับบ้าน ไม่ใช่การยืนยันออกจากโรงพยาบาล • รายการไม่มีคู่เวลาอาจเกิดจากไม่ผ่านจุดนั้น, NULL หรือเวลาผิดลำดับ จึงไม่แปลว่าเป็นข้อผิดพลาดทั้งหมด • TIME ที่ไม่ระบุวันที่ไม่ใช้ยืนยันบริการข้ามวัน • ค่าสูงผิดปกติและการบันทึกย้อนหลังยังรวมอยู่ ต้องตรวจต้นทางก่อนใช้ตัดสินใจ</p>
+        <p>เวลาอยู่เข้าห้องตรวจไม่ใช่เวลาตรวจแพทย์ล้วน ระยะเวลารวมสิ้นสุดที่การเข้าจุดกลับบ้าน ไม่ใช่การยืนยันออกจากโรงพยาบาล • รายการไม่มีคู่เวลาอาจเกิดจากไม่ผ่านจุดนั้น, NULL หรือเวลาผิดลำดับ จึงไม่แปลว่าเป็นข้อผิดพลาดทั้งหมด • TIME ที่ไม่ระบุวันที่ไม่ใช้ยืนยันบริการข้ามวัน • ค่าสูงผิดปกติและการบันทึกย้อนหลังยังรวมอยู่ ต้องตรวจต้นทางก่อนใช้ตัดสินใจ</p>
         <p>การมาตามนัดตรวจจาก HN + วันใน ovst/vn_stat ยังไม่ยืนยันว่ามาตรงคลินิกหรือตรงเวลา อัตราขาดนัดใช้เฉพาะมาตามนัด + ขาดนัดในวันที่ผ่านมา ไม่รวมรอดำเนินการและยกเลิก</p>
     </section>
 
@@ -794,7 +832,7 @@ body{background:var(--cc-bg);color:var(--cc-text)}
 <script>
 (function(root){
     'use strict';
-    const labels={registration:'ลงทะเบียน → ซักประวัติ',triage:'ซักประวัติ → เข้าจุดตรวจ',consult:'จุดตรวจ → เข้าห้องยา',payment:'เข้าห้องตรวจ → ออกใบเสร็จ'};
+    const labels={registration:'เปิด Visit → ซักประวัติ',triage:'ซักประวัติ → เข้าห้องตรวจ',consult:'เข้าห้องตรวจ → เข้าห้องยา',payment:'เข้าห้องเก็บเงิน → ออกใบเสร็จ'};
     function compliance(row,threshold){if(!row||!row.samples)return null;return (row.samples-row['over_'+threshold])*100/row.samples;}
     function appointmentSummary(days,today){let attended=0,missed=0,total=0;for(const day of days){total+=day.total_appointed;if(day.appointment_date<today){attended+=day.attended;missed+=day.no_show;}}return {total,missed,rate:attended+missed?missed*100/(attended+missed):null};}
     function bottleneck(stages,thresholds){return Object.keys(labels).filter(key=>key!=='total'&&stages[key]?.samples>0).map(key=>({key,over:100-compliance(stages[key],thresholds[key]||30),p90:stages[key].p90_minutes})).sort((a,b)=>b.over-a.over||b.p90-a.p90||a.key.localeCompare(b.key))[0]||null;}
@@ -1010,6 +1048,7 @@ body{background:var(--cc-bg);color:var(--cc-text)}
 
         valEl.innerText = minutes(actualMin);
         if (actualMin == null) { row.className = ""; valEl.className = "num-col text-muted"; iconEl.textContent = "ไม่มีข้อมูล"; return; }
+        if (targetMin == null) { row.className = ''; valEl.className = 'num-col'; iconEl.textContent = 'ยังไม่กำหนดเกณฑ์'; return; }
         if (actualMin > targetMin) {
             row.className = 'table-danger';
             valEl.className = 'num-col text-danger fw-bold';
@@ -1074,7 +1113,7 @@ body{background:var(--cc-bg);color:var(--cc-text)}
             row.querySelector('.flow-bar').textContent = 'ไม่มีข้อมูล';
             row.querySelector('.flow-pct').textContent = '—';
         });
-        for (const name of ['registration','triage','doc','consult','pharm','payment']) {
+        for (const name of ['registration','wait-triage','triage','doc','consult','pharm','payment']) {
             updateSlaRow('row-sla-' + name, 'sla-' + name + '-val', 'sla-' + name + '-icon', null, 0);
         }
         for (const id of ['eff-footer-avg','app-center-total','app-walkin-text','app-came-text','app-noshow-text','app-pending-text','app-cancelled-text','app-rate-pct','peak-badge-2','peak-badge-9']) document.getElementById(id).textContent = '—';
@@ -1120,9 +1159,11 @@ body{background:var(--cc-bg);color:var(--cc-text)}
             });
             const samples = d.quality?.time_samples || {};
             document.getElementById('time-data-note').textContent =
-                'จำนวนครั้งที่มีคู่เวลา: ลงทะเบียน ' + (samples.registration || 0) + ', คัดกรองถึงจุดตรวจ ' + (samples.triage || 0) +
-                ', ช่วงจุดตรวจ ' + (samples.consult || 0) + ', จ่ายยา ' + (samples.pharmacy || 0) + ', ห้องจ่ายยา → ใบเสร็จ ' + (samples.payment || 0) +
-                ' • ประสิทธิภาพคลินิกใช้คู่เวลาจริง service_time.service4 → service_time.service6 (1–120 นาที) เพราะไม่มีข้อมูลคู่ service4/service5 ในฐาน • ไม่มีคู่เวลาจะแสดง — ไม่แทนด้วยค่าตัวอย่าง';
+                'จำนวนครั้งที่มีคู่เวลา: เปิด Visit ' + (samples.registration || 0) + ', ซักประวัติถึงเข้าห้องตรวจ ' + (samples.triage || 0) +
+                ', ช่วงเข้าห้องตรวจ ' + (samples.consult || 0) + ', เข้าคิวห้องยา → จ่ายยา ' + (samples.pharmacy || 0) + ', เข้าห้องเก็บเงิน → ออกใบเสร็จ ' + (samples.payment || 0) +
+                ' • เวลาห้องยาใช้เข้าคิวครั้งแรกของแผนก 006/046 → service7 จับคู่ service7_dep แผนกเดียวกัน เฉพาะ 0–240 นาที ตัดเวลาย้อนลำดับ • เวลาห้องเก็บเงินใช้เข้าจุด 016 ครั้งแรก → ใบเสร็จสถานะ OK ใบแรกต่อ VN ภายใน 24 ชั่วโมง ตัดเวลาย้อนลำดับ; ไม่มีคู่เวลาจะแสดง N/A • หัวข้อ 7 ใช้ส่งเข้าห้องตรวจ → บันทึกยาครั้งแรกหลังส่งเข้า โดย VN และรหัสห้องตรงกัน (0–480 นาที) • ไม่มีคู่เวลาจะแสดง — ไม่แทนด้วยค่าตัวอย่าง';
+            const stageNames={registration:'ลงทะเบียน',wait_triage:'รอคัดกรอง',triage:'คัดกรอง/ซักประวัติ',doctor:'รอพบแพทย์',consult:'ตรวจแพทย์'};
+            document.getElementById('time-data-note').textContent = 'คู่เวลา SLA: '+Object.entries(stageNames).map(([key,label])=>label+' '+(d.sla_stages?.[key]?.samples||0)+' visit').join(' • ')+' • ชำระเงิน '+(samples.payment||0)+' visit • รอรับยา '+(samples.pharmacy||0)+' visit • 5 ขั้นตอนแรกใช้บันทึกครั้งแรกของแต่ละประเภทต่อ Visit จาก ovst_service_time รับคู่เวลา 0–6 ชั่วโมงและตัดเวลาย้อนลำดับ • เวลาตรวจเป็นช่วงบันทึก OPD-DOCTOR ยังไม่รวมเวลาหัตถการแยก • ชำระเงิน: เข้าจุด 016 → ใบเสร็จ OK ใบแรก (0–24 ชั่วโมง) • รอรับยา: เข้าคิวห้องยา → จ่ายยา แผนกเดียวกัน (0–4 ชั่วโมง)';
             document.getElementById('data-quality-note').textContent =
                 'หน่วย: ครั้งรับบริการ (VN) • ผู้รับบริการไม่ซ้ำ ' + Number(d.kpi.unique_patients || 0).toLocaleString() + ' คน' +
                 ' • จำแนกใหม่/เก่าไม่ได้ ' + Number(d.kpi.unknown_patient || 0).toLocaleString() + ' ครั้ง' +
@@ -1134,7 +1175,9 @@ body{background:var(--cc-bg);color:var(--cc-text)}
             document.getElementById('kpi-old').innerText = (d.kpi.old_patient || 0).toLocaleString();
             document.getElementById('kpi-wait').innerText = minutes(d.kpi.avg_wait);
             document.getElementById('kpi-doc-time').innerText = minutes(d.kpi.avg_consult);
-            document.getElementById('eff-footer-avg').innerText = minutes(d.kpi.avg_consult);
+            const efficiencyRows=d.efficiency||[];
+            const efficiencySamples=efficiencyRows.reduce((sum,row)=>sum+Number(row.wait_samples||0),0);
+            document.getElementById('eff-footer-avg').innerText = minutes(efficiencySamples?efficiencyRows.reduce((sum,row)=>sum+Number(row.wait_seconds_total||0),0)/efficiencySamples/60:null);
 
             // --- อัปเดตส่วนที่ 2 และ 9: กราฟรายชั่วโมง และ Peak Hour ---
             const hoursList = dashboardHours;
@@ -1156,7 +1199,7 @@ body{background:var(--cc-bg);color:var(--cc-text)}
             const maxPeak = Math.max(...peakSlice, 0);
             const maxPeakIndex = peakSlice.indexOf(maxPeak);
             const peakLabels = dashboardHourRanges;
-            
+
             document.getElementById("peak-badge-2").textContent = "ไม่มีผู้รับบริการในช่วงเวลานี้";
             document.getElementById("peak-badge-9").textContent = "ไม่มีข้อมูลช่วงพีค";
             if (maxPeak > 0 && peakLabels[maxPeakIndex]) {
@@ -1197,10 +1240,12 @@ body{background:var(--cc-bg);color:var(--cc-text)}
             });
 
             // --- อัปเดตส่วนที่ 5: ตารางวิเคราะห์เวลารอ (SLA) ---
-            updateSlaRow('row-sla-registration', 'sla-registration-val', 'sla-registration-icon', d.sla_wait?.registration, 10);
+            updateSlaRow('row-sla-registration', 'sla-registration-val', 'sla-registration-icon', d.sla_stages?.registration?.avg_minutes, 10)
+            updateSlaRow('row-sla-wait-triage', 'sla-wait-triage-val', 'sla-wait-triage-icon', d.sla_stages?.wait_triage?.avg_minutes, 15);
             updateSlaRow('row-sla-payment', 'sla-payment-val', 'sla-payment-icon', d.sla_wait?.payment, 10);
-            updateSlaRow('row-sla-triage', 'sla-triage-val', 'sla-triage-icon', d.sla_wait?.triage, 15);
-            updateSlaRow('row-sla-doc', 'sla-doc-val', 'sla-doc-icon', d.sla_wait?.doctor, 20);
+            updateSlaRow('row-sla-triage', 'sla-triage-val', 'sla-triage-icon', d.sla_stages?.triage?.avg_minutes, 15);
+            updateSlaRow('row-sla-doc', 'sla-doc-val', 'sla-doc-icon', d.sla_stages?.doctor?.avg_minutes, 20);
+            updateSlaRow('row-sla-consult', 'sla-consult-val', 'sla-consult-icon', d.sla_stages?.consult?.avg_minutes, 15);
             updateSlaRow('row-sla-pharm', 'sla-pharm-val', 'sla-pharm-icon', d.sla_wait?.pharmacy, 20);
 
             // --- อัปเดตส่วนที่ 6: ตารางประสิทธิภาพคลินิก ---
@@ -1208,8 +1253,8 @@ body{background:var(--cc-bg);color:var(--cc-text)}
             if (effTbody && d.efficiency && d.efficiency.length > 0) {
                 effTbody.innerHTML = d.efficiency.map(item => {
                     const visits = parseInt(item.total_visit) || 0;
-                    const avgMin = item.avg_consult_min == null ? null : Number(item.avg_consult_min);
-                    const timeSamples = Number(item.consult_samples) || 0;
+                    const avgMin = item.avg_wait_min == null ? null : Number(item.avg_wait_min);
+                    const timeSamples = Number(item.wait_samples) || 0;
                     return `<tr>
                                 <td>${escapeHtml(item.clinic_name)}</td>
                                 <td class="num-col">${visits.toLocaleString()}</td>
@@ -1218,7 +1263,7 @@ body{background:var(--cc-bg);color:var(--cc-text)}
                             </tr>`;
                 }).join('');
             } else if (effTbody) {
-                effTbody.innerHTML = `<tr><td colspan="4" class="text-center text-muted py-3">ไม่มีข้อมูลในช่วงวันที่เลือก (${startDate})</td></tr>`;
+                effTbody.innerHTML = `<tr><td colspan="4" class="text-center text-muted py-3">ไม่มีห้องที่มีคู่เวลาเข้าเกณฑ์ในช่วงวันที่เลือก</td></tr>`;
             }
 
             // Appointment percentages share the appointment-only denominator.
@@ -1254,8 +1299,8 @@ body{background:var(--cc-bg);color:var(--cc-text)}
             const pharmWait = d.sla_wait?.pharmacy;
 
             const alerts = [
-                ['คัดกรองถึงจุดตรวจ', docWait, 15, 'นาที'],
-                ['เวลารอรับยา', pharmWait, 20, 'นาที'],
+                ['ซักประวัติถึงเข้าห้องตรวจ', docWait, 15, 'นาที'],
+                ['เข้าคิวห้องยา → จ่ายยา', pharmWait, 20, 'นาที'],
                 ['ยอดรวมสูงสุดรายชั่วโมงในช่วงวันที่เลือก', maxPeak, 300, 'ครั้ง'],
                 ['อัตราผิดนัด (No-show)', noShowRate, 10, '%']
             ];
@@ -1288,5 +1333,76 @@ body{background:var(--cc-bg);color:var(--cc-text)}
 </script>
 </main>
 <script src="clinic12.js"></script>
+
+<script>
+(function(){
+    'use strict';
+    const button=document.getElementById('fiscal-wait-refresh'),status=document.getElementById('fiscal-wait-status'),tbody=document.getElementById('fiscal-wait-body');
+    const yearSelect=document.getElementById('fiscal-wait-years'),yearOptions=document.getElementById('fiscal-wait-year-options');
+    const todayParts=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Bangkok',year:'numeric',month:'numeric'}).formatToParts(new Date());
+    const part=type=>Number(todayParts.find(item=>item.type===type).value);
+    const currentYear=part('year')+543+(part('month')>=10?1:0);
+    for(let year=currentYear;year>=Math.min(2568,currentYear-10);year--){const label=document.createElement('label');label.className='d-flex align-items-center gap-1 small';const input=document.createElement('input');input.type='checkbox';input.value=String(year);input.className='form-check-input mt-0';input.checked=year===2568||year===2569;label.append(input,document.createTextNode(String(year)));yearOptions.append(label);}
+    const metrics=[['จุดคัดกรอง/ซักประวัติ','จำนวนคัดกรอง'],['จุดรอพบแพทย์','จำนวนรอแพทย์'],['จุด Lab','จำนวน Lab'],['จุด X-ray','จำนวน X-ray'],['จุดรอรับยา','จำนวนรอรับยา'],['รวมทุกจุด','จำนวนรวม']];
+    const charts=[];
+    const colors=['#2563eb','#16a085','#f59e0b','#a855f7','#ef476f','#64748b','#0891b2','#c2410c','#4d7c0f','#be185d','#4338ca','#854d0e'];
+    const fiscalColor=row=>{const year=Number(String(row['ปีงบประมาณ']).match(/\d{4}/)?.[0]||2568);return colors[((year-2568)%colors.length+colors.length)%colors.length];};
+    const labels=['คัดกรอง/ซักประวัติ','รอพบแพทย์','Lab','X-ray','รอรับยา','รวมทุกจุด'];
+    const chartPanel=document.getElementById('fiscal-wait-charts');
+    function clearCharts(){charts.splice(0).forEach(chart=>chart.destroy());chartPanel.hidden=true;}
+    function asMinutes(value){
+        if(value==null)return null;
+        const match=/^(\d+):(\d{2}):(\d{2})$/.exec(String(value));
+        return match?Number(match[1])*60+Number(match[2])+Number(match[3])/60:null;
+    }
+    function renderCharts(rows){
+        clearCharts();
+        if(!rows.length)return;
+        if(typeof Chart==='undefined'){status.textContent+=' • โหลดไลบรารีกราฟไม่สำเร็จ';return;}
+        chartPanel.hidden=false;
+        for(const type of ['bar','line']){
+            charts.push(new Chart(document.getElementById('fiscal-wait-'+type),{
+                type,data:{labels,datasets:rows.map((row,index)=>({label:row['ปีงบประมาณ'],data:metrics.map(([key])=>asMinutes(row[key])),borderColor:fiscalColor(row),backgroundColor:fiscalColor(row)+(type==='bar'?'cc':'33'),borderWidth:2,tension:0,spanGaps:false}))},
+                options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'},tooltip:{callbacks:{label:context=>context.dataset.label+': '+(context.parsed.y==null?'ไม่มีข้อมูล':context.parsed.y.toLocaleString('th-TH',{maximumFractionDigits:2})+' นาที')}}},scales:{y:{beginAtZero:true,title:{display:true,text:'นาที'}}}}
+            }));
+        }
+        charts.push(new Chart(document.getElementById('fiscal-wait-donut'),{
+            type:'doughnut',data:{labels:labels.slice(0,5),datasets:rows.map(row=>({label:row['ปีงบประมาณ'],data:metrics.slice(0,5).map(([,key])=>Number(row[key]||0)),backgroundColor:fiscalColor(row),borderWidth:2}))},
+            options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{generateLabels:chart=>chart.data.datasets.map((dataset,index)=>({text:dataset.label,fillStyle:dataset.backgroundColor,strokeStyle:dataset.backgroundColor,datasetIndex:index,hidden:!chart.isDatasetVisible(index)}))},onClick:(event,item,legend)=>{const chart=legend.chart;chart.setDatasetVisibility(item.datasetIndex,!chart.isDatasetVisible(item.datasetIndex));chart.update();}},tooltip:{callbacks:{label:context=>context.dataset.label+' · '+context.label+': '+Number(context.raw).toLocaleString('th-TH')+' ครั้ง'}}}}
+        }));
+        document.getElementById('fiscal-wait-donut-note').textContent='วงจากด้านนอกเข้าด้านใน: '+rows.map(row=>row['ปีงบประมาณ']).join(' → ')+(rows.every(row=>metrics.slice(0,5).every(([,key])=>!Number(row[key])))?' • ไม่มีตัวอย่างที่ใช้คำนวณ':'' );
+    }
+    async function load(){
+        if(button.disabled)return;
+        const selectedYears=[...yearOptions.querySelectorAll('input:checked')].map(input=>input.value).sort();
+        if(!selectedYears.length){status.textContent='กรุณาเลือกอย่างน้อย 1 ปีงบประมาณ';return;}
+        button.disabled=true;yearSelect.disabled=true;clearCharts();status.textContent='กำลังคำนวณรายงานปีงบประมาณ…';
+        try{
+            const reports=await Promise.all(selectedYears.map(async year=>{
+                const response=await fetch('api.php?action=fiscal_service_times&fiscal_year='+encodeURIComponent(year),{cache:'no-store'}),result=await response.json();
+                if(!response.ok||result.status!=='success')throw Error('ปี '+year+': '+(result.message||'API ทำงานไม่สำเร็จ'));
+                if(!Array.isArray(result.data?.rows))throw Error('รูปแบบข้อมูลปี '+year+' ไม่ถูกต้อง');
+                if(!result.data.rows.length){const empty={'ปีงบประมาณ':'ปีงบประมาณ '+year};metrics.forEach(([time,count])=>{empty[time]=null;empty[count]=0;});result.data.rows.push(empty);}
+                return result.data;
+            }));
+            const body={data:{rows:reports.flatMap(report=>report.rows)}};
+            document.getElementById('fiscal-wait-range').textContent='ปีที่แสดง: '+selectedYears.join(', ');
+            tbody.replaceChildren();
+            for(const row of body.data.rows){
+                const tr=tbody.insertRow(),heading=document.createElement('th');heading.scope='row';heading.textContent=row['ปีงบประมาณ'];tr.append(heading);
+                for(const [time,count] of metrics){const cell=tr.insertCell();cell.className='num-col';const value=document.createElement('div');value.className='fw-bold';value.textContent=row[time]??'—';const samples=document.createElement('div');samples.className='small text-muted';samples.textContent=Number(row[count]||0).toLocaleString('th-TH')+' ครั้ง';cell.append(value,samples);}
+            }
+            if(!body.data.rows.length){const cell=tbody.insertRow().insertCell();cell.colSpan=7;cell.className='text-center text-muted';cell.textContent='ไม่พบข้อมูลในช่วงปีงบประมาณนี้';}
+            status.textContent='อัปเดตสำเร็จ • '+new Date().toLocaleString('th-TH',{timeZone:'Asia/Bangkok'})+' เวลาไทย';
+            renderCharts(body.data.rows);
+        }catch(error){tbody.replaceChildren();const cell=tbody.insertRow().insertCell();cell.colSpan=7;cell.className='text-center text-muted';cell.textContent='ยังไม่มีผลรายงานที่โหลดสำเร็จ';status.textContent='โหลดรายงานไม่สำเร็จ: '+error.message;}
+        finally{button.disabled=false;yearSelect.disabled=false;}
+    }
+    yearSelect.addEventListener('change',()=>{status.textContent='เปลี่ยนปีที่เลือกแล้ว • กดแสดงปีที่เลือกเพื่ออัปเดตตารางและกราฟ';});
+    button.addEventListener('click',load);
+    load();
+})();
+</script>
+
 </body>
 </html>

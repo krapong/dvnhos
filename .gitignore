@@ -19,3 +19,6 @@ config.php
 node_modules/
 .DS_Store
 Thumbs.db
+
+# Versioned report query (not a database export)
+!sql/fiscal-service-times.sql

@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="th">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>เวลาบริการ ปีงบประมาณ 2568–2569</title>
+<style>body{font:16px system-ui,sans-serif;margin:32px;color:#16324f;background:#f4f7fb}main{max-width:1400px;margin:auto;background:white;padding:24px;border-radius:12px}h1{font-size:24px}button,a{color:#0756a0}button{padding:8px 16px;cursor:pointer}.scroll{overflow:auto}table{border-collapse:collapse;width:100%;font-size:14px}th,td{padding:12px;border:1px solid #dbe3ed;white-space:nowrap;text-align:right}th{background:#eaf1fa}th:first-child,td:first-child{text-align:left}p{line-height:1.7}#status{font-weight:600}</style>
+<main>
+<a href="opd_dashboard.html#analytics">กลับแดชบอร์ด</a>
+<h1>เวลาบริการ ปีงบประมาณ 2568–2569</h1>
+<p>วันที่รับบริการ 1 ตุลาคม 2567 – 30 กันยายน 2569 • ช่วงวันที่คงที่ ไม่ใช้ตัวกรองวันที่จากแดชบอร์ด • ค่าเฉลี่ยแสดงเป็น ชั่วโมง:นาที:วินาที และจำนวนครั้งรับบริการ (VN) ที่มีคู่เวลาเข้าเกณฑ์</p>
+<button id="load">โหลดรายงาน</button>
+<p id="status" role="status">กดโหลดรายงานเพื่อคำนวณข้อมูลสองปีงบประมาณ</p>
+<div class="scroll"><table id="report" hidden><thead></thead><tbody></tbody></table></div>
+<p>คัดกรอง: ลงทะเบียน → สิ้นสุดคัดกรองล่าสุด • รอแพทย์: เข้าคิวครั้งแรกในแผนก 003/069/070/071/072/073 → เริ่มพบแพทย์ครั้งแรก • Lab: รับสิ่งส่งตรวจครั้งแรก → รายงานครั้งสุดท้าย (เฉพาะรายการรับและรายงานวันเดียวกัน) • X-ray: ขอครั้งแรก → ยืนยันครั้งสุดท้าย (เฉพาะรายการวันเดียวกัน)</p>
+<p>รอรับยา: เข้าคิวแผนก 006 ครั้งแรก → จ่ายยาครั้งสุดท้ายจาก rx_stat • รวมทุกจุด: ลงทะเบียน → จ่ายยาครั้งสุดท้าย จึงนับเฉพาะ VN ที่มีเวลาจ่ายยา ไม่ใช่ผลรวมค่าเฉลี่ยแต่ละจุด • รับช่วงเวลา 0–8 ชั่วโมง ยกเว้นรอรับยา 0–4 ชั่วโมง • จำนวนตัวอย่างแต่ละจุดอาจต่างกัน และไม่มีข้อมูลแสดงเป็น —</p>
+</main>
+<script>
+const button=document.getElementById('load'),status=document.getElementById('status'),table=document.getElementById('report');
+button.addEventListener('click',async()=>{
+ button.disabled=true;table.hidden=true;status.textContent='กำลังคำนวณรายงานสองปีงบประมาณ…';
+ try{
+  const response=await fetch('api.php?action=fiscal_service_times',{cache:'no-store'}),body=await response.json();
+  if(!response.ok||body.status!=='success')throw Error(body.message||'โหลดรายงานไม่สำเร็จ');
+  const rows=body.data.rows;table.tHead.replaceChildren();table.tBodies[0].replaceChildren();
+  if(!rows.length){status.textContent='ไม่พบข้อมูลในช่วงวันที่รายงาน';return;}
+  const columns=Object.keys(rows[0]),header=table.tHead.insertRow();
+  columns.forEach(key=>{const cell=document.createElement('th');cell.scope='col';cell.textContent=key;header.append(cell);});
+  rows.forEach(row=>{const tr=table.tBodies[0].insertRow();columns.forEach(key=>{tr.insertCell().textContent=row[key]??'—';});});
+  table.hidden=false;status.textContent='โหลดรายงานสำเร็จ';
+ }catch(error){status.textContent='โหลดรายงานไม่สำเร็จ: '+error.message;}
+ finally{button.disabled=false;}
+});
+</script>
+</html>

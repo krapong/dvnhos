@@ -13,6 +13,92 @@ function apiJson(array $body, int $status=200): void {
     echo $json === false ? '{"status":"error","message":"ไม่สามารถแปลงผลลัพธ์เป็น JSON"}' : $json;
     exit;
 }
+function opdRecordedStages(PDO $conn, string $start, string $end): array {
+    $values=array_fill_keys(['registration','wait_triage','triage','doctor','consult'],[]);
+    try {
+        $stmt=$conn->prepare("SELECT t.vn,t.ovst_service_time_type_code type,t.service_begin_datetime started,t.service_end_datetime ended
+            FROM ovst_service_time t JOIN ovst o ON o.vn=t.vn
+            WHERE o.vstdate BETWEEN :s AND :e
+            AND t.ovst_service_time_type_code IN ('OPD-NEW-VISIT','OPD-SCREEN','OPD-DOCTOR')
+            ORDER BY t.service_begin_datetime,t.ovst_service_time_id");
+        $stmt->execute([':s'=>$start,':e'=>$end]);$visits=[];
+        while($r=$stmt->fetch(PDO::FETCH_ASSOC)) {
+            // Retain the first recorded episode, even if incomplete, rather than
+            // selecting a later episode just because it yields a positive wait.
+            if(!isset($visits[$r['vn']][$r['type']]))$visits[$r['vn']][$r['type']]=$r;
+        }
+        $elapsed=static function($a,$b):?float {
+            if(!$a||!$b||strpos($a,'0000-00-00')===0||strpos($b,'0000-00-00')===0)return null;
+            $x=strtotime($a);$y=strtotime($b);if($x===false||$y===false)return null;
+            $seconds=$y-$x;return $seconds>=0&&$seconds<=21600?$seconds/60:null;
+        };
+        foreach($visits as $v) {
+            $r=$v['OPD-NEW-VISIT']??[];$s=$v['OPD-SCREEN']??[];$d=$v['OPD-DOCTOR']??[];
+            $pairs=['registration'=>[$r['started']??null,$r['ended']??null],
+                'wait_triage'=>[$r['ended']??null,$s['started']??null],
+                'triage'=>[$s['started']??null,$s['ended']??null],
+                'doctor'=>[$s['ended']??null,$d['started']??null],
+                'consult'=>[$d['started']??null,$d['ended']??null]];
+            foreach($pairs as $key=>$pair){$m=$elapsed($pair[0],$pair[1]);if($m!==null)$values[$key][]=$m;}
+        }
+    } catch(PDOException $e) { error_log('OPD recorded stages query failed: '.$e->getCode()); }
+    $stats=[];foreach($values as $key=>$items)$stats[$key]=['samples'=>count($items),'avg_minutes'=>$items?round(array_sum($items)/count($items),1):null];
+    return $stats;
+}
+function opdCashierToReceipt(PDO $conn, string $start, string $end): array {
+    $result=['minutes'=>[], 'cash_entries'=>0, 'receipt_pairs'=>0, 'reversed_pairs'=>0, 'over_24h'=>0, 'source_available'=>false];
+    try {
+        $fields=opdReceiptFields($conn);
+        if(!$fields)return $result;
+        $table=$fields['table'];$vn=$fields['vn'];$time=$fields['time'];$date=$fields['date'];
+        if(!in_array('status',opdTableColumns($conn,$table),true))return $result;
+        $dateExpr=$date ? "COALESCE(NULLIF(NULLIF(r.$date,''),'0000-00-00'),o.vstdate)" : 'o.vstdate';
+        // First entry and first OK receipt per VN; this is not a visit-close time.
+        $stmt=$conn->prepare("SELECT q.entry_at,MIN(CONCAT($dateExpr,' ',r.$time)) receipt_at
+            FROM ovst o
+            JOIN (SELECT q.vn,MIN(q.queue_datetime) entry_at
+                FROM opd_dep_queue q JOIN ovst v ON v.vn=q.vn
+                WHERE v.vstdate BETWEEN :qs AND :qe AND q.depcode='016'
+                AND q.queue_datetime>'0000-00-00 00:00:00' GROUP BY q.vn) q ON q.vn=o.vn
+            LEFT JOIN $table r ON r.$vn=o.vn AND r.status='OK'
+                AND r.$time IS NOT NULL AND r.$time<>''
+            WHERE o.vstdate BETWEEN :s AND :e GROUP BY o.vn,q.entry_at");
+        $stmt->execute([':qs'=>$start,':qe'=>$end,':s'=>$start,':e'=>$end]);
+        while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
+            $result['cash_entries']++;
+            if(!$row['receipt_at'])continue;
+            $from=strtotime($row['entry_at']);$to=strtotime($row['receipt_at']);
+            if($from===false||$to===false)continue;
+            $result['receipt_pairs']++;
+            $seconds=$to-$from;
+            if($seconds<0){$result['reversed_pairs']++;continue;}
+            if($seconds>86400){$result['over_24h']++;continue;}
+            $result['minutes'][]=$seconds/60;
+        }
+        $result['source_available']=true;
+    } catch(PDOException $e) { error_log('OPD cashier-receipt query failed: '.$e->getCode()); }
+    return $result;
+}
+function opdPharmacyQueueStats(PDO $conn, string $start, string $end): array {
+    $result=['samples'=>0,'avg_minutes'=>null];
+    try {
+        // One entry per VN and dispensing department; TIME is anchored to visit date.
+        $stmt=$conn->prepare("SELECT COUNT(*) samples,ROUND(AVG(elapsed_seconds)/60,1) avg_minutes
+            FROM (SELECT TIMESTAMPDIFF(SECOND,q.entry_at,CONCAT(o.vstdate,' ',s.service7)) elapsed_seconds
+                FROM ovst o JOIN service_time s ON s.vn=o.vn
+                JOIN (SELECT q.vn,q.depcode,MIN(q.queue_datetime) entry_at
+                    FROM opd_dep_queue q JOIN ovst v ON v.vn=q.vn
+                    WHERE v.vstdate BETWEEN :qs AND :qe AND q.depcode IN ('006','046')
+                    AND q.queue_datetime>'0000-00-00 00:00:00' GROUP BY q.vn,q.depcode) q
+                    ON q.vn=o.vn AND q.depcode=s.service7_dep
+                WHERE o.vstdate BETWEEN :s AND :e AND s.service7 IS NOT NULL) durations
+            WHERE elapsed_seconds BETWEEN 0 AND 14400");
+        $stmt->execute([':qs'=>$start,':qe'=>$end,':s'=>$start,':e'=>$end]);
+        $row=$stmt->fetch(PDO::FETCH_ASSOC);
+        $result=['samples'=>(int)$row['samples'],'avg_minutes'=>isset($row['avg_minutes'])?(float)$row['avg_minutes']:null];
+    } catch(PDOException $e) { error_log('OPD pharmacy queue query failed: '.$e->getCode()); }
+    return $result;
+}
 function opdReceiptFields(PDO $conn): array {
     foreach (['rcpt_print','rcp_print'] as $table) {
         try {
@@ -61,6 +147,36 @@ function opdElapsedServiceMinutes($fromValue, $toValue, string $visitDate, int $
     if ($seconds <= 0 && opdIsTimeOnly((string)$fromValue) && opdIsTimeOnly((string)$toValue)) $seconds += 86400;
     $minutes = (int)round($seconds / 60);
     return $minutes > 0 && $minutes <= $maxMinutes ? $minutes : null;
+}
+function opdClinicWaitStats(PDO $conn, string $start, string $end): array {
+    // One sample per VN and examination room. Order timestamps must carry the same room code.
+    $stmt=$conn->prepare("SELECT IFNULL(k.department,'ไม่ระบุห้องตรวจ') clinic_name,
+        COUNT(*) total_visit,
+        COUNT(CASE WHEN pairs.elapsed_seconds BETWEEN 0 AND 28800 THEN 1 END) wait_samples,
+        SUM(CASE WHEN pairs.elapsed_seconds BETWEEN 0 AND 28800 THEN pairs.elapsed_seconds ELSE 0 END) wait_seconds_total,
+        ROUND(AVG(CASE WHEN pairs.elapsed_seconds BETWEEN 0 AND 28800 THEN pairs.elapsed_seconds/60 END),1) avg_wait_min
+        FROM (
+            SELECT q.vn,q.depcode,TIMESTAMPDIFF(SECOND,q.queue_at,
+                MIN(TIMESTAMP(i.rxdate,i.rxtime))) elapsed_seconds
+            FROM (
+                SELECT q.vn,q.depcode,MIN(q.queue_datetime) queue_at
+                FROM ovst o JOIN opd_dep_queue q ON q.vn=o.vn
+                JOIN kskdepartment room ON room.depcode=q.depcode
+                WHERE o.vstdate BETWEEN :s AND :e
+                AND q.queue_datetime>=:qs AND q.queue_datetime<DATE_ADD(:qe,INTERVAL 1 DAY)
+                GROUP BY q.vn,q.depcode
+            ) q
+            LEFT JOIN opitemrece i ON i.vn=q.vn AND i.dep_code=q.depcode
+                AND i.rxdate>'0000-00-00' AND i.rxtime>'00:00:00'
+                AND TIMESTAMP(i.rxdate,i.rxtime)>=q.queue_at
+                AND TIMESTAMP(i.rxdate,i.rxtime)<=DATE_ADD(q.queue_at,INTERVAL 8 HOUR)
+                AND EXISTS (SELECT 1 FROM drugitems di WHERE di.icode=i.icode)
+            GROUP BY q.vn,q.depcode,q.queue_at
+        ) pairs LEFT JOIN kskdepartment k ON k.depcode=pairs.depcode
+        GROUP BY pairs.depcode,k.department HAVING wait_samples > 0 AND avg_wait_min IS NOT NULL
+        ORDER BY total_visit DESC,pairs.depcode LIMIT 5");
+    $stmt->execute([':s'=>$start,':e'=>$end,':qs'=>$start,':qe'=>$end]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 function opdDoctorSaveStats(PDO $conn, string $startDate, string $endDate): array {
     $serviceColumns=opdTableColumns($conn,'service_time');
@@ -144,6 +260,28 @@ $data = [];
 
 try {
     switch ($action) {
+        case 'fiscal_service_times':
+            $fiscalYear = (string)($_GET['fiscal_year'] ?? 'all');
+            if ($fiscalYear !== 'all' && !preg_match('/^25[0-9]{2}$/D', $fiscalYear)) {
+                apiJson(['status'=>'error','message'=>'ปีงบประมาณต้องเป็น พ.ศ. 2500–2599'],400);
+            }
+            $firstYear = $fiscalYear === 'all' ? 2568 : (int)$fiscalYear;
+            $lastYear = $fiscalYear === 'all' ? 2569 : (int)$fiscalYear;
+            $reportStart = ($firstYear-544).'-10-01';
+            $reportEnd = ($lastYear-543).'-09-30';
+            $dates = ['start'=>$reportStart,'end'=>$reportEnd,
+                'exclusive_end'=>($lastYear-543).'-10-01','dispense_end'=>($lastYear-543).'-10-02'];
+            $sql = file_get_contents(__DIR__.'/sql/fiscal-service-times.sql');
+            if ($sql === false) apiJson(['status'=>'error','message'=>'ไม่พบไฟล์ SQL รายงานปีงบประมาณ'],500);
+            $params = [];
+            $sql = preg_replace_callback('/\{\{(start|end|exclusive_end|dispense_end)\}\}/',static function($match) use ($dates,&$params) {
+                $params[]=$dates[$match[1]]; return '?';
+            },$sql);
+            $stmt=$conn->prepare($sql);
+            $stmt->execute($params);
+            $rows=$stmt->fetchAll(PDO::FETCH_ASSOC);
+            apiJson(['status'=>'success','data'=>['fiscal_year'=>$fiscalYear,'start_date'=>$reportStart,'end_date'=>$reportEnd,'rows'=>$rows]]);
+
         
         // =================================================================
         // Action หลักสำหรับหน้า opd_dashboard.html (ดึงครบทั้ง 10 ส่วน)
@@ -195,24 +333,14 @@ try {
                                 ".$durationExpr('s.service1','s.service4',300)." AS wait_doctor,
                                 ".$sampleExpr('s.service1','s.service4',300)." AS samples_triage,
                                 NULL AS consult_time, 0 AS samples_consult,
-                                ".$durationExpr('s.service5','s.service7',240)." AS wait_pharmacy,
-                                ".$sampleExpr('s.service5','s.service7',240)." AS samples_pharmacy,
+                                NULL AS wait_pharmacy, 0 AS samples_pharmacy,
                                 ".$durationExpr('o.vsttime','s.service7',480)." AS total_wait_avg,
                                 ".($service7Available?"COUNT(DISTINCT CASE WHEN s.service7 IS NOT NULL AND s.service7<>'' THEN o.vn END)":'0')." AS timed_visits
                             FROM ovst o $serviceJoin WHERE o.vstdate BETWEEN :s AND :e";
                 $stmtTime = $conn->prepare($sqlTime);
                 $stmtTime->execute([':s' => $start_date, ':e' => $end_date]);
                 $serviceTime = $stmtTime->fetch(PDO::FETCH_ASSOC);
-                $receiptFields=opdReceiptFields($conn);
-                if ($receiptFields) {
-                    try {
-                        $rt=$receiptFields['table']; $rv=$receiptFields['vn']; $rtime=$receiptFields['time'];
-                        $rdate=$receiptFields['date'] ? 'r.`'.$receiptFields['date'].'`' : 'o.vstdate';
-                        $receiptAt="CONCAT(COALESCE(NULLIF($rdate,''),o.vstdate),' ',r.`$rtime`)";
-                        $sqlPayment="SELECT ROUND(AVG(CASE WHEN TIMESTAMPDIFF(MINUTE,s.service7,$receiptAt) BETWEEN 1 AND 240 THEN TIMESTAMPDIFF(MINUTE,s.service7,$receiptAt) END),0) AS avg_payment, COUNT(CASE WHEN TIMESTAMPDIFF(MINUTE,s.service7,$receiptAt) BETWEEN 1 AND 240 THEN 1 END) AS samples_payment FROM ovst o INNER JOIN service_time s ON s.vn=o.vn INNER JOIN `$rt` r ON r.`$rv`=o.vn WHERE o.vstdate BETWEEN :s AND :e";
-                        $stmtPayment=$conn->prepare($sqlPayment);$stmtPayment->execute([':s'=>$start_date,':e'=>$end_date]);$paymentRow=$stmtPayment->fetch(PDO::FETCH_ASSOC);$paymentWait=isset($paymentRow['avg_payment'])?(int)$paymentRow['avg_payment']:null;$serviceTime['samples_payment']=(int)($paymentRow['samples_payment']??0);
-                    } catch (PDOException $e) { error_log('OPD payment-time query failed: '.$e->getCode()); }
-                }
+
             } catch (PDOException $e) {
                 // หากไม่มีตาราง service_time หรือฟิลด์ไม่ตรง ให้แสดงว่าไม่มีคู่เวลาจริง
                 error_log('OPD service-time query failed: ' . $e->getCode());
@@ -222,12 +350,25 @@ try {
             // fields used by other cards; those fields can differ between HOSxP versions.
             try {
                 $doctorSaveStats=opdDoctorSaveStats($conn,$start_date,$end_date);
-                $clinicEfficiency=$doctorSaveStats['clinics'];
                 $serviceTime['samples_consult']=$doctorSaveStats['samples'];
                 $serviceTime['consult_time']=$doctorSaveStats['avg_minutes'];
             } catch (PDOException $e) {
                 error_log('OPD consultation detail query failed: '.$e->getCode());
             }
+
+            try {
+                $clinicEfficiency=opdClinicWaitStats($conn,$start_date,$end_date);
+            } catch (PDOException $e) {
+                error_log('OPD clinic wait query failed: '.$e->getCode());
+            }
+            $recordedStages=opdRecordedStages($conn,$start_date,$end_date);
+            $pharmacyQueue=opdPharmacyQueueStats($conn,$start_date,$end_date);
+            $serviceTime['wait_pharmacy']=$pharmacyQueue['avg_minutes'];
+            $serviceTime['samples_pharmacy']=$pharmacyQueue['samples'];
+            $cashierReceipt=opdCashierToReceipt($conn,$start_date,$end_date);
+            $closeValues=$cashierReceipt['minutes'];
+            $serviceTime['samples_payment']=count($closeValues);
+            $paymentWait=$closeValues ? round(array_sum($closeValues)/count($closeValues),1) : null;
 
             // 2 & 9. จำนวนผู้ป่วยรายชั่วโมง แยก Walk-in กับ Appointment (08:00 - 16:00)
             $hourlyData = [];
@@ -453,12 +594,14 @@ try {
                     "avg_wait"     => isset($serviceTime['total_wait_avg']) ? (int)$serviceTime['total_wait_avg'] : null,
                     "avg_consult"  => isset($serviceTime['consult_time']) ? (int)$serviceTime['consult_time'] : null
                 ],
+                "cashier_receipt" => array_diff_key($cashierReceipt,['minutes'=>true]),
+                "sla_stages" => $recordedStages,
                 "sla_wait" => [
                     "registration" => isset($serviceTime['wait_registration']) ? (int)$serviceTime['wait_registration'] : null,
                     "triage"   => isset($serviceTime['wait_doctor']) ? (int)$serviceTime['wait_doctor'] : null,
                     "doctor"   => isset($serviceTime['wait_doctor']) ? (int)$serviceTime['wait_doctor'] : null,
                     "consult"  => isset($serviceTime['consult_time']) ? (int)$serviceTime['consult_time'] : null,
-                    "pharmacy" => isset($serviceTime['wait_pharmacy']) ? (int)$serviceTime['wait_pharmacy'] : null,
+                    "pharmacy" => isset($serviceTime['wait_pharmacy']) ? (float)$serviceTime['wait_pharmacy'] : null,
                     "payment" => $paymentWait
                 ],
                 "quality" => ["visits_without_time" => max(0,(int)($kpi['total_opd']??0)-(int)($serviceTime['timed_visits']??0)), "time_samples" => [
@@ -528,20 +671,8 @@ try {
             } catch (PDOException $e) {
                 error_log('OPD analytics service-time query failed: '.$e->getCode());
             }
-            $receiptFields=opdReceiptFields($conn);
-            if ($receiptFields) {
-                try {
-                    $rt=$receiptFields['table']; $rv=$receiptFields['vn']; $rtime=$receiptFields['time'];
-                    $rdate=$receiptFields['date'] ? 'r.`'.$receiptFields['date'].'`' : 'o.vstdate';
-                    $receiptAt="CONCAT(COALESCE(NULLIF($rdate,''),o.vstdate),' ',r.`$rtime`)";
-                    $stmt=$conn->prepare("SELECT o.vstdate AS visit_date, s.service4 AS point_time, MIN($receiptAt) AS receipt_at FROM ovst o INNER JOIN service_time s ON s.vn=o.vn INNER JOIN `$rt` r ON r.`$rv`=o.vn WHERE o.vstdate BETWEEN :s AND :e AND s.service4 IS NOT NULL AND s.service4<>'' GROUP BY o.vn,o.vstdate,s.service4");
-                    $stmt->execute([':s'=>$start_date, ':e'=>$end_date]);
-                    while ($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
-                        $minutes=opdElapsedServiceMinutes($row['point_time'],$row['receipt_at'],(string)$row['visit_date'],720);
-                        if ($minutes!==null) $durations['payment'][]=$minutes;
-                    }
-                } catch (PDOException $e) { error_log('OPD receipt-time query failed: '.$e->getCode()); }
-            }
+            $cashierReceipt=opdCashierToReceipt($conn,$start_date,$end_date);
+            $durations['payment']=$cashierReceipt['minutes'];
             $stages = [];
             foreach ($durations as $key=>$values) {
                 sort($values, SORT_NUMERIC); $n=count($values); $sum=array_sum($values);
@@ -569,7 +700,7 @@ try {
                 'start_date'=>$start_date,'end_date'=>$end_date,'today'=>(new DateTimeImmutable('now',new DateTimeZone('Asia/Bangkok')))->format('Y-m-d'),
                 'updated_at'=>(new DateTimeImmutable('now',new DateTimeZone('Asia/Bangkok')))->format('Y-m-d H:i:s'),
                 'kpi'=>['total_opd'=>(int)($analyticsKpi['total_opd']??0),'unknown_patient'=>(int)($analyticsKpi['unknown_patient']??0)],
-                'stages'=>$stages,'hourly'=>$hourly,'appointments'=>$appointments,'sla_defaults'=>[]
+                'cashier_receipt'=>array_diff_key($cashierReceipt,['minutes'=>true]),'stages'=>$stages,'hourly'=>$hourly,'appointments'=>$appointments,'sla_defaults'=>[]
             ]]);
 
         // Long-range trend report for section 11.

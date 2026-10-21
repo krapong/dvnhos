@@ -37,7 +37,7 @@ $notes[]='นัดหมาย: นับรายการนัดตาม�
 $daily=$query("SELECT o.vstdate date,COUNT(DISTINCT o.vn) visits,COUNT(DISTINCT o.hn) patients FROM ovst o WHERE $where GROUP BY o.vstdate ORDER BY o.vstdate",$params);
 $hourly=$query("SELECT HOUR(o.vsttime) hour,COUNT(DISTINCT o.vn) visits FROM ovst o WHERE $where GROUP BY HOUR(o.vsttime) ORDER BY hour",$params);
 // Use actual arrival records at examination service point 003.
-$stages=[['label'=>'ลงทะเบียน → คัดกรอง','avg'=>null,'samples'=>0],['label'=>'คัดกรอง → เข้าห้องตรวจ','avg'=>null,'samples'=>0],['label'=>'เข้าห้องตรวจ → จ่ายยา','avg'=>null,'samples'=>0],['label'=>'เข้าห้องจ่ายยา → ใบเสร็จ','avg'=>null,'samples'=>0]];
+$stages=[['label'=>'เปิด Visit → ซักประวัติ','avg'=>null,'samples'=>0],['label'=>'ซักประวัติ → เข้าห้องตรวจ','avg'=>null,'samples'=>0],['label'=>'เข้าห้องตรวจ → จ่ายยา','avg'=>null,'samples'=>0],['label'=>'เข้าห้องจ่ายยา → ใบเสร็จ','avg'=>null,'samples'=>0]];
 $sc=$columns('service_time');$totals=array_fill(0,4,[]);$completeTotals=[];$timeline=[];$examVisits=0;
 $at=static function($v,string $day):?int{if(!$v||strpos((string)$v,'0000-00-00')!==false)return null;$v=trim((string)$v);try{return (new DateTimeImmutable(preg_match('/^\d{1,2}:\d{2}(:\d{2})?$/',$v)?"$day $v":$v))->getTimestamp();}catch(Throwable $e){return null;}};
 $qc=$columns('opd_dep_queue');$hasQueue=count(array_intersect(['vn','depcode','queue_datetime'],$qc))===3;
@@ -69,8 +69,8 @@ foreach($receiptRows as $r){$registered=$at($r['vsttime'],$r['vstdate']);$receip
 $completeTotals=array_values($firstReceipt);break;
 }
 foreach($stages as $i=>&$stage){$stage['samples']=count($totals[$i]);$stage['avg']=$stage['samples']?round(array_sum($totals[$i])/$stage['samples'],1):null;}unset($stage);
-$notes[]='เวลา: ลงทะเบียน = vsttime, คัดกรอง = service1, เข้าห้องยา = service5; เฉลี่ยคู่เวลาจริงที่เรียงลำดับภายในวันเดียวและไม่เกิน 24 ชม. ไม่คาดเดาเวลาข้ามวัน';
+$notes[]='เวลา: เปิด Visit = vsttime, ซักประวัติ = service1, เข้าห้องยา = service5; เฉลี่ยคู่เวลาจริงที่เรียงลำดับภายในวันเดียวและไม่เกิน 24 ชม. ไม่คาดเดาเวลาข้ามวัน';
 $notes[]='เข้าห้องตรวจ = opd_dep_queue.queue_datetime รหัส 003 ห้องตรวจโรค ครั้งแรกของ VN; จ่ายยา = service7; ไม่ใช้เวลาจากจุดซักประวัติแทน';
-$notes[]='เวลารอคอยรวม = ลงทะเบียน ovst.vstdate + vsttime ถึงใบเสร็จที่มีสถานะ OK ใบแรกหลังลงทะเบียน นับหนึ่งครั้งต่อ VN เฉลี่ยเฉพาะคู่เวลาที่เรียงลำดับและไม่เกิน 24 ชั่วโมง ไม่ต้องมีเวลาจุดบริการระหว่างทางครบ';
+$notes[]='เวลารอคอยรวม = เปิด Visit ovst.vstdate + vsttime ถึงใบเสร็จที่มีสถานะ OK ใบแรกหลังเปิด Visit นับหนึ่งครั้งต่อ VN เฉลี่ยเฉพาะคู่เวลาที่เรียงลำดับและไม่เกิน 24 ชั่วโมง ไม่ต้องมีเวลาจุดบริการระหว่างทางครบ';
 reply12(['status'=>'success','data'=>['department'=>$dep,'name'=>$clinics[$dep],'start_date'=>$start,'end_date'=>$end,'summary'=>$summary,'appointments'=>$appointments,'daily'=>$daily,'hourly'=>$hourly,'stages'=>$stages,'total_avg'=>count($completeTotals)?round(array_sum($completeTotals)/count($completeTotals),1):null,'total_samples'=>count($completeTotals),'notes'=>$notes,'updated_at'=>date('Y-m-d H:i:s')]]);
 }catch(Throwable $e){error_log('Clinic12: '.$e->getCode());reply12(['status'=>'error','message'=>'ส่วนคลินิกเชื่อมต่อข้อมูลไม่ได้ โปรดตรวจ config บัญชีอ่านข้อมูล และการเชื่อมต่อ HOSxP'],503);}
