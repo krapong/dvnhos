@@ -1,0 +1,9 @@
+DirectoryIndex index.php
+Options -Indexes
+<FilesMatch "^(?:\..*|(?!(?:index|api|manual|risk|login|logout|usage|usage-history)\.php$).+\.[^./]+)$">
+  Require all denied
+</FilesMatch>
+<IfModule mod_headers.c>
+ Header always set Cache-Control "no-store"
+ Header always set X-Content-Type-Options "nosniff"
+</IfModule>

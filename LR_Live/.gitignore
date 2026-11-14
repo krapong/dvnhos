@@ -1,0 +1,11 @@
+config.php
+supplement.config.php
+.private/
+*.log
+output/
+.playwright-cli/
+
+# Schema and permission templates only; no patient exports
+!database/supplement.sql
+!database/grants-example.sql
+

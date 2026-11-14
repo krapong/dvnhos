@@ -1,0 +1,153 @@
+{
+  "spreadsheet_id": "1YXQSaJwTPsqswzN4064Oa5Wqy70visBYWHHAPVYPYaw",
+  "url": "https://docs.google.com/spreadsheets/d/1YXQSaJwTPsqswzN4064Oa5Wqy70visBYWHHAPVYPYaw/edit",
+  "tab": "พ.ย.69",
+  "captured_on": "2026-11-05",
+  "columns": [
+    {
+      "column": 8,
+      "values": [
+        "UC",
+        "เบิกได้",
+        "ประกันสังคม",
+        "ชำระเงิน",
+        "ตด ประกันสุขภาพ"
+      ]
+    },
+    {
+      "column": 9,
+      "values": [
+        "ไทย",
+        "พม่า",
+        "อื่นๆ",
+        "ม้ง",
+        "ลั๊วะ",
+        "กะเหรี่ยง"
+      ]
+    },
+    {
+      "column": 16,
+      "values": [
+        "LMP",
+        "U/S"
+      ]
+    },
+    {
+      "column": 17,
+      "values": [
+        "ไม่มี",
+        "DM",
+        "HT",
+        "Thalassemia",
+        "HIV",
+        "No anc"
+      ]
+    },
+    {
+      "column": 18,
+      "values": [
+        "Neg",
+        "Pos"
+      ]
+    },
+    {
+      "column": 19,
+      "values": [
+        "Neg",
+        "Pos"
+      ]
+    },
+    {
+      "column": 20,
+      "values": [
+        "Neg",
+        "Pos"
+      ]
+    },
+    {
+      "column": 21,
+      "values": [
+        "Neg",
+        "Pos"
+      ]
+    },
+    {
+      "column": 22,
+      "values": [
+        "Neg",
+        "Pos"
+      ]
+    },
+    {
+      "column": 23,
+      "values": [
+        "Neg",
+        "Pos"
+      ]
+    },
+    {
+      "column": 35,
+      "values": [
+        "1เข็ม",
+        "2เข็ม",
+        "3เข็ม",
+        "BT",
+        "ไม่ฉีด"
+      ]
+    },
+    {
+      "column": 38,
+      "values": [
+        "N/D",
+        "V/E",
+        "ท่าก้น",
+        "BBA",
+        "twins",
+        "F/C"
+      ]
+    },
+    {
+      "column": 39,
+      "values": [
+        "Rt.ML",
+        "Lt.ML",
+        "median",
+        "spontaneous tear",
+        "Rt.lateral",
+        "Lt.lateral",
+        "No tear"
+      ]
+    },
+    {
+      "column": 40,
+      "values": [
+        "1st",
+        "2nd",
+        "3rd",
+        "4th",
+        "Anus",
+        "No tear"
+      ]
+    },
+    {
+      "column": 46,
+      "values": [
+        "ช",
+        "ญ",
+        "ไม่สามารถระบุเพศได้"
+      ]
+    },
+    {
+      "column": 63,
+      "values": [
+        "PPH",
+        "PIH",
+        "รกค้าง",
+        "tear anus",
+        "fail V/E",
+        "BA",
+        "tear cervix"
+      ]
+    }
+  ]
+}
