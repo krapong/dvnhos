@@ -9,7 +9,7 @@ URL เป้าหมาย: https://192.0.2.20/
 
 ## 1. เครื่องปลายทาง
 
-ต้องมี PHP 8.4 พร้อม pdo_mysql, iconv, session, json และ Apache + PHP-FPM ที่ทำงานกับ HTTPS แล้ว ตรวจเวอร์ชัน AlmaLinux และแหล่งแพ็กเกจของเครื่องก่อนติดตั้ง PHP อย่าใช้ PHP built-in server สำหรับบริการจริง
+ต้องมี PHP 8.4 พร้อม pdo_mysql, iconv, session, json, openssl และ Apache + PHP-FPM ที่ทำงานกับ HTTPS แล้ว ตรวจเวอร์ชัน AlmaLinux และแหล่งแพ็กเกจของเครื่องก่อนติดตั้ง PHP อย่าใช้ PHP built-in server สำหรับบริการจริง
 
 ตัวอย่างติดตั้งโค้ดที่ /var/www/html/LR_HOSxP_Live (ผู้ดูแลระบบเป็นผู้จัดการไฟล์):
 
@@ -118,3 +118,13 @@ URL เป้าหมาย: https://192.0.2.20/
     5 0 * * * /usr/bin/php /var/www/html/LR_Live/tools/prune-usage.php
 
 เวลา cron ใช้ timezone ของเซิร์ฟเวอร์ ส่วนเกณฑ์อายุใน PHP ใช้ Asia/Bangkok สามารถรันคำสั่ง PHP นี้ด้วยตนเองหลังอัปเดตเพื่อล้างไฟล์เก่าได้ทันที
+## MFA และรายงานฉบับปรับปรุง
+
+ต้องเปิด PHP extension openssl และอัปเดต endpoint mfa.php ใน FilesMatch ทั้งส่วน Require และ SetHandler ตาม apache-lr-emr.conf รุ่นปัจจุบัน อัปโหลด mfa.php, mfa-store.php และ export-report.php พร้อม login.php, security.php, api.php, index.php และ usage-history.php โดยคง config.php, supplement.config.php และ .private เดิมไว้
+
+หลังติดตั้งทุกบัญชีต้องตั้งค่า Authenticator ในการเข้าสู่ระบบครั้งแรก ตรวจสอบตัวเจ้าของบัญชีในการเปิดใช้ครั้งแรก ให้ PHP-FPM เขียน .private/mfa และ .private/exports ได้ และห้ามเข้าถึง .private ทางเว็บ สำรอง .private/mfa/accounts.php พร้อม key.php อย่างปลอดภัย ห้ามนำคีย์จากเครื่องทดสอบไปแทนไฟล์เซิร์ฟเวอร์ คีย์ที่สูญหายไม่สามารถสร้างทดแทนเพื่อถอดรหัสข้อมูลเดิมได้
+
+การกู้คืน MFA: ใช้รหัสกู้คืนครั้งเดียว หรือให้ผู้ดูแลเซิร์ฟเวอร์ยืนยันตัวเจ้าของบัญชีแล้วรัน `php tools/reset-mfa.php --user=USERNAME --confirm=USERNAME` คำสั่งนี้เพิกถอน session เดิมของบัญชีนั้นและบังคับลงทะเบียนใหม่ รายละเอียดการใช้งานพิมพ์และ Excel อยู่ใน README.md
+
+
+รายงานทั้งหมดขอ PHP memory_limit อย่างน้อย 512 MB และเวลาทำงาน 180 วินาที ตรวจค่า php_admin_value และ request_terminate_timeout ของ PHP-FPM รวมถึง timeout ของ Apache ให้สอดคล้องกับปริมาณข้อมูล ระบบจะไม่ตัดแถวเพื่อลดขนาดไฟล์เอง

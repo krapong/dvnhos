@@ -9,14 +9,17 @@ function supplementDiagnostic(Throwable $e): void {
  echo 'INFO '.($hints[$driver]??'Check supplement.config.php and PHP-FPM error log; do not copy local test credentials.').PHP_EOL;
 }
 checkServer(PHP_VERSION_ID>=80400,'PHP 8.4+');
-foreach(['pdo_mysql','iconv','session','json'] as $ext)checkServer(extension_loaded($ext),'PHP extension '.$ext);
+foreach(['pdo_mysql','iconv','session','json','openssl'] as $ext)checkServer(extension_loaded($ext),'PHP extension '.$ext);
 checkServer(is_dir($root.'/.private')&&is_writable($root.'/.private'),'.private is writable for the current CLI user');
+require_once $root.'/mfa-store.php';
+try{mfaStore(static fn($data)=>true);checkServer(true,'MFA storage and encryption key are readable');}catch(Throwable $e){checkServer(false,'MFA storage unavailable; verify OpenSSL, private directory permissions and matching key backup');}
 if(!is_file($root.'/config.php')||!is_file($root.'/supplement.config.php')){checkServer(false,'Create config.php and supplement.config.php');exit(1);}
 require $root.'/report.php';require $root.'/manual-store.php';require $root.'/providers.php';
 try{
  $cfg=require $root.'/config.php';$p=reportConnection($cfg);
  foreach(['ipt','ipt_labour','ipt_labour_infant','ipt_newborn','patient','dchstts','ward','pttype','spclty','ipt_labour_anc_type','ipt_labour_place','membrane_type','membrane_explode_type','sex','infant_delivery_type','infant_indication_type','infant_adaptor_type','ipt_newborn_condition_type1','ipt_newborn_condition_type2','newborn_death_cuase','nationality','labor','doctor','doctor_position','person','person_anc','person_anc_risk','anc_risk','referout','hospcode','ipt_labour_lab','labour_lab','lab_head','lab_order','lab_items','ipt_labour_complication','ipt_labour_vaccine'] as $table){$p->query('SELECT 1 FROM `'.$table.'` LIMIT 1');}
  $p->query('SELECT loginname,passweb,groupname,account_disable,doctorcode FROM opduser LIMIT 0');
+ $p->query('SELECT an,ga,ga_day,anc_place_name FROM ipt_pregnancy LIMIT 0');
  checkServer(true,'HOSxP connection and report SELECT permissions');
  $date=$p->query('SELECT MAX(regdate) FROM ipt')->fetchColumn();echo 'INFO Latest Admit date in configured HOSxP database: '.$date.PHP_EOL;
  checkServer(count(deliveryProviders($p,$cfg['db_charset']))>0,'Active doctor/nurse lookup');

@@ -1,6 +1,6 @@
 DirectoryIndex index.php
 Options -Indexes
-<FilesMatch "^(?:\..*|(?!(?:index|api|manual|risk|login|logout|usage|usage-history)\.php$).+\.[^./]+)$">
+<FilesMatch "^(?:\..*|(?!(?:index|api|manual|risk|login|mfa|logout|usage|usage-history)\.php$).+\.[^./]+)$">
   Require all denied
 </FilesMatch>
 <IfModule mod_headers.c>

@@ -1,0 +1,5 @@
+QR Code Generator for JavaScript by Kazuhiko Arase
+Source: https://github.com/kazuhikoarase/qrcode-generator
+Pinned commit: 83b7e8fe3fddd3b0368dbafd6ce56995bd25e3c8
+License: MIT; see qrcode-LICENSE.txt
+Loaded inline by mfa.php; no external QR service or CDN requests.

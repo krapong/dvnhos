@@ -15,9 +15,9 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
             if(!loginThrottle($username)){$error='ลองเข้าสู่ระบบเกินจำนวนที่กำหนด กรุณารอ 5 นาที';http_response_code(429);header('Retry-After: 300');}
             elseif(authenticateHosxpNurse($cfg,$username,$password)){
                 loginThrottle($username,true);clearAuthSession();
-                $_SESSION['auth_user']=$username;$_SESSION['authenticated_at']=time();$_SESSION['last_activity']=time();$_SESSION['account_checked_at']=time();
-                usageLog('login_success');
-                header('Location: index.php',true,303);exit;
+                $_SESSION['mfa_pending_user']=$username;$_SESSION['mfa_pending_at']=time();
+                usageLog('password_verified',[],$username);
+                header('Location: mfa.php',true,303);exit;
             }else{$error='ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง หรือบัญชีไม่มีสิทธิ์ใช้งาน';http_response_code(401);}
         }catch(Throwable $e){error_log('[LR login] unavailable; code '.$e->getCode());$error='ไม่สามารถตรวจสอบบัญชี HOSxP ได้ กรุณาลองใหม่';http_response_code(503);}
     }

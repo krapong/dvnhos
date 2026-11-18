@@ -1,5 +1,5 @@
 <?php
-return [
+$fields = [
     ['sql' => 'i.an', 'label' => 'AN มารดา', 'type' => 'id', 'tab' => 0],
     ['sql' => 'i.hn', 'label' => 'HN มารดา', 'type' => 'id', 'tab' => 0],
     ['sql' => 'i.regdate', 'label' => 'วันที่ Admit', 'type' => 'date', 'tab' => 0],
@@ -14,8 +14,8 @@ return [
     ['sql' => 'TIMESTAMPDIFF(YEAR,p.birthday,f.birth_date)', 'label' => 'อายุมารดา ณ วันคลอด', 'type' => 'number', 'tab' => 0],
     ['sql' => 'l.preg_no', 'label' => 'ครรภ์ที่', 'type' => 'number', 'tab' => 1],
     ['sql' => 'l.g', 'label' => 'G', 'type' => 'number', 'tab' => 1, 'editable' => true],
-    ['sql' => 'NULL', 'label' => 'TP', 'type' => 'number', 'tab' => 1, 'editable' => true],
-    ['sql' => 'NULL', 'label' => 'Pre', 'type' => 'number', 'tab' => 1, 'editable' => true],
+    ['sql' => 'l.t', 'label' => 'TP', 'type' => 'number', 'tab' => 1, 'editable' => true],
+    ['sql' => 'l.p', 'label' => 'Pre', 'type' => 'number', 'tab' => 1, 'editable' => true, 'hosxpNullZero' => true],
     ['sql' => 'l.p', 'label' => 'P', 'type' => 'number', 'tab' => 1, 'visible' => false],
     ['sql' => 'l.a', 'label' => 'A', 'type' => 'number', 'tab' => 1, 'editable' => true],
     ['sql' => 'l.l', 'label' => 'L', 'type' => 'number', 'tab' => 1, 'editable' => true],
@@ -23,10 +23,10 @@ return [
     ['sql' => 'CONCAT(COALESCE(CAST(l.g AS CHAR),\'?\'),\'/\',COALESCE(CAST(l.p AS CHAR),\'?\'),\'/\',COALESCE(CAST(l.a AS CHAR),\'?\'),\'/\',COALESCE(CAST(l.t AS CHAR),\'?\'))', 'label' => 'GPAT', 'type' => 'text', 'tab' => 1, 'visible' => false],
     ['sql' => 'l.lmp', 'label' => 'LMP', 'type' => 'date', 'tab' => 1],
     ['sql' => 'l.edc', 'label' => 'EDC', 'type' => 'date', 'tab' => 1],
-    ['sql' => 'l.ga', 'label' => 'GA สัปดาห์', 'type' => 'number', 'tab' => 1],
-    ['sql' => 'l.ga_day', 'label' => 'GA วัน', 'type' => 'number', 'tab' => 1],
+    ['sql' => 'pg.ga', 'label' => 'GA สัปดาห์', 'type' => 'number', 'tab' => 1],
+    ['sql' => 'pg.ga_day', 'label' => 'GA วัน', 'type' => 'number', 'tab' => 1],
     ['sql' => 'l.anc_count', 'label' => 'จำนวนครั้ง ANC', 'type' => 'number', 'tab' => 1],
-    ['sql' => 'l.anc_place_name', 'label' => 'สถานที่ ANC', 'type' => 'text', 'tab' => 1],
+    ['sql' => 'COALESCE(NULLIF(l.anc_place_name,\'\'),NULLIF(pg.anc_place_name,\'\'))', 'label' => 'สถานที่ ANC', 'type' => 'text', 'tab' => 1],
     ['sql' => 'at.ipt_labour_anc_type_name', 'label' => 'ประเภท ANC', 'type' => 'text', 'tab' => 1],
     ['sql' => 'l.lmp_from_us', 'label' => 'LMP จาก US (รหัส)', 'type' => 'text', 'tab' => 1],
     ['sql' => 'ipl.ipt_labour_place_name', 'label' => 'สถานที่คลอด', 'type' => 'text', 'tab' => 1],
@@ -47,19 +47,19 @@ return [
     ['sql' => 'f.body_length', 'label' => 'ความยาวทารก', 'type' => 'number', 'tab' => 2],
     ['sql' => 'f.head_length', 'label' => 'รอบศีรษะ', 'type' => 'number', 'tab' => 2],
     ['sql' => 'f.chest_circumference_length', 'label' => 'รอบอก', 'type' => 'number', 'tab' => 2],
-    ['sql' => 'f.abdominal_length', 'label' => 'รอบท้อง', 'type' => 'number', 'tab' => 2],
+    ['sql' => 'f.abdominal_length', 'label' => 'รอบท้อง', 'type' => 'number', 'tab' => 2, 'visible' => false],
     ['sql' => 'f.temperature', 'label' => 'อุณหภูมิทารก', 'type' => 'number', 'tab' => 2],
     ['sql' => 'f.hr', 'label' => 'ชีพจรทารก', 'type' => 'number', 'tab' => 2],
     ['sql' => 'f.rr', 'label' => 'อัตราหายใจทารก', 'type' => 'number', 'tab' => 2],
     ['sql' => 'f.ga', 'label' => 'GA ทารก', 'type' => 'number', 'tab' => 2],
     ['sql' => 'COALESCE(NULLIF(f.infant_an,\'\'),nb.an)', 'label' => 'AN ทารก', 'type' => 'text', 'tab' => 2],
-    ['sql' => 'f.hn', 'label' => 'HN ทารก', 'type' => 'text', 'tab' => 2],
+    ['sql' => 'COALESCE((SELECT ci.hn FROM ipt ci WHERE ci.an=COALESCE(NULLIF(f.infant_an,\'\'),nb.an)),f.hn)', 'label' => 'HN ทารก', 'type' => 'text', 'tab' => 2],
     ['sql' => 'idt.infant_delivery_type_name', 'label' => 'วิธีคลอดทารก', 'type' => 'text', 'tab' => 2],
     ['sql' => 'f.infant_delivery_type_id', 'label' => 'รหัสวิธีคลอด (ทารก)', 'type' => 'text', 'tab' => 2],
     ['sql' => 'iit.infant_indication_type_name', 'label' => 'ข้อบ่งชี้', 'type' => 'text', 'tab' => 2],
-    ['sql' => 'f.infant_indication_type_id', 'label' => 'รหัสข้อบ่งชี้', 'type' => 'text', 'tab' => 2],
-    ['sql' => 'iad.infant_adaptor_type_name', 'label' => 'ผู้รับทารก', 'type' => 'text', 'tab' => 2],
-    ['sql' => 'f.infant_icd10', 'label' => 'ICD10 ทารก', 'type' => 'text', 'tab' => 2],
+    ['sql' => 'f.infant_indication_type_id', 'label' => 'รหัสข้อบ่งชี้', 'type' => 'text', 'tab' => 2, 'visible' => false],
+    ['sql' => 'iad.infant_adaptor_type_name', 'label' => 'ผู้รับทารก', 'type' => 'text', 'tab' => 2, 'visible' => false],
+    ['sql' => 'f.infant_icd10', 'label' => 'ICD10 ทารก', 'type' => 'text', 'tab' => 2, 'visible' => false],
     ['sql' => 'f.apgar_score_min1', 'label' => 'APGAR 1 นาที', 'type' => 'number', 'tab' => 3],
     ['sql' => 'f.apgar_score_min5', 'label' => 'APGAR 5 นาที', 'type' => 'number', 'tab' => 3],
     ['sql' => 'f.apgar_score_min10', 'label' => 'APGAR 10 นาที', 'type' => 'number', 'tab' => 3],
@@ -91,8 +91,8 @@ return [
     ['sql' => 'f.infant_check_eyepaste', 'label' => 'ยาป้ายตา (รหัส)', 'type' => 'text', 'tab' => 4],
     ['sql' => 'f.infant_check_bcg', 'label' => 'BCG (รหัส)', 'type' => 'text', 'tab' => 4],
     ['sql' => 'f.infant_check_hepb', 'label' => 'HBV (รหัส)', 'type' => 'text', 'tab' => 4],
-    ['sql' => 'f.thyroid_screen', 'label' => 'คัดกรองไทรอยด์ (รหัส)', 'type' => 'text', 'tab' => 4],
-    ['sql' => 'f.thyroid_result', 'label' => 'ผลไทรอยด์', 'type' => 'text', 'tab' => 4],
+    ['sql' => 'f.thyroid_screen', 'label' => 'คัดกรองไทรอยด์ (รหัส)', 'type' => 'text', 'tab' => 3],
+    ['sql' => 'f.thyroid_result', 'label' => 'ผลไทรอยด์', 'type' => 'text', 'tab' => 3],
     ['sql' => 'f.tsh_result', 'label' => 'ผล TSH', 'type' => 'text', 'tab' => 4],
     ['sql' => 'f.infant_dchstts', 'label' => 'สถานะจำหน่ายทารก (รหัส)', 'type' => 'text', 'tab' => 4],
     ['sql' => 'f.infant_dchtype', 'label' => 'ประเภทจำหน่ายทารก (รหัส)', 'type' => 'text', 'tab' => 4],
@@ -125,12 +125,12 @@ return [
     ['sql' => 'pa.ga', 'label' => 'GA จากทะเบียน ANC', 'type' => 'number', 'tab' => 1],
     ['sql' => 'pa.service_count', 'label' => 'จำนวนครั้ง ANC (ทะเบียน ANC)', 'type' => 'number', 'tab' => 1],
     ['sql' => 'lg.mother_place', 'label' => 'สถานที่ ANC (บันทึก labor)', 'type' => 'text', 'tab' => 1],
-    ['sql' => 'lg.labor_cleaning', 'label' => 'การทำความสะอาดก่อนคลอด', 'type' => 'text', 'tab' => 2],
-    ['sql' => 'lg.labor_record', 'label' => 'เลขที่บันทึกคลอด', 'type' => 'text', 'tab' => 2],
+    ['sql' => 'lg.labor_cleaning', 'label' => 'การทำความสะอาดก่อนคลอด', 'type' => 'text', 'tab' => 2, 'visible' => false],
+    ['sql' => 'lg.labor_record', 'label' => 'เลขที่บันทึกคลอด', 'type' => 'text', 'tab' => 2, 'visible' => false],
     ['sql' => 'lg.placenta_bloodloss', 'label' => 'ปริมาณเลือดสูญเสีย EBL (mL)', 'type' => 'number', 'tab' => 2],
     ['sql' => 'lg.placenta_weight', 'label' => 'น้ำหนักรก (กรัม)', 'type' => 'number', 'tab' => 2],
     ['sql' => 'dd.name', 'label' => 'ชื่อผู้ทำคลอด', 'type' => 'text', 'tab' => 2, 'editable' => true, 'provider' => true],
-    ['sql' => 'lg.sulture_doctor', 'label' => 'รหัสผู้เย็บแผล', 'type' => 'text', 'tab' => 2],
+    ['sql' => 'lg.sulture_doctor', 'label' => 'รหัสผู้เย็บแผล', 'type' => 'text', 'tab' => 2, 'visible' => false],
     ['sql' => 'sd.name', 'label' => 'ชื่อผู้เย็บแผล', 'type' => 'text', 'tab' => 2],
     ['sql' => '(SELECT GROUP_CONCAT(CONCAT(rf.refer_date,\' \',COALESCE(rf.refer_time,\'\'),\' → \',COALESCE(hc.name,rf.hospcode)) ORDER BY rf.refer_date,rf.refer_time,rf.referout_id SEPARATOR \' | \') FROM referout rf LEFT JOIN hospcode hc ON hc.hospcode=rf.hospcode WHERE rf.hn=i.hn AND COALESCE(rf.cancel_status,\'N\')<>\'Y\' AND rf.refer_date>=DATE_SUB(i.regdate,INTERVAL 1 DAY) AND rf.refer_date<DATE_ADD(COALESCE(NULLIF(CAST(i.dchdate AS CHAR),\'0000-00-00\'),i.regdate),INTERVAL 8 DAY))', 'label' => 'ประวัติ REFER ใกล้ช่วง Admit', 'type' => 'text', 'tab' => 4],
     ['sql' => 'pa.vaccine_dtanc1_date', 'label' => 'วันที่วัคซีน DT ANC ครั้งที่ 1', 'type' => 'date', 'tab' => 1],
@@ -157,3 +157,35 @@ return [
     ['sql' => 'NULL', 'label' => 'ระดับแผลฝีเย็บ (ตามชีต)', 'type' => 'text', 'tab' => 2],
     ['sql' => 'NULL', 'label' => 'ภาวะแทรกซ้อน (ตามชีต)', 'type' => 'text', 'tab' => 4]
 ];
+
+// Presentation changes from the November review; keep source fields for exports/history.
+$hidden = ['ลำดับรายงาน','อายุมารดา ณ วัน Admit','LMP จาก US (รหัส)','ผู้บันทึกทะเบียนคลอด','เวลาบันทึกทะเบียนคลอด','รหัสสถานที่คลอด','รหัสประเภทการคลอด (มารดา)','รหัสวิธีคลอด (มารดา)','รหัสทะเบียน ANC ที่จับคู่','ระดับความเสี่ยง ANC (รหัส)','วันที่ขึ้นทะเบียน ANC','GA จากทะเบียน ANC','จำนวนครั้ง ANC (ทะเบียน ANC)','สถานที่ ANC (บันทึก labor)','รหัสวิธีคลอด (ทารก)','รหัสข้อบ่งชี้','การทำความสะอาดก่อนคลอด','เลขที่บันทึกคลอด','รหัสผู้เย็บแผล','ระดับแผลฝีเย็บ (ตามชีต)','ภาวะแทรกซ้อน (ตามชีต)','วิธีประเมินอายุครรภ์ (ตามชีต)'];
+foreach ($fields as &$field) {
+    if (in_array($field['label'],['A','L'],true)) $field['hosxpNullZero']=true;
+    if (in_array($field['label'],['สถานที่คลอด','ชนิดถุงน้ำคร่ำ','ชนิดถุงน้ำคร่ำแตก','คลอดก่อนมาถึง (รหัส)'],true)) $field['tab']=2;
+    if ($field['label']==='ครรภ์ที่') $field['visible']=false;
+    if (in_array($field['label'],$hidden,true)) $field['visible']=false;
+    if ($field['tab']===4) $field['visible']=false;
+    if (preg_match('/^(?:HIV มารดา|VDRL มารดา|HBsAg มารดา|Hct มารดา|Thalassemia มารดา|หมู่เลือด ABO มารดา|Rh มารดา|รหัส Lab|วันที่วัคซีน DT)/u',$field['label'])) $field['visible']=false;
+    if (preg_match('/^APGAR (1|5|10) นาที/u',$field['label'])) $field['apgar']=true;
+    if (str_starts_with($field['sql'],'f.infant_check_')) {
+        $field['tab']=3; $field['visible']=true; $field['checkbox']=true;
+    }
+}
+unset($field);
+foreach ([
+    ['วันที่ฝากครรภ์ครั้งแรก','date',1],['GA ฝากครรภ์ครั้งแรก สัปดาห์','number',1],
+    ['GA ฝากครรภ์ครั้งแรก วัน','number',1],['ชื่อสามี','text',1],
+    ['วันที่แจ้งเกิด','date',2],['ชื่อผู้แจ้งเกิดและเบอร์โทร','text',2],
+    ['ภาวะแทรกซ้อนมารดา','text',6],['ภาวะแทรกซ้อนทารก','text',6],['HBIG (รหัส)','text',3]
+] as [$label,$type,$tab]) $fields[]=['sql'=>'NULL','label'=>$label,'type'=>$type,'tab'=>$tab];
+foreach ($fields as &$field) {
+    if ($field['label']==='วันที่ฝากครรภ์ครั้งแรก') $field['sql']="NULLIF(pa.first_doctor_date,'0000-00-00')";
+    if ($field['label']==='GA ฝากครรภ์ครั้งแรก สัปดาห์') $field['sql']='l.ga';
+    if ($field['label']==='GA ฝากครรภ์ครั้งแรก วัน') {$field['sql']='l.ga_day';$field['hosxpNullZero']=true;}
+    if ($field['label']==='ชื่อสามี') $field['sql']="COALESCE(NULLIF(TRIM(lg.hname),''),NULLIF(TRIM(CONCAT(COALESCE(pa.husband_pname,''),COALESCE(pa.husband_fname,''),' ',COALESCE(pa.husband_lname,''))), ''))";
+    if ($field['label']==='แผลฝีเย็บ (ตามชีต)') $field['sql']="COALESCE(NULLIF(lg.perineum_desc,''),NULLIF(lg.perineum_type,''))";
+    if ($field['label']==='HBIG (รหัส)') $field['checkbox']=true;
+}
+unset($field);
+return $fields;

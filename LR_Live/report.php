@@ -61,6 +61,7 @@ LEFT JOIN ipt_newborn_condition_type2 nc2 ON nc2.id=nb.birthcondition2
 LEFT JOIN newborn_death_cuase ndc ON ndc.newborn_death_cause_id=nb.newborn_death_cause_id
 LEFT JOIN nationality nt ON nt.nationality=p.nationality
 LEFT JOIN labor lg ON lg.laborid=(SELECT MIN(lg2.laborid) FROM labor lg2 WHERE lg2.an=l.an HAVING COUNT(*)=1)
+LEFT JOIN ipt_pregnancy pg ON pg.an=(SELECT pg2.an FROM ipt_pregnancy pg2 WHERE pg2.an=i.an GROUP BY pg2.an HAVING COUNT(*)=1)
 LEFT JOIN doctor dd ON dd.code=f.labour_doctor
 LEFT JOIN doctor sd ON sd.code=lg.sulture_doctor
 LEFT JOIN person_anc pa ON pa.person_anc_id=(
@@ -104,7 +105,15 @@ function reportNormalize(array $row,string $charset): array {
         if(is_string($value)&&(trim($value)===''||($field['type']==='date'&&$value==='0000-00-00')))$value=null;
         $row[$field['label']]=$value;unset($row['field_'.$index]);
     }
-    foreach($row as &$value)if(is_string($value)&&preg_match('//u',$value)!==1){$converted=iconv($charset,'UTF-8',$value);if($converted===false)throw new RuntimeException('Invalid source encoding');$value=$converted;}unset($value);
+    $encodingIssues=[];
+    foreach($row as $key=>&$value)if(is_string($value)&&preg_match('//u',$value)!==1){$raw=$value;$issue=false;$value=reportDecodeText($value,$charset,$issue);if($issue)$encodingIssues[$key]=bin2hex($raw);}unset($value);
+    if($encodingIssues)$row['_encoding_issues']=$encodingIssues;
+    // Numeric HOSxP sex codes remain reliable when the lookup label has damaged encoding.
+    $sexCode=trim((string)($row['เพศทารก (รหัส)']??''));
+    if(in_array($sexCode,['1','2'],true)){
+        $row['_source_sex_label']=$row['เพศทารก']??null;
+        $row['เพศทารก']=$sexCode==='1'?'ชาย':'หญิง';
+    }
     $row['_record_id']=$row['_labour_id']===null?'a'.$row['AN มารดา']:'l'.$row['_labour_id'].'-f'.($row['_infant_id']??'none');
     return $row;
 }
@@ -123,8 +132,22 @@ function reportValidateCount(string $value): void {
     if($value!==''&&!preg_match('/\A[0-9]{1,3}\z/',$value))throw new InvalidArgumentException('G / TP / Pre / A / L ต้องเป็นจำนวนเต็ม 0–999 หรือเว้นว่าง');
 }
 function reportNormalizeLinked(array $row,string $charset): array {
-    foreach($row as &$value)if(is_string($value)&&preg_match('//u',$value)!==1)$value=iconv($charset,'UTF-8',$value);unset($value);
+    $issues=[];
+    foreach($row as $key=>&$value)if(is_string($value)&&preg_match('//u',$value)!==1){$raw=$value;$issue=false;$value=reportDecodeText($value,$charset,$issue);if($issue)$issues[$key]=bin2hex($raw);}unset($value);
+    if($issues)$row['หมายเหตุการเข้ารหัส (ช่อง:ข้อมูลดิบ hex)']=json_encode($issues,JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
     return $row;
+}
+
+function reportDecodeText(string $value,string $charset,?bool &$issue=null): string {
+    $issue=false;
+    if(preg_match('//u',$value)===1)return $value;
+    $converted=@iconv($charset,'UTF-8',$value);if($converted!==false)return $converted;
+    $issue=true;
+    // Preserve undefined legacy bytes visibly; never silently drop malformed history.
+    if(in_array(strtolower(str_replace(['-','_'],'',$charset)),['tis620','cp874','windows874','iso885911'],true)){
+        $out='';foreach(str_split($value) as $byte){$part=@iconv($charset,'UTF-8',$byte);$out.=$part===false?'\\x'.strtoupper(bin2hex($byte)):$part;}return $out;
+    }
+    return '[raw hex:'.bin2hex($value).']';
 }
 
 function reportCurrentWardWhere(): string { return "i.ward=:ward AND (i.dchdate IS NULL OR CAST(i.dchdate AS CHAR) IN ('','0000-00-00'))"; }

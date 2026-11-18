@@ -29,6 +29,7 @@ try {
         $value=trim($value);$body['fields'][$key]=$value;
         if(in_array($key,['G','TP','Pre','A','L'],true))reportValidateCount($value);
         if($value==='')continue;
+        if(!empty($field['checkbox'])&&!in_array($value,['Y','N'],true))throw new InvalidArgumentException('กรุณาเลือกให้แล้ว / ไม่ได้ให้ หรือเว้นว่าง');
         if($field['type']==='number'&&(!is_numeric($value)||!is_finite((float)$value)||(float)$value<0))throw new InvalidArgumentException('กรุณากรอกตัวเลขไม่ติดลบ');
         if($field['type']==='date'){
             if(!preg_match('/\A[0-9]{4}-[0-9]{2}-[0-9]{2}\z/',$value))throw new InvalidArgumentException('รูปแบบวันที่ไม่ถูกต้อง');

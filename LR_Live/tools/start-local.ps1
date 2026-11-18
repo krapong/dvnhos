@@ -22,6 +22,6 @@ foreach($listener in $webListeners){
 # Also stop matching project servers that are not visible in the TCP inventory.
 Get-CimInstance Win32_Process -Filter "name='php.exe'" | Where-Object { $_.CommandLine -and $_.CommandLine.Contains($projectRoot) -and $_.CommandLine -match '-S\s+127\.0\.0\.1:8089(?:\s|$)' } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }
 New-Item -ItemType Directory -Path (Join-Path $projectRoot '.private\logs') -Force | Out-Null
-Start-Process -FilePath $phpExe -ArgumentList '-n','-d','extension_dir=C:\xampp\php\ext','-d','extension=pdo_mysql','-d','extension=iconv','-S','127.0.0.1:8089','-t',$projectRoot,(Join-Path $projectRoot 'router.php') -WorkingDirectory $projectRoot -WindowStyle Hidden -RedirectStandardError (Join-Path $projectRoot '.private\logs\server-error.log') -RedirectStandardOutput (Join-Path $projectRoot '.private\logs\server-output.log')
+Start-Process -FilePath $phpExe -ArgumentList '-n','-d','extension_dir=C:\xampp\php\ext','-d','extension=pdo_mysql','-d','extension=openssl','-S','127.0.0.1:8089','-t',$projectRoot,(Join-Path $projectRoot 'router.php') -WorkingDirectory $projectRoot -WindowStyle Hidden -RedirectStandardError (Join-Path $projectRoot '.private\logs\server-error.log') -RedirectStandardOutput (Join-Path $projectRoot '.private\logs\server-output.log')
 Write-Output 'Local MySQL: 127.0.0.1:3308 / lr_supplement'
 Write-Output 'Web: http://127.0.0.1:8089/index.php'

@@ -6,6 +6,28 @@ function respond(int $status, array $payload): never {
     echo json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE | JSON_PARTIAL_OUTPUT_ON_ERROR);
     exit;
 }
+$output=$_GET['output']??'json';
+if(!is_string($output)||!in_array($output,['json','xlsx','csv','csvzip','print'],true))respond(400,['ok'=>false,'error'=>'รูปแบบรายงานไม่ถูกต้อง']);
+$exporting=$output!=='json';
+if($exporting){
+    if($_SERVER['REQUEST_METHOD']!=='POST'){header('Allow: POST');respond(405,['ok'=>false,'error'=>'ใช้ปุ่มส่งออกหรือพิมพ์จากหน้าระบบ']);}
+    $token=$_POST['csrf']??'';
+    if(!is_string($token)||!hash_equals($_SESSION['csrf'],$token))respond(403,['ok'=>false,'error'=>'หน้าเว็บหมดอายุ กรุณาโหลดระบบใหม่']);
+    $memoryLimit=ini_get('memory_limit');$unit=strtolower(substr($memoryLimit,-1));
+    $memoryBytes=(int)$memoryLimit*(['k'=>1024,'m'=>1048576,'g'=>1073741824][$unit]??1);
+    if($memoryBytes>0&&$memoryBytes<536870912)ini_set('memory_limit','512M');
+    set_time_limit(180);
+    // Release the session lock while preparing a large report; authentication was checked above.
+    if(session_status()===PHP_SESSION_ACTIVE)session_write_close();
+    if($output==='print'&&empty($_GET['an']))respond(400,['ok'=>false,'error'=>'กรุณาเลือก AN ผู้ป่วยก่อนพิมพ์']);
+    // Exports always use a fresh, unfiltered registry read; search and group UI do not limit it.
+    $_GET['scope']='search';$_GET['q']='';
+    $_GET['basis']=($output==='print'||($_GET['all']??'')==='1')?'all':'admission';
+    if($_GET['basis']==='all'){
+        $today=(new DateTimeImmutable('now',new DateTimeZone('Asia/Bangkok')))->format('Y-m-d');
+        $_GET['from']=$today;$_GET['to']=$today; // Dates do not restrict an all-time read.
+    }
+}
 if(isset($_GET['lookup'])){
  if($_GET['lookup']!=='providers')respond(400,['ok'=>false,'error'=>'รายการค้นหาไม่ถูกต้อง']);
  require_once __DIR__.'/report.php';require_once __DIR__.'/providers.php';
@@ -54,7 +76,7 @@ try {
     if($currentWard){$where=reportCurrentWardWhere();$params=[':ward'=>'04'];}
     if($scope==='period')$where.=' AND '.reportDeliveryAdmissionWhere();
     if($scope==='search'){
-      $where.=' AND '.reportDeliveryAdmissionWhere();
+      if($output!=='print')$where.=' AND '.reportDeliveryAdmissionWhere();
       if(trim($query)!==''){
         $term='%'.strtr(trim($query),['!'=>'!!','%'=>'!%','_'=>'!_']).'%';
         $fields=['i.hn','i.an','f.hn',"COALESCE(NULLIF(f.infant_an,''),nb.an)","CONCAT(COALESCE(p.pname,''),COALESCE(p.fname,''),' ',COALESCE(p.lname,''))"];
@@ -70,21 +92,26 @@ try {
     foreach($identity as $key=>$value){$where.=' AND i.'.$key.'=:'.$key;$params[':'.$key]=$value;}
     $pdo->beginTransaction();
     $readStage='main';
-    $stmt=$pdo->prepare(reportSql($where,$includeAdmissions));
+    $mainQuery=reportSql($where,$includeAdmissions);
+    if($exporting)$mainQuery=preg_replace('/ LIMIT [0-9]+\z/','',$mainQuery);
+    $stmt=$pdo->prepare($mainQuery);
     $stmt->execute($params);
     $rows=array_map(fn($r)=>reportNormalize($r,$cfg['db_charset']),$stmt->fetchAll());
     if($scope==='search'){
-        if(count($rows)>200)respond(422,['ok'=>false,'error'=>'พบมากกว่า 200 รายการ กรุณาระบุคำค้นให้เจาะจงขึ้น']);
+        if(!$exporting&&count($rows)>200)respond(422,['ok'=>false,'error'=>'พบมากกว่า 200 รายการ กรุณาระบุคำค้นให้เจาะจงขึ้น']);
+        if(!$exporting){
         $ans=array_values(array_unique(array_column($rows,'AN มารดา')));
         $params=[];
         foreach($ans as $index=>$an)$params[':an'.$index]=$an;
         $where=$params?'i.an IN ('.implode(',',array_keys($params)).')':'1=0';
+        }
     }
-    if(count($rows)>10000)respond(422,['ok'=>false,'error'=>'มีข้อมูลเกิน 10,000 รายการ กรุณาลดช่วงวันที่']);
+    if(!$exporting&&count($rows)>10000)respond(422,['ok'=>false,'error'=>'มีข้อมูลเกิน 10,000 รายการ กรุณาลดช่วงวันที่']);
     $readStage='supplement';
     $warnings=[];$supplementAvailable=true;
     try{$stored=manualStore(static fn($data)=>$data);}
     catch(Throwable $e){
+        if($exporting)throw $e; // Never present a partial export as a complete report.
         $stored=[];$supplementAvailable=false;
         $reference=bin2hex(random_bytes(4));
         error_log('[LR API '.$reference.'] stage=supplement '.$e->getMessage());
@@ -114,13 +141,34 @@ try {
     foreach($sql as $key=>$query){
       $readStage=$key;
       if(!in_array($key,['labs','lab_results'],true))$query=str_replace('i.regdate>=:start AND i.regdate<:end',$where,$query);
+      if($exporting)$query=preg_replace('/ LIMIT [0-9]+\z/','',$query);
       preg_match_all('/AS \x60([^\x60]+)\x60/',$query,$aliases);
       $aliasIndex=0;
       $query=preg_replace_callback('/AS \x60([^\x60]+)\x60/',static function($m)use(&$aliasIndex){return 'AS field_'.($aliasIndex++);},$query);
       $stmt=$pdo->prepare($query);$stmt->execute($params);$data[$key]=array_map(fn($row)=>reportNormalizeLinked(array_combine($aliases[1],array_values($row)),$cfg['db_charset']),$stmt->fetchAll());
-      if(count($data[$key])>20000)respond(422,['ok'=>false,'error'=>'ข้อมูลประกอบเกินขนาด กรุณาลดช่วงวันที่']);
+      if(!$exporting&&count($data[$key])>20000)respond(422,['ok'=>false,'error'=>'ข้อมูลประกอบเกินขนาด กรุณาลดช่วงวันที่']);
     }
     $pdo->commit();
+    if($exporting){
+        require_once __DIR__.'/export-report.php';
+        if(!$rows)respond(404,['ok'=>false,'error'=>'ไม่พบข้อมูลผู้รับบริการในขอบเขตที่เลือก']);
+        if($output==='print'){
+            if(!usageLog('patient_print',['count'=>count($rows),'an'=>$identity['an']]))respond(503,['ok'=>false,'error'=>'บันทึกประวัติการพิมพ์ไม่สำเร็จ']);
+            exportPrint($data,reportFields(),$stored);
+        }
+        $sheets=exportSheets($data,$stored,reportFields(),['all'=>$basis==='all','from'=>$from,'to'=>$to]);
+        $path=$output==='xlsx'?exportWorkbook($sheets):exportCsvFile($sheets,$output==='csvzip');
+        try{
+            if(!usageLog($output==='xlsx'?'xlsx_export':'csv_export',['format'=>$output,'count'=>count($rows),'scope'=>$basis==='all'?'all':'period','from'=>$basis==='all'?null:$from,'to'=>$basis==='all'?null:$to]))throw new RuntimeException('Export audit unavailable');
+            $type=['xlsx'=>'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','csv'=>'text/csv; charset=UTF-8','csvzip'=>'application/zip'][$output];
+            $extension=$output==='csvzip'?'zip':$output;
+            header('Content-Type: '.$type);
+            header('Content-Disposition: attachment; filename="LR_all_fields_'.($basis==='all'?'all':$from.'_'.$to).'.'.$extension.'"');
+            header('Content-Length: '.filesize($path));
+            readfile($path);
+        }finally{unlink($path);}
+        exit;
+    }
     usageLog('data_read',['scope'=>$scope,'basis'=>$currentWard?'current':$basis,'from'=>$from,'to'=>$to,'keyword_used'=>trim($_GET['q']??'')!=='','count'=>count($rows)]);
     respond(200,['ok'=>true,'warnings'=>$warnings,'data'=>$data,'fields'=>array_map(static fn($f)=>array_diff_key($f,['sql'=>true]),reportFields()),'csrf'=>$_SESSION['csrf'],'period'=>['from'=>$from,'to'=>$to,'basis'=>$currentWard?'current_ward':($scope==='search'?$basis:'admission'),'ward'=>$currentWard?'04':null]]);
 } catch(Throwable $e) {
@@ -129,5 +177,6 @@ try {
     $reference=bin2hex(random_bytes(4));
     error_log('[LR API '.$reference.'] stage='.$readStage.' '.$e->getMessage());
     $stageNames=['connection'=>'เชื่อมต่อฐาน HOSxP','main'=>'ทะเบียนมารดาและทารก','supplement'=>'ฐานข้อมูลเสริม','labs'=>'Lab ทะเบียนคลอด','lab_results'=>'ผลห้องปฏิบัติการ','complications'=>'ภาวะแทรกซ้อน','vaccines'=>'วัคซีน'];
+    if($e instanceof LengthException)respond(422,['ok'=>false,'error'=>$e->getMessage()]);
     respond(500,['ok'=>false,'error'=>'อ่านข้อมูลไม่สำเร็จ: '.($stageNames[$readStage]??$readStage).' (รหัส '.$reference.') กรุณาตรวจสอบ PHP error log']);
 }
