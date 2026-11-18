@@ -1,0 +1,21 @@
+.env
+.venv/
+keys/
+data/
+__pycache__/
+*.pyc
+
+# Local browser sessions, screenshots and generated runtime artifacts
+.playwright-cli/
+output/
+*.log
+*.sqlite
+*.sqlite3
+*.db
+*.sql
+*.sql.gz
+*.key
+*.pem
+*.pfx
+*.zip
+*.tmp

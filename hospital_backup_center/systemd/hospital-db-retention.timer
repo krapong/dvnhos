@@ -1,0 +1,8 @@
+[Unit]
+Description=Daily hospital backup retention check
+[Timer]
+OnCalendar=*-*-* 03:00:00 Asia/Bangkok
+Persistent=true
+Unit=hospital-db-retention.service
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,10 @@
+[Unit]
+Description=Hospital database-only backup
+After=network.target mariadb.service
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/backup-agent.sh --db-only
+Nice=10
+IOSchedulingClass=best-effort
+IOSchedulingPriority=7
+TimeoutStartSec=8h

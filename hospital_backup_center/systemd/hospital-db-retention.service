@@ -1,0 +1,5 @@
+[Unit]
+Description=Prune completed hospital backups beyond the newest three sets
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/backup-agent.sh --prune-only
